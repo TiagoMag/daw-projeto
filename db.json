@@ -1,0 +1,29 @@
+[
+    {
+        "nome":"João Nuno Abreu",
+        "email":"joao.nuno.abreu@gmail.com",
+        "filiação":"estudante",
+        "nível":"admin",
+        "dataRegisto":"21/12/2020",
+        "dataUltimoAcesso":"21/12/2020",
+        "password":"123"
+    },
+    {
+        "nome":"Tiago Magalhães",
+        "email":"tiago.magalhaes@gmail.com",
+        "filiação":"estudante",
+        "nível":"produtor",
+        "dataRegisto":"21/12/2020",
+        "dataUltimoAcesso":"21/12/2020",
+        "password":"123"
+    },
+    {
+        "nome":"André Morais",
+        "email":"andre.morais@gmail.com",
+        "filiação":"estudante",
+        "nível":"consumidor",
+        "dataRegisto":"21/12/2020",
+        "dataUltimoAcesso":"21/12/2020",
+        "password":"123"
+    }
+]
