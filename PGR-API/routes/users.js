@@ -2,22 +2,25 @@ const { response } = require('express');
 var express = require('express');
 const User = require('../controllers/user');
 var router = express.Router();
+require("dotenv-safe").config();
+const jwt = require('jsonwebtoken');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  var data = req.body;
-   data.forEach(function (item) {
-       res.send(item.id);
-       res.send(item.Name);
-   });
+router.get('/',verifyJWT, function(req, res, next) {
+  User.list()
+  .then(data => res.status(200).json({message: data}))
+  .catch(err => res.status(500).json({message: err}) )
+  
 });
 
 router.post('/registar', (req,res)=>{
-  print("asdasd")
+  console.log("asdasd")
   user = req.body
-  User.insert(user)
-  .then(data => res.status(200).json({message: 'User registado com sucesso:'+data}))
+  console.log(user)
+  User.inserir(user)
+  .then(data => res.status(200).json({message: 'User registado com sucesso:'}))
   .catch(err => res.status(500).json({message: err}) )
+ 
 })
 
 // Autenticação utilizador e geração de token para a sessão
@@ -25,6 +28,7 @@ router.post('/login', (req, res, next) => {
     //esse teste abaixo deve ser feito no seu banco de dados
     var email = req.body.email 
     var password = req.body.password
+    console.log(email)
     console.log(password)
     User.lookup(email)
     .then(data => {
@@ -38,10 +42,10 @@ router.post('/login', (req, res, next) => {
       }else{ res.status(500).json({message: 'Login inválido!'});}
 
     })
-    .catch(err => res.status(500).json({message: 'Login inválido!'}))    
+    .catch(err => res.status(500).json({message: 'Login inválido!'+ err}))    
 })
 
-router.post('/logout',verifyJWT, function(req, res) {
+router.post('/logout', function(req, res) {
   res.json({ auth: false, token: null });
 })
 

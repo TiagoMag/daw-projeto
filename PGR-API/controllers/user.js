@@ -10,16 +10,14 @@ module.exports.list = () => {
 }
 
 module.exports.lookup = id => {
+    console.log("asdasd")
     return User
         .findOne({email: id})
         .exec()
 }
-
-// Insert student
-module.exports.insert = user => {
-    print("entrei")
-    var newUser = new Student(user)
-    return newUser.save()
+module.exports.inserir = u => {
+    var novo = new User(u)
+    return novo.save()
 }
 
 module.exports.remove = id => {
