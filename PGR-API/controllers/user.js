@@ -1,5 +1,5 @@
 // User controller
-var User = require('../models/User')
+var User = require('../models/user')
 
 // Returns user list
 module.exports.list = () => {
@@ -15,8 +15,11 @@ module.exports.lookup = id => {
         .exec()
 }
 
+// Insert student
 module.exports.insert = user => {
-    return new User(user).save()
+    print("entrei")
+    var newUser = new Student(user)
+    return newUser.save()
 }
 
 module.exports.remove = id => {
