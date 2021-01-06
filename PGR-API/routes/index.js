@@ -3,7 +3,7 @@ var router = express.Router();
 const jwt = require('jsonwebtoken');
 
 function verificaAutorizacao(req,res,next){
-  if(req.user.nivel == 'admin')
+  if(req.nivel == 'admin')
     next()
   else
     res.status(401).jsonp({error: "Não tem nível de autorização para aceder a esta área."})

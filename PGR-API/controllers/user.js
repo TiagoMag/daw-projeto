@@ -10,7 +10,6 @@ module.exports.list = () => {
 }
 
 module.exports.lookup = id => {
-    console.log("asdasd")
     return User
         .findOne({email: id})
         .exec()

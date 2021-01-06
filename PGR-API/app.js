@@ -4,6 +4,8 @@ var path = require('path');
 var logger = require('morgan');
 var mongoose = require('mongoose')
 var bodyParser = require('body-parser');
+var jwt = require('jsonwebtoken')
+require("dotenv-safe").config()
 
 // ----------------------------------------------------------------------------
 
@@ -45,7 +47,7 @@ app.use(function(req, res, next){
       
       // se tudo estiver ok, salva no request para uso posterior
       req.userId = decoded.id;
-      console.log("a sair da verificação de token")
+      req.nivel = decoded.nivel;
       next();
     })
   });
@@ -65,7 +67,7 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
+  res.status(err.status || 500).jsonp({error: err.message})
  
 });
 

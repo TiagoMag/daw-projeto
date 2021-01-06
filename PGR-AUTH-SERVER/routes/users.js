@@ -4,14 +4,19 @@ const jwt = require('jsonwebtoken');
 const User = require('../controllers/user');
 require("dotenv-safe").config();
 
+router.post('/registar', (req,res)=>{
+  user = req.body
+  User.inserir(user)
+  .then(data => res.status(200).json({message: 'User registado com sucesso:'+data}))
+  .catch(err => res.status(500).json({message: err}) )
+})
+
 // Autenticação utilizador e geração de token para a sessão
 router.post('/login', (req, res, next) => {
   var email = req.body.email 
   var password = req.body.password
-  console.log("email = "+ email) 
   User.lookup(email)
   .then(data => {
-    console.log(data.email)
     if(data.email == email && data.password == password){
       const id = email; 
       const nivel = data.nivel
