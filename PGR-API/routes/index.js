@@ -2,9 +2,6 @@ var express = require('express');
 var router = express.Router();
 const jwt = require('jsonwebtoken');
 
-var express = require('express');
-var router = express.Router();
-
 function verificaAutorizacao(req,res,next){
   if(req.user.nivel == 'admin')
     next()

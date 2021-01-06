@@ -2,7 +2,6 @@
 var User = require('../models/user')
 
 module.exports.lookup = id => {
-    console.log("asdasd")
     return User
         .findOne({email: id})
         .exec()

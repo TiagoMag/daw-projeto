@@ -45,6 +45,7 @@ app.use(function(req, res, next){
       
       // se tudo estiver ok, salva no request para uso posterior
       req.userId = decoded.id;
+      console.log("a sair da verificação de token")
       next();
     })
   });

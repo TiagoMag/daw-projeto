@@ -1,12 +1,14 @@
 var express = require('express');
 var router = express.Router();
 const jwt = require('jsonwebtoken');
+const User = require('../controllers/user');
 require("dotenv-safe").config();
 
 // Autenticação utilizador e geração de token para a sessão
 router.post('/login', (req, res, next) => {
   var email = req.body.email 
   var password = req.body.password
+  console.log("email = "+ email) 
   User.lookup(email)
   .then(data => {
     console.log(data.email)
@@ -17,7 +19,9 @@ router.post('/login', (req, res, next) => {
         expiresIn: 300 // expires in 5min
       });
       return res.json({ auth: true, token: token });
-    }else{ res.status(500).json({message: 'Login inválido!'});}
+    }
+    else
+      res.status(500).json({message: 'Login inválido!'});
   })
   .catch(err => res.status(500).json({message: 'Login inválido!'+ err}))    
 })

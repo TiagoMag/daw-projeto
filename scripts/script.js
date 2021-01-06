@@ -1,8 +1,8 @@
 var axios = require('axios')
 
-axios.post('http://localhost:7778/users',{
+axios.post('http://localhost:7778/users/login',{
     "nome":"João Nuno Abreu",
-    "email":"j.nuno.abreu@gmail.com",
+    "email":"joao.nuno.abreu@gmail.com",
     "filiacao":"estudante",
     "nivel":"admin",
     "dataRegisto":"21/12/2020",
