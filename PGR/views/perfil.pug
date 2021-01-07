@@ -1,0 +1,51 @@
+extends layout
+
+block content
+    .w3-container.w3.bar.w3-teal
+        a(href="/" class="w3-bar-item w3-button w3-right")
+            img(src="images/logout.png" style='width:25px; height:25px;') 
+        a(href="/perfil" class="w3-bar-item w3-button w3-right")
+            img(src="images/utilizador.png" style='width:25px; height:25px;') 
+        a(href="" class="w3-bar-item w3-button w3-right")
+            img(src="images/upload.png" style='width:25px; height:25px;') 
+        a(href="" class="w3-bar-item w3-button w3-right")
+            img(src="images/search.png" style='width:25px; height:25px;') 
+        a(href="" class="w3-bar-item w3-button w3-right")
+            img(src="images/home.png" style='width:25px; height:25px;') 
+    head
+        .w3-row
+            div(class="w3-col s3")
+                div(class="containerp")
+                    img.imagep(src="images/home.png" alt="Avatar" class="imgp" style="width:100%")
+                    div(class="middlep")
+                        div(class="textp")
+                            a(href="/upload") Nova Foto
+            div(class="w3-col s9" )
+                ul 
+                    hr
+                    li Nome:
+                    br
+                    br
+                    li Email:
+                    br
+                    br
+                    li Nº de publicações:
+                    br
+                    hr
+            .w3-row
+                .w3-container.w3-margin
+                    table.w3-table-all#myTable
+                        thead
+                            tr
+                                th Nome
+                                th Data de Upload
+                                th Remover
+                        tbody
+    script(src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js")
+        
+
+
+        script.
+            $(document).ready( function () {
+                $('#myTable').DataTable();
+                } );

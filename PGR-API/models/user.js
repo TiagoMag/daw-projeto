@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose')
 
 var userSchema = new mongoose.Schema({
@@ -10,7 +9,6 @@ var userSchema = new mongoose.Schema({
     dataUltimoAcesso: String,
     password: String
 });
-
 
 
   
