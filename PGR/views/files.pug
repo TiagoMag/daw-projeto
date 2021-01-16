@@ -18,7 +18,7 @@ table.w3-table.w3-bordered
         th Size
         th Type
     each f in files  
-        tr(onclick=`showImage(\"${f.name}\", \"${f.mimetype}\")`)
+        tr(onclick=`showImage(\"${f.name}\", \"${f.mimetype}\", \"${u_email}\")`)
             td #{f.date}
             td #{f.name}
             td #{f.desc}

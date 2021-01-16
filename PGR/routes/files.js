@@ -5,12 +5,15 @@ var fs = require('fs')
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 var path = require('path')
+var jwt_decode = require('jwt-decode');
 
 
 router.get('/',function(req,res){
+    var token = req.cookies.token
+    u_email = jwt_decode(token).id
     var d = new Date().toISOString().substring(0,16)
     var files = jsonfile.readFileSync(path.resolve(__dirname, '../dbFiles.json'))
-    res.render("files",{files: files, d: d})
+    res.render("files",{files: files, d: d, u_email: u_email})
 })
 
 router.get('/upload',function(req,res){
@@ -25,10 +28,16 @@ router.get('/download/:fname',function(req,res){
 router.post('/',upload.array('myFile'),function(req,res){
 
     req.files.forEach((f,idx) => {
+        var token = req.cookies.token
+        u_email = jwt_decode(token).id
         let oldPath = path.resolve(__dirname, '../') + '/' + f.path
-        console.log("oldPath = " + oldPath)
-        let newPath = path.resolve(__dirname, '../') + '/public/fileStore/' + f.originalname
-        console.log("newPath = " + newPath)
+        let newPath = path.resolve(__dirname, '../') + '/public/fileStore/' + u_email + '/'
+
+        if (!fs.existsSync(newPath)){
+            fs.mkdirSync(newPath);
+        }
+
+        newPath += f.originalname
 
         fs.rename(oldPath,newPath, function (err){
             if(err) throw err

@@ -1,7 +1,7 @@
-function showImage(name,type){
+function showImage(name,type,user){
     console.log("type = " + type)
     if(type == 'image/png' || type == 'image/jpeg')
-        var ficheiro = '<img src="/fileStore/' + name + '" width="80%"/>'
+        var ficheiro = '<img src="/fileStore/' + user + '/' + name + '" width="80%"/>'
     else
         var ficheiro = '<p>' + name + ', ' + type + '</p>'
 
