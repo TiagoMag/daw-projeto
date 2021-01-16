@@ -19,6 +19,19 @@ form.w3-container(action='/files' method='POST' enctype='multipart/form-data')
             label.w3-text-teal Select File
         .w3-col.s9.w3-border
             input.w3-input.w3-border.w3-light-grey(type='file' name='myFile')
+    .w3-row.w3-margin-bottom
+        .w3-col.s3
+            label.w3-text-teal File Type
+        .w3-col.s9.w3-border
+            select(id="tipo" name="tipo")
+                option(value='relatorio') Relatório
+                option(value='tese') Tese
+                option(value='artigo') Artigo
+                option(value='aplicacao') Aplicação
+                option(value='slides') Slides
+                option(value='teste') Teste
+                option(value='problema') Problema Resolvido
+
     #adiciona
     input.w3-btn.w3-blue-grey(type='button' value='+' onclick='addFile()')
     input.w3-btn.w3-blue-grey(type='submit' value='Submit')

@@ -1,11 +1,14 @@
 function showImage(name,type,user){
     console.log("type = " + type)
-    if(type == 'image/png' || type == 'image/jpeg')
+    if(type == 'application/x-zip-compressed'){
+        console.log("É um zip.")
+        var ficheiro = '<p>' + name + ', ' + type + '</p>'
+    }
+    else if (type == 'image/png' || type == 'image/jpeg')
         var ficheiro = '<img src="/fileStore/' + user + '/' + name + '" width="80%"/>'
     else
         var ficheiro = '<p>' + name + ', ' + type + '</p>'
 
-    console.log("ficheiro = " + JSON.stringify(ficheiro))
     var fileObj = `
         <div class="w3-row w3-margin">
             <div class="w3-col s6">
@@ -26,25 +29,38 @@ function showImage(name,type,user){
 }
 
 function addFile(){
-    var file = $( `<div class="w3-row w3-margin-bottom">
-    <div class="w3-col s3">
-        <label class="w3-text-teal">Description</label>
-    </div>
+    var file = $( `
+    <hr>
 
-    <div class="w3-col s9 w3-border">
-        <input class="w3-input w3-border w3-light-grey" type="text" name="desc">
+    <div class="w3-row w3-margin-bottom">
+        <div class="w3-col s3">
+           <label class="w3-text-teal">Description</label>
+        </div>
+        <div class="w3-col s9 w3-border">
+           <input class="w3-input w3-border w3-light-grey" type="text" name="desc">
+        </div>
     </div>
+    <div class="w3-row w3-margin-bottom">
+        <div class="w3-col s3">
+           <label class="w3-text-teal">Select File</label>
+        </div>
+        <div class="w3-col s9 w3-border">
+           <input class="w3-input w3-border w3-light-grey" type="file" name="myFile">
+        </div>
+    </div>
+    <div class="w3-row w3-margin-bottom">
+    <div class="w3-col s3"><label class="w3-text-teal">File Type</label></div>
+    <div class="w3-col s9 w3-border"><select id="tipo" name="tipo">
+            <option value="relatorio">Relatório</option>
+            <option value="tese">Tese</option>
+            <option value="artigo">Artigo</option>
+            <option value="aplicacao">Aplicação</option>
+            <option value="slides">Slides</option>
+            <option value="teste">Teste</option>
+            <option value="problema">Problema Resolvido</option>
+        </select></div>
 </div>
 
-
-<div class="w3-row w3-margin-bottom">
-    <div class="w3-col s3">
-        <label class="w3-text-teal">Select File</label>
-    </div>
-
-    <div class="w3-col s9 w3-border">
-        <input class="w3-input w3-border w3-light-grey" type="file" name="myFile">
-    </div>
-</div>`)
+    `)
     $("#adiciona").append(file)
 }

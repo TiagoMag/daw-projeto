@@ -7,7 +7,6 @@ var upload = multer({ dest: 'uploads/' })
 var path = require('path')
 var jwt_decode = require('jwt-decode');
 
-
 router.get('/',function(req,res){
     var token = req.cookies.token
     u_email = jwt_decode(token).id
@@ -22,12 +21,15 @@ router.get('/upload',function(req,res){
 })
   
 router.get('/download/:fname',function(req,res){
-    res.download(path.resolve(__dirname, '../') + "/public/fileStore/" + req.params.fname)
+    var token = req.cookies.token
+    u_email = jwt_decode(token).id
+    res.download(path.resolve(__dirname, '../') + "/public/fileStore/" + u_email + '/' + req.params.fname)
 })
 
 router.post('/',upload.array('myFile'),function(req,res){
 
     req.files.forEach((f,idx) => {
+        console.log("f = " + JSON.stringify(f))
         var token = req.cookies.token
         u_email = jwt_decode(token).id
         let oldPath = path.resolve(__dirname, '../') + '/' + f.path
@@ -53,7 +55,8 @@ router.post('/',upload.array('myFile'),function(req,res){
                 name: f.originalname,
                 mimetype: f.mimetype,
                 size: f.size,
-                desc: req.body.desc[idx]
+                desc: req.body.desc[idx],
+                tipo: req.body.tipo[idx]
             })
         }
         else if (n == 1){
@@ -62,7 +65,8 @@ router.post('/',upload.array('myFile'),function(req,res){
                 name: f.originalname,
                 mimetype: f.mimetype,
                 size: f.size,
-                desc: req.body.desc
+                desc: req.body.desc,
+                tipo: req.body.tipo
             })
         }
         jsonfile.writeFileSync(path.resolve(__dirname, '../dbFiles.json'),files)
