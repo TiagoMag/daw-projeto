@@ -12,7 +12,7 @@ block content
             img(src="images/search.png" style='width:25px; height:25px;') 
         a(href="" class="w3-bar-item w3-button w3-right")
             img(src="images/home.png" style='width:25px; height:25px;') 
-    head
+    body
         .w3-row
             div(class="w3-col s3")
                 div(class="containerp")
@@ -41,11 +41,11 @@ block content
                                 th Data de Upload
                                 th Remover
                         tbody
-    script(src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js")
-        
+    script(src='https://code.jquery.com/jquery-3.5.1.js')
+    link(rel='stylesheet', href='https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css')
+    script(src='https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js')
 
-
-        script.
-            $(document).ready( function () {
-                $('#myTable').DataTable();
-                } );
+    script.
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+            } );

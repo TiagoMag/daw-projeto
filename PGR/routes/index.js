@@ -46,4 +46,12 @@ router.post('/login', function(req, res) {
     .catch(err => res.render('error',{error: err}))
 });
 
+router.get('/admin/edit',function(req,res){
+
+  axios.get('http://localhost:7777/users/lista?token=' + req.cookies.token)
+    .then(data => {res.render('edit', {token: req.cookies.token,list: data.data, title: 'PGR'})})
+    .catch(err => res.render('error', {error: err}))
+  })
+
+
 module.exports = router;

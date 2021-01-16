@@ -13,9 +13,5 @@ router.get('/infoSecreta', verificaAutorizacao, function(req, res, next) {
   res.status(200).jsonp({dados: ["cenoura","alface","tomate"]})
 });
 
-router.get('*', function(req, res, next) {
-  res.status(200).jsonp({dados: "Lista de qq coisa..."})
-});
-
 
 module.exports = router;
