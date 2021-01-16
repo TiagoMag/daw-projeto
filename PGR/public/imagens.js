@@ -1,4 +1,5 @@
 function showImage(name,type){
+    console.log("type = " + type)
     if(type == 'image/png' || type == 'image/jpeg')
         var ficheiro = '<img src="/fileStore/' + name + '" width="80%"/>'
     else

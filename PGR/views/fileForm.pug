@@ -1,0 +1,26 @@
+head
+    title File Upload
+    meta(charset='utf-8')
+    script(src='/jquery-3.5.1.min.js')
+    script(src='/imagens.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js')
+    link(rel='icon' href='/favicon.png')
+    link(rel='stylesheet' href='/w3.css')
+.w3-container.w3-teal
+    h2 File Upload
+form.w3-container(action='/files' method='POST' enctype='multipart/form-data')
+    .w3-row.w3-margin-bottom
+        .w3-col.s3
+            label.w3-text-teal Description
+        .w3-col.s9.w3-border
+            input.w3-input.w3-border.w3-light-grey(type='text' name='desc')
+    .w3-row.w3-margin-bottom
+        .w3-col.s3
+            label.w3-text-teal Select File
+        .w3-col.s9.w3-border
+            input.w3-input.w3-border.w3-light-grey(type='file' name='myFile')
+    #adiciona
+    input.w3-btn.w3-blue-grey(type='button' value='+' onclick='addFile()')
+    input.w3-btn.w3-blue-grey(type='submit' value='Submit')
+footer.w3-container.w3-teal
+    adress Gerado por PGR:: André Morais, João Nuno Abreu, Tiago Magalhães em #{d} ----------------
