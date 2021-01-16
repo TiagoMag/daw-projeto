@@ -85,7 +85,6 @@ function fileForm( d ){
                     </div>
                 </div>
 
-
                 <div class="w3-row w3-margin-bottom">
                     <div class="w3-col s3">
                         <label class="w3-text-teal">Select File</label>

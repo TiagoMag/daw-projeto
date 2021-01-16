@@ -30,16 +30,20 @@ router.post('/registar', function(req, res) {
   res.redirect("/")
 });
 
-
 router.post('/login', function(req, res) {
   var email = req.body.email
   var password = req.body.password
   var u = {"email" : email, "password" : password}
-  axios.post('http://localhost:7776/users/login',
-    u
-  )
-  .then(data => {if(data != "Login inválido!") res.redirect("/perfil")})
-  .catch(err => res.render('error',{error: err}))
+  axios.post('http://localhost:7776/users/login', u)
+    .then(dados => {
+      res.cookie('token', dados.data.token, {
+        expires: new Date(Date.now() + '1d'),
+        secure: false, // set to true if your using https
+        httpOnly: true
+      });
+      res.redirect("/perfil")
+    })
+    .catch(err => res.render('error',{error: err}))
 });
 
 module.exports = router;
