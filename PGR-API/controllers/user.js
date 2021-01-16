@@ -14,6 +14,13 @@ module.exports.lookup = id => {
         .findOne({email: id})
         .exec()
 }
+
+module.exports.lookupid = id => {
+    return User
+        .findOne({_id: id})
+        .exec()
+}
+
 module.exports.inserir = u => {
     var novo = new User(u)
     return novo.save()

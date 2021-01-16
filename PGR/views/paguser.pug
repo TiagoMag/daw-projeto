@@ -11,17 +11,13 @@ block content
         header.w3-container
             .w3-container.w3-margin
                 table.w3-table-all#myTable
-                    caption Lista de Utilizadores 
+                    caption Lista de Imagens do utilizador 
                         thead
                             tr
-                                th ID
                                 th Nome
-                                th Email
-                                th Filiação
-                                th Nível
-                                th Data de Registo
-                                th Data do último acesso
-                                th Remover Utilizador
+                                th Data de Upload 
+                                th Descrição
+                                th Remover
                         tbody
 
 
@@ -31,26 +27,17 @@ block content
 
     script.
         var token = '#{token}';
+        var id = '#{id}'
         $(document).ready(function() {
             $('#myTable').DataTable( {
                 "paginate": false,
                 "order": [[ 1, "desc" ]],
                 "ajax": {
-                    "url": "http://localhost:7777/users/lista?token=" + token,
+                    "url": "http://localhost:7777/users/perfil/" + id + "?token=" + token,
                     "type": "GET"
                 },
                 "columns": [
-                    { "data": "_id",
-                        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                            $(nTd).html("<a href='http://localhost:7778/admin/"+ oData._id +"'>"+oData._id+"</a>");
-                        } 
-                    },
                     { "data": "nome"},
-                    { "data": "email"},
-                    { "data": "filiacao"},
-                    { "data": "nivel"},
-                    { "data": "dataRegisto"},
-                    { "data": "dataUltimoAcesso"},
                     { data: null, 
                         className: 'dt-body-center',
                         render: function ( data, type, row ) {

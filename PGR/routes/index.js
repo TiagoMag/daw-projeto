@@ -53,5 +53,13 @@ router.get('/admin/edit',function(req,res){
     .catch(err => res.render('error', {error: err}))
   })
 
+  router.get('/admin/:id',function(req,res){
+    id = req.params.id
+    axios.get('http://localhost:7777/users/perfil/' + id + '?token=' + req.cookies.token)
+      .then(data => {res.render('paguser', {id:id ,token: req.cookies.token,list: data.data, title: 'PGR'})})
+      .catch(err => res.render('error', {error: err}))
+    })
+  
+
 
 module.exports = router;
