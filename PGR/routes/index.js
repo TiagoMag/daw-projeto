@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var axios = require('axios')
-
-
 var User = require('../models/user')
 
 
@@ -28,7 +26,7 @@ router.post('/registar', function(req, res) {
     u
   )
   .then(data => console.log("Registado"))
-  .catch(err => console.log("Deu merda"))
+  .catch(err => res.render('error',{error: err}))
   res.redirect("/")
 });
 
@@ -37,13 +35,11 @@ router.post('/login', function(req, res) {
   var email = req.body.email
   var password = req.body.password
   var u = {"email" : email, "password" : password}
-  console.log(u)
   axios.post('http://localhost:7776/users/login',
     u
   )
-  .then(data => console.log("Registado"))
-  .catch(err => console.log("Erro"))
-  res.redirect("/perfil")
+  .then(data => {if(data != "Login inválido!") res.redirect("/perfil")})
+  .catch(err => res.render('error',{error: err}))
 });
 
 module.exports = router;
