@@ -14,5 +14,4 @@ router.get('/infoSecreta', verificaAutorizacao, function(req, res, next) {
 });
 
 
-
 module.exports = router;

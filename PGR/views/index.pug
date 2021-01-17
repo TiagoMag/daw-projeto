@@ -11,7 +11,10 @@ block content
             label.w3-text-teal
                 p.w3-text-white Password: 
                     input.w3-input.w3-border.w3-light-grey(type='password' name='password')
-            br
+            if(err=="1")
+                p <i class="fas fa-info-circle"></i> Email/Passowrd incorretos
+            else if (err=="2")
+                p <i class="fas fa-info-circle"></i> Sessão Expirada
             input.w3-btn.w3-tealw3-btn.w3-border.w3-margin-bottom.w3-right.w3-teal(type='submit' value='Login')
             br
             p
