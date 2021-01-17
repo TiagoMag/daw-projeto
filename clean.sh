@@ -1,0 +1,1 @@
+rm -rf PGR/public/fileStore/* ; > PGR/dbFiles.json ; echo "[]" > PGR/dbFiles.json

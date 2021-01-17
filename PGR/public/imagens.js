@@ -1,13 +1,11 @@
 function showImage(name,type,user){
     console.log("type = " + type)
-    if(type == 'application/x-zip-compressed'){
-        console.log("É um zip.")
-        var ficheiro = '<p>' + name + ', ' + type + '</p>'
+    if (type == 'cartaz'){
+        var name_without_ext = name.split('.').slice(0, -1).join('.')
+        var ficheiro = '<img src="/fileStore/' + user + '/' + name_without_ext + "/" + name_without_ext + ".jpg" + '" width="80%"/>'
     }
-    else if (type == 'image/png' || type == 'image/jpeg')
-        var ficheiro = '<img src="/fileStore/' + user + '/' + name + '" width="80%"/>'
     else
-        var ficheiro = '<p>' + name + ', ' + type + '</p>'
+        var ficheiro = '<a href="newsletter_01.pdf" target="_blank"></a>'
 
     var fileObj = `
         <div class="w3-row w3-margin">
@@ -19,7 +17,6 @@ function showImage(name,type,user){
                 <p>Mimetype: ${type}</p>
             </div>
         </div>
-    
     `
     
     var download = $('<div><a href="/files/download/' + name + '">Download</a></div>')
@@ -58,7 +55,9 @@ function addFile(){
             <option value="slides">Slides</option>
             <option value="teste">Teste</option>
             <option value="problema">Problema Resolvido</option>
-        </select></div>
+            <option value="cartaz">Cartaz</option>
+        </select>
+    </div>
 </div>
 
     `)

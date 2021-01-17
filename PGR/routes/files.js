@@ -6,6 +6,9 @@ var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 var path = require('path')
 var jwt_decode = require('jwt-decode');
+var AdmZip = require('adm-zip');
+var path = require('path')
+
 
 router.get('/',function(req,res){
     var token = req.cookies.token
@@ -39,16 +42,20 @@ router.post('/',upload.array('myFile'),function(req,res){
             fs.mkdirSync(newPath);
         }
 
-        newPath += f.originalname
+        let filePath = newPath + f.originalname
+        console.log("oldPath = " + oldPath)
+        console.log("filePath = " + filePath)
 
-        fs.rename(oldPath,newPath, function (err){
+        fs.rename(oldPath,filePath, function (err){
             if(err) throw err
         })
 
+
+        // Escreve no ficheiro as alterações
         var files = jsonfile.readFileSync(path.resolve(__dirname, '../dbFiles.json'))
         var d = new Date().toISOString().substring(0,16)
         var n = req.files.length
-
+        
         if(n > 1){
             files.push({
                 date: d,
@@ -56,7 +63,7 @@ router.post('/',upload.array('myFile'),function(req,res){
                 mimetype: f.mimetype,
                 size: f.size,
                 desc: req.body.desc[idx],
-                tipo: req.body.tipo[idx]
+                tipo: req.body.tipo[idx] 
             })
         }
         else if (n == 1){
@@ -70,6 +77,27 @@ router.post('/',upload.array('myFile'),function(req,res){
             })
         }
         jsonfile.writeFileSync(path.resolve(__dirname, '../dbFiles.json'),files)
+
+        // Faz unzip
+        var zip = new AdmZip(filePath);
+        var zipEntries = zip.getEntries();
+        var meta_dados = [];
+        zipEntries.forEach(function(zipEntry) {
+            meta_dados.push(zipEntry.toString());
+        });
+
+        // Remove o file extension
+        var folder_dest = newPath + f.originalname.split('.').slice(0, -1).join('.') + "/"
+
+        // Extrai zip para uma pasta com o mesmo nome
+        zip.extractAllTo(folder_dest, true);
+        console.log("Zip extracted to: " + folder_dest)
+
+        // Apaga o zip
+        fs.unlink(filePath, function(err) {
+            if (err) throw err
+            else console.log("Successfully deleted the zip: " + filePath)
+        })
     })
     res.redirect('/files')
 })

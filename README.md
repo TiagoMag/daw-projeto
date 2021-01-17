@@ -8,6 +8,9 @@ mongoimport -d PGR -c users --jsonArray db.json
 
 # Correr servers que dão restart em saves (ctrl+s)
 npm run devstart
+
+# Limpa o fileStore e o dbFiles.json
+sh clean.sh
 ```
 
 ## Comandos úteis mongo:
