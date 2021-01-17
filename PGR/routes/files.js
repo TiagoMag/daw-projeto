@@ -11,6 +11,7 @@ var path = require('path')
 
 
 router.get('/',function(req,res){
+
     var token = req.cookies.token
     u_email = jwt_decode(token).id
     var d = new Date().toISOString().substring(0,16)
@@ -49,7 +50,6 @@ router.post('/',upload.array('myFile'),function(req,res){
         fs.rename(oldPath,filePath, function (err){
             if(err) throw err
         })
-
 
         // Escreve no ficheiro as alterações
         var files = jsonfile.readFileSync(path.resolve(__dirname, '../dbFiles.json'))
