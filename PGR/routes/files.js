@@ -43,6 +43,19 @@ router.post('/',upload.array('myFile'),function(req,res){
             fs.mkdirSync(newPath);
         }
 
+        var zip2 = new AdmZip(oldPath);
+        var zipEntries2 = zip2.getEntries();
+        var meta_dados2 = [];
+        zipEntries2.forEach(function(zipEntry2) {
+            meta_dados2.push(zipEntry2);
+        });
+        if(req.body.tipo != "aplicacao"){
+            var ext = path.extname(meta_dados2[0]["name"]).substring(1)
+        }
+        else
+            var ext = "zip"
+
+        console.log("ext = " + ext)
         let filePath = newPath + f.originalname
         console.log("oldPath = " + oldPath)
         console.log("filePath = " + filePath)
@@ -50,22 +63,6 @@ router.post('/',upload.array('myFile'),function(req,res){
         fs.rename(oldPath,filePath, function (err){
             if(err) throw err
         })
-
-        var tmp = filePath.replace(/\//g, "\\")
-        console.log("tmp = " + tmp)
-        var zip = new AdmZip(tmp)
-        var zipEntries = zip.getEntries();
-        var meta_dados = [];
-        zipEntries.forEach(function(zipEntry) {
-            meta_dados.push(zipEntry);
-            console.log("zipEntry.toString() = " + zipEntry.toString())
-        });
-
-        if(req.body.tipo != "Aplicação"){
-            var ext = path.extname(meta_dados[0]["name"])
-        }
-        else
-            var ext = ".zip"
 
         // Escreve no ficheiro as alterações
         var files = jsonfile.readFileSync(path.resolve(__dirname, '../dbFiles.json'))
@@ -97,8 +94,14 @@ router.post('/',upload.array('myFile'),function(req,res){
         jsonfile.writeFileSync(path.resolve(__dirname, '../dbFiles.json'),files)
 
         // Faz unzip
-        
-        
+        var tmp = path.resolve(__dirname,"../public/fileStore/") + "/" + u_email + "/" + f.originalname
+        console.log("tmp = " + tmp)
+        var zip = new AdmZip(tmp);
+        var zipEntries = zip.getEntries();
+        var meta_dados = [];
+        zipEntries.forEach(function(zipEntry) {
+            meta_dados.push(zipEntry.toString());
+        });
 
         // Remove o file extension
         var folder_dest = newPath + f.originalname.split('.').slice(0, -1).join('.') + "/"

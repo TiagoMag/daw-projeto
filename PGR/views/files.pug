@@ -17,13 +17,15 @@ table.w3-table.w3-bordered
         th Description
         th Size
         th Tipo
+        th Extensão
     each f in files  
-        tr(onclick=`showImage(\"${f.name}\", \"${f.tipo}\", \"${u_email}\")`)
+        tr(onclick=`showImage(\"${f.name}\", \"${f.ext}\",\"${f.tipo}\", \"${u_email}\")`)
             td #{f.date}
             td #{f.name}
             td #{f.desc}
             td #{f.size}
             td #{f.tipo}
+            td #{f.ext}
 
 .w3-container.w3-teal
     adress Gerado por PGR:: André Morais, João Nuno Abreu, Tiago Magalhães em #{d} ----------------

@@ -1,13 +1,9 @@
-function showImage(name,type,user){
-    console.log("type = " + type)
+function showImage(name,ext,tipo,user){
     var name_without_ext = name.split('.').slice(0, -1).join('.')
-    
-    if(type == "cartaz")
-        var ext = ".jpg"
+    if(tipo == "aplicacao")
+        var ficheiro = '<p>' + name + ', ' + ext + '</p>'
     else
-        var ext = ".pdf"
-
-    var ficheiro = '<a href=/fileStore/' + user + '/' + name_without_ext + "/" + name_without_ext + ext + ' target="_blank">Ver Ficheiro</a>'
+        var ficheiro = '<a href=/fileStore/' + user + '/' + name_without_ext + "/" + name_without_ext + "." + ext + ' target="_blank">Ver Ficheiro</a>'
 
     var fileObj = `
         <div class="w3-row w3-margin">
@@ -16,7 +12,8 @@ function showImage(name,type,user){
             </div>
             <div class="w3-col s6 w3-border">
                 <p>Filename: ${name}</p>
-                <p>Tipo: ${type}</p>
+                <p>Tipo: ${tipo}</p>
+                <p>Formato: ${ext}</p>
             </div>
         </div>
     `
