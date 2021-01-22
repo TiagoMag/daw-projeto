@@ -3,6 +3,10 @@ var router = express.Router();
 var axios = require('axios')
 var User = require('../models/user')
 var jwt_decode = require('jwt-decode');
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
+var path = require('path')
+var fs = require('fs')
 
 
 /* GET home page. */
@@ -38,6 +42,7 @@ router.get('/perfilp', function(req, res) {
 });
 
 router.get('/perfilc', function(req, res) {
+
   if(req.cookies.logout == "1") {res.cookie('auth', "2", {
     expires: new Date(Date.now() + '1d'),
     secure: false, // set to true if your using https
@@ -46,20 +51,41 @@ router.get('/perfilc', function(req, res) {
   u_id = jwt_decode(req.cookies.token).id
   axios.get('http://localhost:7777/users/perfilmail/' + u_id+ "?token=" + req.cookies.token)  //get email(id)
     .then (dados => {
+
+      const testFolder = path.resolve(__dirname, '../') + "/public/profilepics/"
+      var extensao = ""
+      fs.readdirSync(testFolder).forEach(file => {
+        if(path.parse(file).name == dados.data.data.email){
+          extensao = path.parse(file).ext
+        }
+      });
+
       if(verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
       if(verifyProdutor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
-      if(verifyConsumidor(req.cookies.token) == true) res.render("perfilc", {title: 'PGR', perfil: dados.data.data})
+      if(verifyConsumidor(req.cookies.token) == true) res.render("perfilc", {title: 'PGR', perfil: dados.data.data, extensao: extensao})
     })
     .catch(err => res.render('error',{error: err}))
 });
 
-router.post('/registar', function(req, res) {
+router.post('/registar',upload.single('myFile'), function(req, res) {
   var u = new User(req.body)
   u.dataRegisto = new Date(Date.now()).toISOString()
   u.dataUltimoAcesso = new Date(Date.now()).toISOString()
-  axios.post('http://localhost:7776/users/registar',
-    u
-  )
+
+  //------------------------- Upload Profile Pic ----------------------------------
+
+  let oldPath = path.resolve(__dirname, '../') + '/' + req.file.path
+  let newPath = path.resolve(__dirname, '../') + '/public/profilepics/' + u.email + path.extname(req.file.originalname)
+
+  console.log("oldPath = " + oldPath)
+  console.log("newPath = " + newPath)
+  fs.rename(oldPath,newPath, function (err){
+    if(err) throw err
+  })
+
+  // ------------------------------------------------------------------------------
+
+  axios.post('http://localhost:7776/users/registar',u)
   .then(data => console.log("Registado"))
   .catch(err => res.render('error',{error: err}))
   res.redirect("/")
@@ -76,11 +102,12 @@ router.post('/login', function(req, res) {
         secure: false, // set to true if your using https
         httpOnly: true
       });
+      res.cookie('logout', {expires: Date.now()});
       if(verifyAdmin(dados.data.token) == true) res.redirect("/admin/edit")
       if(verifyProdutor(dados.data.token) == true) res.redirect("/perfilp")
       if(verifyConsumidor(dados.data.token) == true) res.redirect("/perfilc")
     })
-    .catch( err => {res.cookie('auth', "1", {
+    .catch( err => {res.cookie('logout', "0", {
       expires: new Date(Date.now() + '1d'),
       secure: false, // set to true if your using https
       httpOnly: true

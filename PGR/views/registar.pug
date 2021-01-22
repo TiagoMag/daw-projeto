@@ -1,10 +1,14 @@
-extends layout
-
-block content
+head
+    meta(charset='utf-8')
+    script(src='/jquery-3.5.1.min.js')
+    script(src='/imagens.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js')
+    link(rel='icon' href='/favicon.png')
+    link(rel='stylesheet' href='/w3.css')
     .w3-container.w3-teal
         header.w3-container.w3-teal
             h2 Registar
-        form.w3-container(action='/registar' method='POST')
+        form.w3-container(action='/registar' method='POST' enctype='multipart/form-data')
             label.w3-text-teal
                 p.w3-text-white Nome:
                     input.w3-input.w3-border.w3-light-grey(type='text' name='nome')
@@ -25,6 +29,9 @@ block content
                     select(id="nivel" name="nivel")
                             option(value="consumidor") Consumidor
                             option(value="produtor") Produtor
+            label.w3-text-teal
+                p.w3-text-white Foto de Perfil:
+                    input.w3-input.w3-border.w3-light-grey(type='file' name='myFile')
             br
             input.w3-btn.w3-tealw3-btn.w3-border.w3-margin-bottom.w3-left.w3-teal(type='submit' value='Registar')
             input.w3-btn.w3-border.w3-margin-bottom.w3-right.w3-teal(type='reset' value='Limpar')

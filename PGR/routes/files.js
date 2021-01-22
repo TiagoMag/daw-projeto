@@ -7,7 +7,6 @@ var upload = multer({ dest: 'uploads/' })
 var path = require('path')
 var jwt_decode = require('jwt-decode');
 var AdmZip = require('adm-zip');
-var path = require('path')
 
 
 router.get('/',function(req,res){

@@ -14,11 +14,11 @@ block content
         .w3-row
             div(class="w3-col s3")
                 div(class="containerp")
-                    img.imagep(src="images/home.png" alt="Avatar" class="imgp" style="width:100%")
+                    img.imagep(src="profilepics/" + perfil.email + extensao alt="Avatar" class="imgp" style="width:100%")
                     div(class="middlep")
                         div(class="textp")
                             a(href="/upload") Nova Foto
-           div(class="w3-col s9" )
+            div(class="w3-col s9" )
                 ul 
                     hr
                     li Nome: #{perfil.nome}

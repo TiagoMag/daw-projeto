@@ -1,29 +1,47 @@
 [
     {
-        "nome":"João Nuno Abreu",
-        "email":"joao.nuno.abreu@gmail.com",
-        "filiacao":"estudante",
-        "nivel":"admin",
-        "dataRegisto":"21/12/2020",
-        "dataUltimoAcesso":"21/12/2020",
-        "password":"123"
+        "nome" : "admin",
+        "email" : "admin",
+        "password" : "admin",
+        "filiacao" : "professor",
+        "nivel" : "admin",
+        "dataRegisto" : "2021-01-17T17:10:33.845Z",
+        "dataUltimoAcesso" : "2021-01-17T17:10:33.845Z"
     },
     {
-        "nome":"Tiago Magalhães",
-        "email":"tiago.magalhaes@gmail.com",
-        "filiacao":"estudante",
-        "nivel":"produtor",
-        "dataRegisto":"21/12/2020",
-        "dataUltimoAcesso":"21/12/2020",
-        "password":"123"
+        "nome" : "andre",
+        "email" : "andre@gmail.com",
+        "password" : "123",
+        "filiacao" : "estudante",
+        "nivel" : "consumidor",
+        "dataRegisto" : "2021-01-17T17:14:36.486Z",
+        "dataUltimoAcesso" : "2021-01-17T17:14:36.486Z"
     },
     {
-        "nome":"André Morais",
-        "email":"andre.morais@gmail.com",
-        "filiacao":"estudante",
-        "nivel":"consumidor",
-        "dataRegisto":"21/12/2020",
-        "dataUltimoAcesso":"21/12/2020",
-        "password":"123"
+        "nome" : "Duarte",
+        "email" : "duartao@gmail.com",
+        "password" : "123",
+        "filiacao" : "estudante",
+        "nivel" : "consumidor",
+        "dataRegisto" : "2021-01-17T17:15:23.719Z",
+        "dataUltimoAcesso" : "2021-01-17T17:15:23.719Z"
+    },
+    {
+        "nome" : "EltigasPT",
+        "email" : "tiago@hotmail.com",
+        "password" : "123",
+        "filiacao" : "professor",
+        "nivel" : "produtor",
+        "dataRegisto" : "2021-01-17T17:15:41.104Z",
+        "dataUltimoAcesso" : "2021-01-17T17:15:41.104Z"
+    },
+    {
+        "nome" : "Joao",
+        "email" : "jony@gmail.com",
+        "password" : "123",
+        "filiacao" : "estudante",
+        "nivel" : "produtor",
+        "dataRegisto" : "2021-01-17T17:16:09.642Z",
+        "dataUltimoAcesso" : "2021-01-17T17:16:09.642Z"
     }
 ]
