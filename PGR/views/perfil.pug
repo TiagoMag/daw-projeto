@@ -4,10 +4,11 @@ block content
     .w3-container.w3.bar.w3-teal
         a(href="/logout" class="w3-bar-item w3-button w3-right")
             img(src="images/logout.png" style='width:25px; height:25px;') 
-        a(href="/perfilp" class="w3-bar-item w3-button w3-right")
+        a(href="/perfil" class="w3-bar-item w3-button w3-right")
             img(src="images/utilizador.png" style='width:25px; height:25px;') 
-        a(href="" class="w3-bar-item w3-button w3-right")
-            img(src="images/upload.png" style='width:25px; height:25px;') 
+        if(isProd == 1)    
+            a(href="" class="w3-bar-item w3-button w3-right")
+                img(src="images/upload.png" style='width:25px; height:25px;') 
         a(href="" class="w3-bar-item w3-button w3-right")
             img(src="images/search.png" style='width:25px; height:25px;') 
         a(href="" class="w3-bar-item w3-button w3-right")
@@ -16,7 +17,7 @@ block content
         .w3-row
             div(class="w3-col s3")
                 div(class="containerp")
-                    img.imagep(src="images/home.png" alt="Avatar" class="imgp" style="width:100%")
+                    img.imagep(src="profilepics/" + perfil.email + extensao alt="Avatar" class="imgp" style="width:100%")
                     div(class="middlep")
                         div(class="textp")
                             a(href="/upload") Nova Foto
@@ -38,6 +39,7 @@ block content
                     li Nº de publicações:
                     br
                     hr
+        if (isProd==1)            
             .w3-row
                 .w3-container.w3-margin
                     table.w3-table-all#myTable
@@ -55,7 +57,7 @@ block content
         $(document).ready( function () {
             $('#myTable').DataTable();
             } );
-
+    
     .w3-container.w3-teal
         footer.w3-container
             p

@@ -9,8 +9,6 @@ var userSchema = new mongoose.Schema({
     dataUltimoAcesso: String,
     password: String
 });
-
-
   
 module.exports = mongoose.model('user', userSchema)
 

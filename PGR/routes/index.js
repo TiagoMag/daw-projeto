@@ -8,7 +8,6 @@ var upload = multer({ dest: 'uploads/' })
 var path = require('path')
 var fs = require('fs')
 
-
 /* GET home page. */
 router.get('/', function(req, res) {
   if (req.cookies.auth == "2") { res.cookie('auth', {expires: Date.now()}); res.render('index', {err: "2", title: 'PGR' });} 
@@ -16,42 +15,29 @@ router.get('/', function(req, res) {
   else res.render('index', {err: "0", title: 'PGR' });
 });
 
+/* Página de acesso não autorizado */
 router.get('/naoaut', function(req, res) {
   res.render('naoaut', { title: 'PGR' });
 });
 
+/* Form de registo */
 router.get('/registar', function(req, res) {
   res.render('registar', { title: 'PGR' });
 });
 
-router.get('/perfilp', function(req, res) {
-  console.log(req.cookies)
-  if(req.cookies.logout == "1") {res.cookie('auth', "2", {
-    expires: new Date(Date.now() + '1d'),
-    secure: false, // set to true if your using https
-    httpOnly: true
-  }); res.redirect("/")}
-  u_id = jwt_decode(req.cookies.token).id
-  axios.get('http://localhost:7777/users/perfilmail/' + u_id+ "?token=" + req.cookies.token)  //get email(id)
+/* Perfil de consumidor e produtor */
+router.get('/perfil', function(req, res) {
+  if(req.cookies.logout == "1") { // verifica se sessão deu logout
+    res.cookie('auth', "2", { 
+      expires: new Date(Date.now() + '1d'),
+      secure: false, // set to true if your using https
+      httpOnly: true
+     }); 
+     res.redirect("/")
+  }
+  u_id = jwt_decode(req.cookies.token).id // retira email da cookie
+  axios.get('http://localhost:7777/users/perfil?email=' + u_id+ "&token=" + req.cookies.token)  
     .then (dados => {
-      if(verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
-      if(verifyProdutor(req.cookies.token) == true) res.render("perfilp", { title: 'PGR', perfil: dados.data.data })
-      if(verifyConsumidor(req.cookies.token) == true) res.render("naoaut", {title: 'PGR' })
-    })
-    .catch(err => res.render('error',{error: err}))
-});
-
-router.get('/perfilc', function(req, res) {
-
-  if(req.cookies.logout == "1") {res.cookie('auth', "2", {
-    expires: new Date(Date.now() + '1d'),
-    secure: false, // set to true if your using https
-    httpOnly: true
-  }); res.redirect("/")}
-  u_id = jwt_decode(req.cookies.token).id
-  axios.get('http://localhost:7777/users/perfilmail/' + u_id+ "?token=" + req.cookies.token)  //get email(id)
-    .then (dados => {
-
       const testFolder = path.resolve(__dirname, '../') + "/public/profilepics/"
       var extensao = ""
       fs.readdirSync(testFolder).forEach(file => {
@@ -59,14 +45,15 @@ router.get('/perfilc', function(req, res) {
           extensao = path.parse(file).ext
         }
       });
-
       if(verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
-      if(verifyProdutor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
-      if(verifyConsumidor(req.cookies.token) == true) res.render("perfilc", {title: 'PGR', perfil: dados.data.data, extensao: extensao})
+      var consumidor = verifyConsumidor(req.cookies.token)
+      var produtor = verifyProdutor(req.cookies.token)
+      res.render("perfil", {title: 'PGR', perfil: dados.data.data, extensao: extensao , isProd: produtor, isCons: consumidor})
     })
     .catch(err => res.render('error',{error: err}))
 });
 
+/* POST utilizador */
 router.post('/registar',upload.single('myFile'), function(req, res) {
   var u = new User(req.body)
   u.dataRegisto = new Date(Date.now()).toISOString()
@@ -85,12 +72,14 @@ router.post('/registar',upload.single('myFile'), function(req, res) {
 
   // ------------------------------------------------------------------------------
 
+  // regista utilizador
   axios.post('http://localhost:7776/users/registar',u)
   .then(data => console.log("Registado"))
   .catch(err => res.render('error',{error: err}))
   res.redirect("/")
 });
 
+/* POST login */
 router.post('/login', function(req, res) {
   var email = req.body.email
   var password = req.body.password
@@ -104,8 +93,8 @@ router.post('/login', function(req, res) {
       });
       res.cookie('logout', {expires: Date.now()});
       if(verifyAdmin(dados.data.token) == true) res.redirect("/admin/edit")
-      if(verifyProdutor(dados.data.token) == true) res.redirect("/perfilp")
-      if(verifyConsumidor(dados.data.token) == true) res.redirect("/perfilc")
+      if(verifyProdutor(dados.data.token) || verifyConsumidor(dados.data.token)) 
+        res.redirect("/perfil")
     })
     .catch( err => {res.cookie('logout', "0", {
       expires: new Date(Date.now() + '1d'),
@@ -114,6 +103,7 @@ router.post('/login', function(req, res) {
     }); res.redirect("/")})
 });
 
+/* Página de admin ... */
 router.get('/admin/edit',function(req,res){
   if(verifyProdutor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
   if(verifyConsumidor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
@@ -123,6 +113,7 @@ router.get('/admin/edit',function(req,res){
     .catch(err => res.render('error', {error: err}))}
   })
 
+/* Página de admin ... */
 router.get('/admin/:id',function(req,res){
   id = req.params.id
   if(verifyProdutor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
@@ -133,32 +124,35 @@ router.get('/admin/:id',function(req,res){
     .catch(err => res.render('error', {error: err}))}
   })
 
-
-  router.get("/logout", function(req,res){
-    res.cookie('logout', "1", {
-      expires: new Date(Date.now() + '1d'),
-      secure: false, // set to true if your using https
-      httpOnly: true
-    })
-    res.cookie('token', {expires: Date.now()});
-    res.redirect("/")
+/* Logout */
+router.get("/logout", function(req,res){
+  res.cookie('logout', "1", {
+    expires: new Date(Date.now() + '1d'),
+    secure: false, // set to true if your using https
+    httpOnly: true
   })
+  res.cookie('token', {expires: Date.now()});
+  res.redirect("/")
+})
   
+// --------------------------------------------Funções auxiliares -------------------------------------------
 
+/* Verifica se nível de utilizador é admin */
 function verifyAdmin(token){
   u_level = jwt_decode(token).nivel
   return u_level == 'admin' ? true : false
 }
 
+/* Verifica se nível de utilizador é produtor */
 function verifyProdutor(token){
   u_level = jwt_decode(token).nivel
   return u_level == 'produtor' ? true : false
 }
 
+/* Verifica se nível de utilizador é consumidor */
 function verifyConsumidor(token){
   u_level = jwt_decode(token).nivel
   return u_level == 'consumidor' ? true : false
 }
 
-  
 module.exports = router;

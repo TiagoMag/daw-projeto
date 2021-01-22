@@ -1,7 +1,7 @@
 // User controller
 var User = require('../models/user')
 
-// Returns user list
+/* Retorna a lista de utilizadores */
 module.exports.list = () => {
     return User
         .find()
@@ -9,23 +9,27 @@ module.exports.list = () => {
         .exec()
 }
 
-module.exports.lookup = id => {
+/* Procura pelo email um utilizador */
+module.exports.lookupEm = id => {
     return User
         .findOne({email: id})
         .exec()
 }
 
-module.exports.lookupid = id => {
+/* Procura pelo id um utilizador */
+module.exports.lookupId = id => {
     return User
         .findOne({_id: id})
         .exec()
 }
 
-module.exports.inserir = u => {
+/* Insere um utilizador na bd */
+module.exports.insert = u => {
     var novo = new User(u)
     return novo.save()
 }
 
+/* Remove um utilizador da bd */
 module.exports.remove = id => {
     return User
         .deleteOne({email: id})

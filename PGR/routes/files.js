@@ -8,9 +8,8 @@ var path = require('path')
 var jwt_decode = require('jwt-decode');
 var AdmZip = require('adm-zip');
 
-
+/* GET files */
 router.get('/',function(req,res){
-
     var token = req.cookies.token
     u_email = jwt_decode(token).id
     var d = new Date().toISOString().substring(0,16)
@@ -18,17 +17,20 @@ router.get('/',function(req,res){
     res.render("files",{files: files, d: d, u_email: u_email})
 })
 
+/* GET upload */
 router.get('/upload',function(req,res){
     var d = new Date().toISOString().substring(0,16)
     res.render("fileForm",{d: d})
 })
   
+/* Download file */
 router.get('/download/:fname',function(req,res){
     var token = req.cookies.token
     u_email = jwt_decode(token).id
     res.download(path.resolve(__dirname, '../') + "/public/fileStore/" + u_email + '/' + req.params.fname)
 })
 
+/* POST file */
 router.post('/',upload.array('myFile'),function(req,res){
 
     req.files.forEach((f,idx) => {
