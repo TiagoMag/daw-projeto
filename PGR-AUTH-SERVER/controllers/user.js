@@ -11,3 +11,10 @@ module.exports.inserir = u => {
     return novo.save()
 }
 
+module.exports.atualizar = id => {
+    data = new Date(Date.now()).toISOString()
+    return User
+        .updateOne({email: id},  {$set: {dataUltimoAcesso: data }} )
+        .exec()
+}
+

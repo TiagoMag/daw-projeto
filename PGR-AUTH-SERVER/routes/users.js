@@ -24,6 +24,7 @@ router.post('/login', (req, res, next) => {
       const token = jwt.sign({ id, nivel }, process.env.SECRET, {
         expiresIn: 300 // expires in 5min
       });
+      User.atualizar(email)
       return res.json({ auth: true, token: token });
     }
     else

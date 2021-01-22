@@ -20,7 +20,6 @@ router.get('/registar', function(req, res) {
   res.render('registar', { title: 'PGR' });
 });
 
-
 router.get('/perfilp', function(req, res) {
   console.log(req.cookies)
   if(req.cookies.logout == "1") {res.cookie('auth', "2", {
@@ -28,9 +27,14 @@ router.get('/perfilp', function(req, res) {
     secure: false, // set to true if your using https
     httpOnly: true
   }); res.redirect("/")}
-  if(verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
-  if(verifyProdutor(req.cookies.token) == true) res.render("perfilp", { title: 'PGR' })
-  if(verifyConsumidor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
+  u_id = jwt_decode(req.cookies.token).id
+  axios.get('http://localhost:7777/users/perfilmail/' + u_id+ "?token=" + req.cookies.token)  //get email(id)
+    .then (dados => {
+      if(verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
+      if(verifyProdutor(req.cookies.token) == true) res.render("perfilp", { title: 'PGR', perfil: dados.data.data })
+      if(verifyConsumidor(req.cookies.token) == true) res.render("naoaut", {title: 'PGR' })
+    })
+    .catch(err => res.render('error',{error: err}))
 });
 
 router.get('/perfilc', function(req, res) {
@@ -39,9 +43,14 @@ router.get('/perfilc', function(req, res) {
     secure: false, // set to true if your using https
     httpOnly: true
   }); res.redirect("/")}
-  if(verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
-  if(verifyProdutor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
-  if(verifyConsumidor(req.cookies.token) == true) res.render("perfilc", { title: 'PGR' })
+  u_id = jwt_decode(req.cookies.token).id
+  axios.get('http://localhost:7777/users/perfilmail/' + u_id+ "?token=" + req.cookies.token)  //get email(id)
+    .then (dados => {
+      if(verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
+      if(verifyProdutor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
+      if(verifyConsumidor(req.cookies.token) == true) res.render("perfilc", {title: 'PGR', perfil: dados.data.data})
+    })
+    .catch(err => res.render('error',{error: err}))
 });
 
 router.post('/registar', function(req, res) {
