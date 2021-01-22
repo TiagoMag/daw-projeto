@@ -51,6 +51,22 @@ router.post('/',upload.array('myFile'),function(req,res){
             if(err) throw err
         })
 
+        var tmp = filePath.replace(/\//g, "\\")
+        console.log("tmp = " + tmp)
+        var zip = new AdmZip(tmp)
+        var zipEntries = zip.getEntries();
+        var meta_dados = [];
+        zipEntries.forEach(function(zipEntry) {
+            meta_dados.push(zipEntry);
+            console.log("zipEntry.toString() = " + zipEntry.toString())
+        });
+
+        if(req.body.tipo != "Aplicação"){
+            var ext = path.extname(meta_dados[0]["name"])
+        }
+        else
+            var ext = ".zip"
+
         // Escreve no ficheiro as alterações
         var files = jsonfile.readFileSync(path.resolve(__dirname, '../dbFiles.json'))
         var d = new Date().toISOString().substring(0,16)
@@ -63,7 +79,8 @@ router.post('/',upload.array('myFile'),function(req,res){
                 mimetype: f.mimetype,
                 size: f.size,
                 desc: req.body.desc[idx],
-                tipo: req.body.tipo[idx] 
+                tipo: req.body.tipo[idx],
+                ext: ext
             })
         }
         else if (n == 1){
@@ -73,18 +90,15 @@ router.post('/',upload.array('myFile'),function(req,res){
                 mimetype: f.mimetype,
                 size: f.size,
                 desc: req.body.desc,
-                tipo: req.body.tipo
+                tipo: req.body.tipo,
+                ext: ext
             })
         }
         jsonfile.writeFileSync(path.resolve(__dirname, '../dbFiles.json'),files)
 
         // Faz unzip
-        var zip = new AdmZip(filePath);
-        var zipEntries = zip.getEntries();
-        var meta_dados = [];
-        zipEntries.forEach(function(zipEntry) {
-            meta_dados.push(zipEntry.toString());
-        });
+        
+        
 
         // Remove o file extension
         var folder_dest = newPath + f.originalname.split('.').slice(0, -1).join('.') + "/"

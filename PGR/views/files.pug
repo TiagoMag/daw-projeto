@@ -16,7 +16,6 @@ table.w3-table.w3-bordered
         th File
         th Description
         th Size
-        th Mimetype
         th Tipo
     each f in files  
         tr(onclick=`showImage(\"${f.name}\", \"${f.tipo}\", \"${u_email}\")`)
@@ -24,7 +23,6 @@ table.w3-table.w3-bordered
             td #{f.name}
             td #{f.desc}
             td #{f.size}
-            td #{f.mimetype}
             td #{f.tipo}
 
 .w3-container.w3-teal
