@@ -50,3 +50,11 @@ module.exports.insert = r => {
     var novo = new Recurso(r)
     return novo.save()
 }
+
+// Devolve uma lista de tipo de recursos e sua contagem.
+module.exports.tipos = () =>{
+    return Recurso.aggregate( [
+        { $group: { _id: "$tipo" ,  count: { $sum: 1 } } },
+        { $project: { _id: 1, count: 1 } }
+     ] )
+}
