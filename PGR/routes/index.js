@@ -10,8 +10,8 @@ var fs = require('fs')
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  if (req.cookies.auth == "2") { res.cookie('auth', {expires: Date.now()}); res.render('index', {err: "2", title: 'PGR' });} 
   if (req.cookies.auth == "1") { res.cookie('auth', {expires: Date.now()}); res.render('index', {err: "1", title: 'PGR' });} 
+  else if (req.cookies.auth == "2") { res.cookie('auth', {expires: Date.now()}); res.render('index', {err: "2", title: 'PGR' });} 
   else res.render('index', {err: "0", title: 'PGR' });
 });
 

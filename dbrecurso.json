@@ -1,0 +1,50 @@
+[   
+    {
+        "tipo" :  "Teste", 
+        "titulo": "Teste de SDB",
+        "descricao": "1º Teste de SDB",
+        "subtitulo": "Teste sobre vagrant", 
+        "dataCriacao": "2021-01-17T17:10:33.845Z", 
+        "dataRegisto" : "2021-01-17T17:10:33.845Z",
+        "visibilidade": "Publico",
+        "hashtags": ["SDB","Informatica"],
+        "rating": "5",
+        "autor": "jony@gmail.com"
+    },
+    {
+        "tipo" :  "Teste", 
+        "titulo": "Teste de Cripto",
+        "descricao": "2º Teste de Cripto",
+        "subtitulo": "Teste sobre OTP", 
+        "dataCriacao": "2021-02-17T17:10:33.845Z", 
+        "dataRegisto" : "2021-02-17T17:10:33.845Z",
+        "visibilidade": "Publico",
+        "hashtags": ["Cripto","Informatica"],
+        "rating": "5",
+        "autor": "jony@gmail.com"
+    },
+    {
+        "tipo" :  "Teste", 
+        "titulo": "Teste de Segurança",
+        "descricao": "2º Teste de Segurança",
+        "subtitulo": "Teste sobre Pentesting", 
+        "dataCriacao": "2021-02-15T17:10:33.845Z", 
+        "dataRegisto" : "2021-02-15T17:10:33.845Z",
+        "visibilidade": "Publico",
+        "hashtags": ["Seguranca","Informatica"],
+        "rating": "5",
+        "autor": "jony@gmail.com"
+    },
+    {
+        "tipo" :  "Teste", 
+        "titulo": "Teste de BD",
+        "descricao": "2º Teste de Segurança",
+        "subtitulo": "Teste sobre Pentesting", 
+        "dataCriacao": "2021-02-15T17:10:33.845Z", 
+        "dataRegisto" : "2021-02-15T17:10:33.845Z",
+        "visibilidade": "Privado",
+        "hashtags": ["Seguranca","Informatica"],
+        "rating": "5",
+        "autor": "jony@gmail.com"
+    }
+]
