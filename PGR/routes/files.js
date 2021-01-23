@@ -24,10 +24,31 @@ router.get('/upload',function(req,res){
 })
   
 /* Download file */
-router.get('/download/:fname',function(req,res){
+router.get('/download/:fname', function(req,res){
     var token = req.cookies.token
     u_email = jwt_decode(token).id
-    res.download(path.resolve(__dirname, '../') + "/public/fileStore/" + u_email + '/' + req.params.fname)
+
+    // ---------------------- Zippa de novo ------------------------
+
+    var zip = new AdmZip();
+    var name_without_ext = req.params.fname.split('.').slice(0, -1).join('.')
+    var folder = path.resolve(__dirname, '../') + "/public/fileStore/" + u_email + '/' + name_without_ext
+    fs.readdirSync(folder).forEach(file => {
+        zip.addLocalFile(folder + "/" + path.parse(file).base);
+    });
+
+    let newZip = path.resolve(__dirname, '../') + '/public/fileStore/' + u_email + '/' + req.params.fname
+
+    zip.writeZip(newZip);
+
+    // -------------------------------------------------------------
+
+    res.download(newZip, function(err) {
+        if (err) console.log(err);
+        fs.unlink(newZip, function(){
+            console.log("File was deleted")
+        });
+    });
 })
 
 /* POST file */
@@ -56,10 +77,7 @@ router.post('/',upload.array('myFile'),function(req,res){
         else
             var ext = "zip"
 
-        console.log("ext = " + ext)
         let filePath = newPath + f.originalname
-        console.log("oldPath = " + oldPath)
-        console.log("filePath = " + filePath)
 
         fs.rename(oldPath,filePath, function (err){
             if(err) throw err
@@ -120,4 +138,11 @@ router.post('/',upload.array('myFile'),function(req,res){
     res.redirect('/files')
 })
   
+function deleteZip(path){
+    fs.unlink(path, function(err) {
+        if (err) throw err
+        else console.log("Successfully deleted the zip: " + path)
+    })
+}
+
 module.exports = router;

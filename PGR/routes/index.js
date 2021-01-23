@@ -39,12 +39,18 @@ router.get('/perfil', function(req, res) {
   axios.get('http://localhost:7777/users/perfil?email=' + u_id+ "&token=" + req.cookies.token)  
     .then (dados => {
       const testFolder = path.resolve(__dirname, '../') + "/public/profilepics/"
+
+      // -------------------------- Adiciona extensão --------------------------
+
       var extensao = ""
       fs.readdirSync(testFolder).forEach(file => {
         if(path.parse(file).name == dados.data.data.email){
           extensao = path.parse(file).ext
         }
       });
+
+      // -----------------------------------------------------------------------
+
       if(verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
       var consumidor = verifyConsumidor(req.cookies.token)
       var produtor = verifyProdutor(req.cookies.token)
@@ -64,8 +70,6 @@ router.post('/registar',upload.single('myFile'), function(req, res) {
   let oldPath = path.resolve(__dirname, '../') + '/' + req.file.path
   let newPath = path.resolve(__dirname, '../') + '/public/profilepics/' + u.email + path.extname(req.file.originalname)
 
-  console.log("oldPath = " + oldPath)
-  console.log("newPath = " + newPath)
   fs.rename(oldPath,newPath, function (err){
     if(err) throw err
   })
