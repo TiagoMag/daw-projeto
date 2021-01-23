@@ -1,32 +1,29 @@
-head
-    title File List
-    meta(charset='utf-8')
-    link(rel='icon' href='/favicon.png')
-    link(rel='stylesheet' href='/w3.css')
-    script(src='/jquery-3.5.1.min.js')
-    script(src='/imagens.js')
+extends layout
+block content
+    script(src='/javascripts/jquery-3.5.1.min.js')
+    script(src='/javascripts/imagens.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js')
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css')
-#display.w3-card-4.modal
-.w3-container.w3-teal
-    h2 File List
-table.w3-table.w3-bordered
-    tr
-        th Date
-        th File
-        th Description
-        th Size
-        th Tipo
-        th Extensão
-    each f in files  
-        tr(onclick=`showImage(\"${f.name}\", \"${f.ext}\",\"${f.tipo}\", \"${u_email}\")`)
-            td #{f.date}
-            td #{f.name}
-            td #{f.desc}
-            td #{f.size}
-            td #{f.tipo}
-            td #{f.ext}
+    #display.w3-card-4.modal
+    .w3-container.w3-teal
+        h2 File List
+    table.w3-table.w3-bordered
+        tr
+            th Date
+            th File
+            th Description
+            th Size
+            th Tipo
+            th Extensão
+        each f in files  
+            tr(onclick=`showImage(\"${f.name}\", \"${f.ext}\",\"${f.tipo}\", \"${u_email}\")`)
+                td #{f.date}
+                td #{f.name}
+                td #{f.desc}
+                td #{f.size}
+                td #{f.tipo}
+                td #{f.ext}
 
-.w3-container.w3-teal
-    adress Gerado por PGR:: André Morais, João Nuno Abreu, Tiago Magalhães em #{d} ----------------
+    .w3-container.w3-teal
+        adress Gerado por PGR:: André Morais, João Nuno Abreu, Tiago Magalhães em #{d} ----------------
             

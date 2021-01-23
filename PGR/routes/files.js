@@ -14,13 +14,13 @@ router.get('/',function(req,res){
     u_email = jwt_decode(token).id
     var d = new Date().toISOString().substring(0,16)
     var files = jsonfile.readFileSync(path.resolve(__dirname, '../dbFiles.json'))
-    res.render("files",{files: files, d: d, u_email: u_email})
+    res.render("files",{title:"File List",files: files, d: d, u_email: u_email})
 })
 
 /* GET upload */
 router.get('/upload',function(req,res){
     var d = new Date().toISOString().substring(0,16)
-    res.render("fileForm",{d: d})
+    res.render("fileForm",{title:"File Upload",d: d})
 })
   
 /* Download file */
