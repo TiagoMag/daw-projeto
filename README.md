@@ -2,7 +2,16 @@
 
 ## Sobre
 ### Plataforma de Gestão e Disponibilização deRecursos Educativos
-***Plataforma que disponibiliza recursos educativos de vários tipos: livros, artigos, aplicações, trabalhos de alunos, monografias, relatórios***
+Plataforma que disponibiliza recursos educativos de vários tipos: livros, artigos, aplicações, trabalhos de alunos, monografias, relatórios
+
+# Requisitos
+
+**nodejs** - 3.5-3.9 </br>
+**npm** - Installs package dependencies</br>
+**mongodb** - Database</br>
+
+# Instalação
+
 
 ## Comandos úteis:
 
