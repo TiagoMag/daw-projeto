@@ -1,4 +1,8 @@
-# daw-projeto
+# Projeto DAW
+
+## Sobre
+### Plataforma de Gestão e Disponibilização deRecursos Educativos
+*** Plataforma que disponibiliza recursos educativos de vários tipos: livros, artigos, aplicações, trabalhos de alunos, monografias, relatórios ***
 
 ## Comandos úteis:
 
@@ -22,11 +26,9 @@ db.users.deleteOne({"_id":ObjectId("5fe0fb1e752091173a8732e8")})
 ```
 
 ## To Do list:
+- [ ] Feed
+- [ ] 
 
-```bash
-Interface registo
-API login
-Interface login
-API auth
-```
+
+
 
