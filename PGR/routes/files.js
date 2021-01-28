@@ -7,6 +7,8 @@ var upload = multer({ dest: 'uploads/' })
 var path = require('path')
 var jwt_decode = require('jwt-decode');
 var AdmZip = require('adm-zip');
+var axios = require('axios')
+const Recurso = require('../models/recurso');
 
 /* GET files */
 router.get('/',function(req,res){
@@ -56,6 +58,7 @@ router.post('/',upload.array('myFile'),function(req,res){
 
     req.files.forEach((f,idx) => {
         console.log("f = " + JSON.stringify(f))
+        console.log("req = " + JSON.stringify(req.body))
         var token = req.cookies.token
         u_email = jwt_decode(token).id
         let oldPath = path.resolve(__dirname, '../') + '/' + f.path
@@ -82,7 +85,7 @@ router.post('/',upload.array('myFile'),function(req,res){
         fs.rename(oldPath,filePath, function (err){
             if(err) throw err
         })
-
+        var r = new Recurso()
         // Escreve no ficheiro as alterações
         var files = jsonfile.readFileSync(path.resolve(__dirname, '../dbFiles.json'))
         var d = new Date().toISOString().substring(0,16)
@@ -98,6 +101,14 @@ router.post('/',upload.array('myFile'),function(req,res){
                 tipo: req.body.tipo[idx],
                 ext: ext
             })
+            r.tipo = req.body.tipo[idx], // Relatorio,tese,exame,artigo,aplicacao,slides
+            r.titulo = req.body.titulo[idx]
+            r.descricao = req.body.desc[idx]
+            r.subtitulo = req.body.subtitulo[idx] // Opcional 
+            r.dataCriacao = req.body.dataCriacao[idx] 
+            r.visibilidade = req.body.visibilidade[idx]
+            r.hashtags = req.body.hashtags[idx]
+            
         }
         else if (n == 1){
             files.push({
@@ -109,8 +120,24 @@ router.post('/',upload.array('myFile'),function(req,res){
                 tipo: req.body.tipo,
                 ext: ext
             })
+            r.tipo = req.body.tipo, // Relatorio,tese,exame,artigo,aplicacao,slides
+            r.titulo = req.body.titulo
+            r.descricao = req.body.desc
+            r.subtitulo = req.body.subtitulo // Opcional 
+            r.dataCriacao = req.body.dataCriacao 
+            r.visibilidade = req.body.visibilidade
+            r.hashtags = req.body.hashtags
+            
         }
+
         jsonfile.writeFileSync(path.resolve(__dirname, '../dbFiles.json'),files)
+
+        r.rating = 0
+        r.autor = u_email
+
+        axios.post('http://localhost:7777/recurso?token='+token,r)
+        .then(data => console.log("Registado"))
+        .catch(err => console.log("Erro:"+err))
 
         // Faz unzip
         var tmp = path.resolve(__dirname,"../public/fileStore/") + "/" + u_email + "/" + f.originalname
