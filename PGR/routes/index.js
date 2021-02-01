@@ -72,7 +72,7 @@ router.post('/registar',upload.single('myFile'), function(req, res) {
   u.dataRegisto = new Date(Date.now()).toISOString()
   u.dataUltimoAcesso = new Date(Date.now()).toISOString()
 
-  if(req.file.path){
+  if(req.file){
 
     //------------------------- Upload Profile Pic ----------------------------------
 
