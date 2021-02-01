@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title= title
+    meta(charset='utf-8')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css")
+    link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/v4-shims.css")
+    
+  body
+    .w3-container.w3.bar.w3-teal
+        a(href="/logout" class="w3-bar-item w3-button w3-right")
+            img(src="/images/logout.png" style='width:25px; height:25px;') 
+        a(href="/perfil" class="w3-bar-item w3-button w3-right")
+            img(src="/images/utilizador.png" style='width:25px; height:25px;')  
+        a(href="/files/upload" class="w3-bar-item w3-button w3-right")
+            img(src="/images/upload.png" style='width:25px; height:25px;') 
+        a(href="/recursos" class="w3-bar-item w3-button w3-right")
+            img(src="/images/search.png" style='width:25px; height:25px;') 
+        a(href="" class="w3-bar-item w3-button w3-right")
+            img(src="/images/home.png" style='width:25px; height:25px;') 
+    block content

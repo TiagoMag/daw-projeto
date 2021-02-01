@@ -1,62 +1,49 @@
-extends layout
-
+extends header
 block content
-    .w3-container.w3.bar.w3-teal
-        a(href="/logout" class="w3-bar-item w3-button w3-right")
-            img(src="images/logout.png" style='width:25px; height:25px;') 
-        a(href="/perfil" class="w3-bar-item w3-button w3-right")
-            img(src="images/utilizador.png" style='width:25px; height:25px;') 
-        if(isProd == 1)    
-            a(href="" class="w3-bar-item w3-button w3-right")
-                img(src="images/upload.png" style='width:25px; height:25px;') 
-        a(href="/recursos" class="w3-bar-item w3-button w3-right")
-            img(src="images/search.png" style='width:25px; height:25px;') 
-        a(href="" class="w3-bar-item w3-button w3-right")
-            img(src="images/home.png" style='width:25px; height:25px;') 
-    body
+
+    .w3-row
+        div(class="w3-col s3")
+            div(class="containerp")
+                if( temFoto == true )
+                    img.imagep(src="profilepics/" + perfil.email + extensao alt="Avatar" class="imgp" style="width:100%")
+                else
+                    img.imagep(src="profilepics/default.png" alt="Avatar" class="imgp" style="width:100%")
+                div(class="middlep")
+                    div(class="textp")
+                        a(href="/upload") Nova Foto
+        div(class="w3-col s9" )
+            ul 
+                hr
+                li Nome: #{perfil.nome}
+                br
+                br
+                li Email: #{perfil.email}
+                br
+                br
+                li Nível: #{perfil.nivel}
+                br
+                br
+                li Filiação: #{perfil.filiacao}
+                br
+                br
+                li Nº de publicações:
+                br
+                hr
+    if (isProd==1)            
         .w3-row
-            div(class="w3-col s3")
-                div(class="containerp")
-                    if( temFoto == true )
-                        img.imagep(src="profilepics/" + perfil.email + extensao alt="Avatar" class="imgp" style="width:100%")
-                    else
-                        img.imagep(src="profilepics/default.png" alt="Avatar" class="imgp" style="width:100%")
-                    div(class="middlep")
-                        div(class="textp")
-                            a(href="/upload") Nova Foto
-            div(class="w3-col s9" )
-                ul 
-                    hr
-                    li Nome: #{perfil.nome}
-                    br
-                    br
-                    li Email: #{perfil.email}
-                    br
-                    br
-                    li Nível: #{perfil.nivel}
-                    br
-                    br
-                    li Filiação: #{perfil.filiacao}
-                    br
-                    br
-                    li Nº de publicações:
-                    br
-                    hr
-        if (isProd==1)            
-            .w3-row
-                .w3-container.w3-margin
-                    table.w3-table-all#myTable
-                        thead
-                            tr
-                                th Tipo
-                                th titulo
-                                th Descrição
-                                th Subtitulo
-                                th Data de Criação
-                                th Data de Registo
-                                th Hashtags
-                                th autor
-                        tbody
+            .w3-container.w3-margin
+                table.w3-table-all#myTable
+                    thead
+                        tr
+                            th Tipo
+                            th titulo
+                            th Descrição
+                            th Subtitulo
+                            th Data de Criação
+                            th Data de Registo
+                            th Hashtags
+                            th autor
+                    tbody
     script(src='https://code.jquery.com/jquery-3.5.1.js')
     link(rel='stylesheet', href='https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css')
     script(src='https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js')

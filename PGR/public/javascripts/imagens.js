@@ -29,34 +29,60 @@ function addFile(){
     <hr>
 
     <div class="w3-row w3-margin-bottom">
-        <div class="w3-col s3">
-           <label class="w3-text-teal">Description</label>
-        </div>
-        <div class="w3-col s9 w3-border">
-           <input class="w3-input w3-border w3-light-grey" type="text" name="desc">
-        </div>
+       <div class="w3-col s3"><label class="w3-text-teal">Descrição</label></div>
+       <div class="w3-col s9 w3-border"><input class="w3-input w3-border w3-light-grey" type="text" name="desc" /></div>
     </div>
     <div class="w3-row w3-margin-bottom">
-        <div class="w3-col s3">
-           <label class="w3-text-teal">Select File</label>
-        </div>
-        <div class="w3-col s9 w3-border">
-           <input class="w3-input w3-border w3-light-grey" type="file" name="myFile">
-        </div>
+       <div class="w3-col s3"><label class="w3-text-teal">Título</label></div>
+       <div class="w3-col s9 w3-border"><input class="w3-input w3-border w3-light-grey" type="text" name="titulo" /></div>
     </div>
     <div class="w3-row w3-margin-bottom">
-    <div class="w3-col s3"><label class="w3-text-teal">File Type</label></div>
-    <div class="w3-col s9 w3-border"><select id="tipo" name="tipo">
-            <option value="relatorio">Relatório</option>
-            <option value="tese">Tese</option>
-            <option value="artigo">Artigo</option>
-            <option value="aplicacao">Aplicação</option>
-            <option value="slides">Slides</option>
-            <option value="teste">Teste</option>
-            <option value="problema">Problema Resolvido</option>
-            <option value="cartaz">Cartaz</option>
-        </select>
+       <div class="w3-col s3"><label class="w3-text-teal">Subtítulo</label></div>
+       <div class="w3-col s9 w3-border"><input class="w3-input w3-border w3-light-grey" type="text" name="subtitulo" /></div>
     </div>
+    <div class="w3-row w3-margin-bottom">
+       <div class="w3-col s3">
+            <label class="w3-text-teal">Tags</label>
+       </div>
+       <div class="w3-col s9">
+          <input class="w3-input w3-border w3-light-grey tags" type="text" id="hashtags2" name="hashtags2" autocomplete="off" />
+          <input class="w3-input w3-border w3-light-grey tags" type="hidden" id="hashtags" name="hashtags[]" autocomplete="off" />
+          <div class="tag-container"></div>
+       </div>
+    </div>
+    <div class="w3-row w3-margin-bottom">
+       <div class="w3-col s3"><label class="w3-text-teal">Escolher Ficheiro</label></div>
+       <div class="w3-col s9"><input class="w3-input w3-border w3-light-grey" type="file" name="myFile" /></div>
+    </div>
+    <div class="w3-row w3-margin-bottom">
+       <div class="w3-col s3"><label class="w3-text-teal">Tipo do Ficheiro</label></div>
+       <div class="w3-col s9">
+          <select id="tipo" name="tipo">
+             <option value="relatorio">Relatório</option>
+             <option value="tese">Tese</option>
+             <option value="artigo">Artigo</option>
+             <option value="aplicacao">Aplicação</option>
+             <option value="slides">Slides</option>
+             <option value="teste">Teste</option>
+             <option value="problema">Problema Resolvido</option>
+             <option value="cartaz">Cartaz</option>
+          </select>
+       </div>
+    </div>
+    <div class="w3-row w3-margin-bottom">
+       <div class="w3-col s3"><label class="w3-text-teal">Visibilidade</label></div>
+       <div class="w3-col s9">
+          <select id="visibilidade" name="visibilidade">
+             <option value="publico">Publico</option>
+             <option value="privado">Privado</option>
+          </select>
+       </div>
+    </div>
+    <div class="w3-row w3-margin-bottom">
+       <div class="w3-col s3"><label class="w3-text-teal">Data de criação</label></div>
+       <div class="w3-col s9"><input class="w3-light-grey" type="text" id="datepicker" name="dataCriacao" /></div>
+    </div>
+
 </div>
 
     `)

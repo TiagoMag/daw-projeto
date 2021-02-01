@@ -1,19 +1,6 @@
-extends layout
+extends header
 
 block content
-    .w3-container.w3.bar.w3-teal
-        a(href="/logout" class="w3-bar-item w3-button w3-right")
-            img(src="images/logout.png" style='width:25px; height:25px;') 
-        a(href="/perfil" class="w3-bar-item w3-button w3-right")
-            img(src="images/utilizador.png" style='width:25px; height:25px;') 
-        if(isProd == 1)    
-            a(href="" class="w3-bar-item w3-button w3-right")
-                img(src="images/upload.png" style='width:25px; height:25px;') 
-        a(href="" class="w3-bar-item w3-button w3-right")
-            img(src="images/search.png" style='width:25px; height:25px;') 
-        a(href="" class="w3-bar-item w3-button w3-right")
-            img(src="images/home.png" style='width:25px; height:25px;') 
-    body
     if(isphoto == 1)
         .w3-row
             div(class="w3-col s3")

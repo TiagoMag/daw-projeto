@@ -1,25 +1,20 @@
-extends layout
+extends header
 block content
-    link(rel='stylesheet', href='/stylesheets/tags.css')
-    script(src='/javascripts/jquery-3.5.1.min.js')
-    script(src='/javascripts/imagens.js')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js')
-    .w3-container.w3-teal
-        h2 File Upload
+    
     form.w3-container(action='/files' method='POST' id="myform" enctype='multipart/form-data')
         .w3-row.w3-margin-bottom
             .w3-col.s3
-                label.w3-text-teal Description
+                label.w3-text-teal Descrição
             .w3-col.s9.w3-border
                 input.w3-input.w3-border.w3-light-grey(type='text' name='desc')
         .w3-row.w3-margin-bottom
             .w3-col.s3
-                label.w3-text-teal Titulo
+                label.w3-text-teal Título
             .w3-col.s9.w3-border
                 input.w3-input.w3-border.w3-light-grey(type='text' name='titulo')
         .w3-row.w3-margin-bottom
             .w3-col.s3
-                label.w3-text-teal Subtitulo
+                label.w3-text-teal Subtítulo
             .w3-col.s9.w3-border
                 input.w3-input.w3-border.w3-light-grey(type='text' name='subtitulo')
         .w3-row.w3-margin-bottom
@@ -31,12 +26,12 @@ block content
                 div(class="tag-container")
         .w3-row.w3-margin-bottom
             .w3-col.s3
-                label.w3-text-teal Select File
+                label.w3-text-teal Escolher Ficheiro
             .w3-col.s9
                 input.w3-input.w3-border.w3-light-grey(type='file' name='myFile')
         .w3-row.w3-margin-bottom
             .w3-col.s3
-                label.w3-text-teal File Type
+                label.w3-text-teal Tipo do Ficheiro
             .w3-col.s9
                 select(id="tipo" name="tipo")
                     option(value='relatorio') Relatório
@@ -59,13 +54,17 @@ block content
                 label.w3-text-teal Data de criação
             .w3-col.s9
                 input.w3-light-grey(type="text" id="datepicker" name="dataCriacao")
-    
         #adiciona
         input.w3-btn.w3-grey.w3-border(type='button' value='+' onclick='addFile()')
         input.w3-btn.w3-teal.w3-border(type='submit' value='Submit')
     footer.w3-container.w3-teal
         adress Gerado por PGR:: André Morais, João Nuno Abreu, Tiago Magalhães em #{d} ----------------
 
+    link(rel='stylesheet', href='/stylesheets/tags.css')
+    script(src='/javascripts/jquery-3.5.1.min.js')
+    script(src='/javascripts/imagens.js')
+    script(src='https://code.jquery.com/jquery-1.12.4.js')
+    script(src='https://code.jquery.com/ui/1.12.1/jquery-ui.js')
     script.  
         let input, hashtagArray, container, t;
         input = document.querySelector('#hashtags2');
@@ -101,10 +100,6 @@ block content
                     event.preventDefault();
                 }
             });
-    link(rel='stylesheet' href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
-    link(rel='stylesheet' href='/resources/demos/style.css')
-    script(src='https://code.jquery.com/jquery-1.12.4.js')
-    script(src='https://code.jquery.com/ui/1.12.1/jquery-ui.js')
     script.
         $( function() {
             $( "#datepicker" ).datepicker();

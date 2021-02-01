@@ -149,8 +149,6 @@ router.get("/logout", function(req,res){
   res.redirect("/")
 })
 
-
-
 // --------------------------------------------Funções auxiliares -------------------------------------------
 
 /* Verifica se nível de utilizador é admin */
