@@ -48,18 +48,41 @@ block content
                     table.w3-table-all#myTable
                         thead
                             tr
-                                th Nome
-                                th Data de Upload
-                                th Remover
+                                th Tipo
+                                th titulo
+                                th Descrição
+                                th Subtitulo
+                                th Data de Criação
+                                th Data de Registo
+                                th Hashtags
+                                th autor
                         tbody
     script(src='https://code.jquery.com/jquery-3.5.1.js')
     link(rel='stylesheet', href='https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css')
     script(src='https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js')
-
     script.
-        $(document).ready( function () {
-            $('#myTable').DataTable();
+        $(document).ready(function() {
+            var token = '!{token}'
+            var email = '!{id}'
+            $('#myTable').DataTable( {
+                "paginate": true,
+                "order": [[ 1, "desc" ]],
+                "ajax": {
+                    "url": "http://localhost:7777/recurso/lista?autor="+ email + "&token="+token,
+                    "type": "GET"
+                },
+                "columns": [
+                    { "data": "tipo"},
+                    { "data": "titulo" },
+                    { "data": "descricao" },
+                    { "data": "subtitulo" },
+                    { "data": "dataCriacao" },
+                    { "data": "dataRegisto" },
+                    { "data": "hashtags" },
+                    { "data": "autor" }
+                ],
             } );
+        });
     
     .w3-container.w3-teal
         footer.w3-container

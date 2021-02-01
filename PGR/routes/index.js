@@ -61,7 +61,7 @@ router.get('/perfil', function(req, res) {
       if(verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
       var consumidor = verifyConsumidor(req.cookies.token)
       var produtor = verifyProdutor(req.cookies.token)
-      res.render("perfil", {title: 'PGR', perfil: dados.data.data, extensao: extensao , isProd: produtor, isCons: consumidor, temFoto: temFoto})
+      res.render("perfil", {title: 'PGR', perfil: dados.data.data, extensao: extensao , isProd: produtor, isCons: consumidor, temFoto: temFoto, id: u_id, token: req.cookies.token})
     })
     .catch(err => res.render('error',{error: err}))
 });
