@@ -10,7 +10,8 @@ var recSchema = new mongoose.Schema({
     visibilidade: String, // Publico,Privado
     hashtags: [String],
     rating: Number,
-    autor: String
+    autor: String,
+    nome: String
 });
  
 module.exports = mongoose.model('recurso', recSchema)

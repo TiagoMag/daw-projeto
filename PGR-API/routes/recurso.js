@@ -11,6 +11,7 @@ router.get('/lista', function(req, res, next) {
     var tipo = req.query.tipo
     var ano = req.query.ano
     var tags = req.query.tags
+    var nome = req.query.nome
     if(tags){
         var array_tags = tags.split(" ")
         Recurso.listByTags(array_tags)
@@ -24,6 +25,11 @@ router.get('/lista', function(req, res, next) {
     }
     else if(tipo){
         Recurso.listByTipo(tipo)
+        .then(data => res.status(200).json({data: data}))
+        .catch(err => res.status(500).json({message: err}))
+    }
+    else if(nome){
+        Recurso.listByNome(nome)
         .then(data => res.status(200).json({data: data}))
         .catch(err => res.status(500).json({message: err}))
     }

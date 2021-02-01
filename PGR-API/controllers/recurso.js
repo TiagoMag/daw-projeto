@@ -11,6 +11,11 @@ module.exports.listByUser = (email) => {
   return Recurso.find({ autor: email }).sort({ dataRegisto: 1 }).exec();
 };
 
+/* Retorna a lista de recursos de um utilizador com dado nome */
+module.exports.listByNome = (nome) => {
+  return Recurso.find({ nome: nome }).sort({ dataRegisto: 1 }).exec();
+};
+
 /* Retorna a lista de recursos de um tipo */
 module.exports.listByTipo = (tipo) => {
   return Recurso.find({ tipo: tipo }).sort({ dataRegisto: 1 }).exec();
