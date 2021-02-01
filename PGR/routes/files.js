@@ -9,7 +9,6 @@ var jwt_decode = require('jwt-decode');
 var AdmZip = require('adm-zip');
 var axios = require('axios')
 const Recurso = require('../models/recurso');
-const { response } = require('express');
 
 /* GET files */
 router.get('/',function(req,res){
@@ -63,7 +62,6 @@ router.post('/',upload.array('myFile'), function(req,res){
     axios.get('http://localhost:7777/users/perfil?email=' + u_email + "&token=" + token)  
         .then(response => {
             var nome = response.data.data.nome
-            console.log("nome = " + nome)
 
             req.files.forEach((f,idx) => {
 

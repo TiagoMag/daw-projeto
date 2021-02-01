@@ -1,3 +1,5 @@
+var count = 0
+
 function showImage(name,ext,tipo,user){
     var name_without_ext = name.split('.').slice(0, -1).join('.')
     if(tipo == "aplicacao")
@@ -25,7 +27,8 @@ function showImage(name,ext,tipo,user){
 }
 
 function addFile(){
-    var file = $( `
+    count++;
+    var file = `
     <hr>
 
     <div class="w3-row w3-margin-bottom">
@@ -47,7 +50,7 @@ function addFile(){
        <div class="w3-col s9">
           <input class="w3-input w3-border w3-light-grey tags" type="text" id="hashtags2" name="hashtags2" autocomplete="off" />
           <input class="w3-input w3-border w3-light-grey tags" type="hidden" id="hashtags" name="hashtags[]" autocomplete="off" />
-          <div class="tag-container"></div>
+          <div class="tag-container${count}"></div>
        </div>
     </div>
     <div class="w3-row w3-margin-bottom">
@@ -85,6 +88,6 @@ function addFile(){
 
 </div>
 
-    `)
+    `
     $("#adiciona").append(file)
 }
