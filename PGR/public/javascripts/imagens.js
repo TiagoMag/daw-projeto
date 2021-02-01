@@ -47,10 +47,10 @@ function addFile(){
        <div class="w3-col s3">
             <label class="w3-text-teal">Tags</label>
        </div>
-       <div class="w3-col s9">
-          <input class="w3-input w3-border w3-light-grey tags" type="text" id="hashtags2" name="hashtags2" autocomplete="off" />
-          <input class="w3-input w3-border w3-light-grey tags" type="hidden" id="hashtags" name="hashtags[]" autocomplete="off" />
-          <div class="tag-container${count}"></div>
+       <div class="w3-col s9" id=${count}>
+          <input class="w3-input w3-border w3-light-grey tags" type="text" id="hashtags2${count}" name="hashtags2${count}" autocomplete="off" onkeydown="tags(this)"/>
+          <input class="w3-input w3-border w3-light-grey tags" type="hidden" id="hashtags${count}" name="hashtags[]" autocomplete="off" />
+          <div class="tag-container" id="tag-container${count}"></div>
        </div>
     </div>
     <div class="w3-row w3-margin-bottom">
@@ -83,7 +83,7 @@ function addFile(){
     </div>
     <div class="w3-row w3-margin-bottom">
        <div class="w3-col s3"><label class="w3-text-teal">Data de criação</label></div>
-       <div class="w3-col s9"><input class="w3-light-grey" type="text" id="datepicker" name="dataCriacao" /></div>
+       <div class="w3-col s9"><input class="w3-light-grey" type="text" id="datepicker${count}" onclick='picker(this)' name="dataCriacao" /></div>
     </div>
 
 </div>

@@ -112,7 +112,7 @@ router.post('/',upload.array('myFile'), function(req,res){
                     r.subtitulo = req.body.subtitulo[idx] // Opcional 
                     r.dataCriacao = req.body.dataCriacao[idx] 
                     r.visibilidade = req.body.visibilidade[idx]
-                    r.hashtags = req.body.hashtags[idx]
+                    r.hashtags = req.body.hashtags[idx].split(",")
                     r.nome = nome
                     
                 }
@@ -133,7 +133,7 @@ router.post('/',upload.array('myFile'), function(req,res){
                     r.subtitulo = req.body.subtitulo // Opcional 
                     r.dataCriacao = req.body.dataCriacao 
                     r.visibilidade = req.body.visibilidade
-                    r.hashtags = req.body.hashtags
+                    r.hashtags = req.body.hashtags[0].split(',')
                     r.nome = nome
                 }
         
