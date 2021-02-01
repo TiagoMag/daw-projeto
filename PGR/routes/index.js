@@ -49,12 +49,19 @@ router.get('/perfil', function(req, res) {
         }
       });
 
+      // Se não encontrar o ficheiro, quer dizer que o user não tem foto de perfil
+      var temFoto = true
+      console.log("extensao = " + extensao)
+      if(extensao == ""){
+        temFoto = false
+      }
+
       // -----------------------------------------------------------------------
 
       if(verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
       var consumidor = verifyConsumidor(req.cookies.token)
       var produtor = verifyProdutor(req.cookies.token)
-      res.render("perfil", {title: 'PGR', perfil: dados.data.data, extensao: extensao , isProd: produtor, isCons: consumidor})
+      res.render("perfil", {title: 'PGR', perfil: dados.data.data, extensao: extensao , isProd: produtor, isCons: consumidor, temFoto: temFoto})
     })
     .catch(err => res.render('error',{error: err}))
 });
@@ -65,16 +72,19 @@ router.post('/registar',upload.single('myFile'), function(req, res) {
   u.dataRegisto = new Date(Date.now()).toISOString()
   u.dataUltimoAcesso = new Date(Date.now()).toISOString()
 
-  //------------------------- Upload Profile Pic ----------------------------------
+  if(req.file.path){
 
-  let oldPath = path.resolve(__dirname, '../') + '/' + req.file.path
-  let newPath = path.resolve(__dirname, '../') + '/public/profilepics/' + u.email + path.extname(req.file.originalname)
+    //------------------------- Upload Profile Pic ----------------------------------
 
-  fs.rename(oldPath,newPath, function (err){
-    if(err) throw err
-  })
+    let oldPath = path.resolve(__dirname, '../') + '/' + req.file.path
+    let newPath = path.resolve(__dirname, '../') + '/public/profilepics/' + u.email + path.extname(req.file.originalname)
 
-  // ------------------------------------------------------------------------------
+    fs.rename(oldPath,newPath, function (err){
+      if(err) throw err
+    })
+
+    // ------------------------------------------------------------------------------
+  }
 
   // regista utilizador
   axios.post('http://localhost:7776/users/registar',u)

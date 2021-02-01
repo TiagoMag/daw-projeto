@@ -17,7 +17,10 @@ block content
         .w3-row
             div(class="w3-col s3")
                 div(class="containerp")
-                    img.imagep(src="profilepics/" + perfil.email + extensao alt="Avatar" class="imgp" style="width:100%")
+                    if( temFoto == true )
+                        img.imagep(src="profilepics/" + perfil.email + extensao alt="Avatar" class="imgp" style="width:100%")
+                    else
+                        img.imagep(src="profilepics/default.png" alt="Avatar" class="imgp" style="width:100%")
                     div(class="middlep")
                         div(class="textp")
                             a(href="/upload") Nova Foto

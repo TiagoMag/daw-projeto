@@ -9,30 +9,36 @@ var fs = require('fs')
 
 /* Search page */
 router.get("/", function(req,res){
-    var consumidor = verifyConsumidor(req.cookies.token)
-    var produtor = verifyProdutor(req.cookies.token)
-    res.render('recursos', { token: req.cookies.token,isProd: produtor, isCons: consumidor})  
-  })
+  var consumidor = verifyConsumidor(req.cookies.token)
+  var produtor = verifyProdutor(req.cookies.token)
+  res.render('recursos', { token: req.cookies.token,isProd: produtor, isCons: consumidor})  
+})
+
+router.get("/:id", function(req,res){
+  var consumidor = verifyConsumidor(req.cookies.token)
+  var produtor = verifyProdutor(req.cookies.token)
+  res.render('recurso', { token: req.cookies.token,isProd: produtor, isCons: consumidor})  
+})
     
 // --------------------------------------------Funções auxiliares -------------------------------------------
 
 /* Verifica se nível de utilizador é admin */
 function verifyAdmin(token){
-    u_level = jwt_decode(token).nivel
-    return u_level == 'admin' ? true : false
-  }
-  
-  /* Verifica se nível de utilizador é produtor */
-  function verifyProdutor(token){
-    u_level = jwt_decode(token).nivel
-    return u_level == 'produtor' ? true : false
-  }
-  
-  /* Verifica se nível de utilizador é consumidor */
-  function verifyConsumidor(token){
-    u_level = jwt_decode(token).nivel
-    return u_level == 'consumidor' ? true : false
-  }
-  
-  module.exports = router;
+  u_level = jwt_decode(token).nivel
+  return u_level == 'admin' ? true : false
+}
+
+/* Verifica se nível de utilizador é produtor */
+function verifyProdutor(token){
+  u_level = jwt_decode(token).nivel
+  return u_level == 'produtor' ? true : false
+}
+
+/* Verifica se nível de utilizador é consumidor */
+function verifyConsumidor(token){
+  u_level = jwt_decode(token).nivel
+  return u_level == 'consumidor' ? true : false
+}
+
+module.exports = router;
   
