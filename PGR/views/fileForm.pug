@@ -6,12 +6,22 @@ block content
     script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js')
     .w3-container.w3-teal
         h2 File Upload
-    form.w3-container(action='/files' method='POST' enctype='multipart/form-data')
+    form.w3-container(action='/files' method='POST' id="myform" enctype='multipart/form-data')
         .w3-row.w3-margin-bottom
             .w3-col.s3
                 label.w3-text-teal Description
             .w3-col.s9.w3-border
                 input.w3-input.w3-border.w3-light-grey(type='text' name='desc')
+        .w3-row.w3-margin-bottom
+            .w3-col.s3
+                label.w3-text-teal Titulo
+            .w3-col.s9.w3-border
+                input.w3-input.w3-border.w3-light-grey(type='text' name='titulo')
+        .w3-row.w3-margin-bottom
+            .w3-col.s3
+                label.w3-text-teal Subtitulo
+            .w3-col.s9.w3-border
+                input.w3-input.w3-border.w3-light-grey(type='text' name='subtitulo')
         .w3-row.w3-margin-bottom
             .w3-col.s3
                 label.w3-text-teal Select File
@@ -30,12 +40,22 @@ block content
                     option(value='teste') Teste
                     option(value='problema') Problema Resolvido
                     option(value='cartaz') Cartaz
+        .w3-row.w3-margin-bottom
+            .w3-col.s3
+                label.w3-text-teal Visibilidade
+            .w3-col.s9.w3-border
+                select(id="visibilidade" name="visibilidade")
+                    option(value='publico') Publico
+                    option(value='privado') Privado
+            
             div(class="wrapper")
-                h3 Tags
-                p(class="info") Type your hashtag & click enter.</p>
-                input(type="text" id="hashtags" autocomplete="off")
+                h3(class="tags") Your hashtags
+                p(class="tags") Type your hashtag & click enter.
+                input(class="tags" type="text" id="hashtags2" name="hashtags2" autocomplete="off")
+                input(class="tags" type="hidden" id="hashtags" name="hashtags[]" autocomplete="off")
                 div(class="tag-container")
-                
+            p Data de criação: 
+                input(type="text" id="datepicker" name="dataCriacao")
     
         #adiciona
         input.w3-btn.w3-blue-grey(type='button' value='+' onclick='addFile()')
@@ -45,19 +65,21 @@ block content
 
     script.  
         let input, hashtagArray, container, t;
-
-        input = document.querySelector('#hashtags');
+        input = document.querySelector('#hashtags2');
         container = document.querySelector('.tag-container');
         hashtagArray = [];
-
+ 
         input.addEventListener('keyup', () => {
             if (event.which == 13 && input.value.length > 0) {
             var text = document.createTextNode(input.value);
             var p = document.createElement('p');
             container.appendChild(p);
             p.appendChild(text);
+           
             p.classList.add('tag');
+            
             hashtagArray.push(input.value)
+            document.getElementById("hashtags").value = hashtagArray;
             input.value = '';
             
             let deleteTags = document.querySelectorAll('.tag');
@@ -76,3 +98,11 @@ block content
                     event.preventDefault();
                 }
             });
+    link(rel='stylesheet' href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
+    link(rel='stylesheet' href='/resources/demos/style.css')
+    script(src='https://code.jquery.com/jquery-1.12.4.js')
+    script(src='https://code.jquery.com/ui/1.12.1/jquery-ui.js')
+    script.
+        $( function() {
+            $( "#datepicker" ).datepicker();
+        } );

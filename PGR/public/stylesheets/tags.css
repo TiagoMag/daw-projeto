@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans:300,400');
 
-body {
+body.tags {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,20 +16,20 @@ body {
   margin: 0;
   width: 580px;
   background-color: #273c75;
-  border-radius: 30px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   flex-flow: row wrap;
   border: solid 2px white;
 }
 
-h3 {
+h3.tags {
   margin: 10px 14px 10px 0;
   font-weight: 300;
   font-size: 36px;
 }
 
-p {
+p.tags {
   margin: 10px 10px;
   font-weight: 300;
   font-size: 14px;
@@ -37,7 +37,7 @@ p {
   letter-spacing: 1px;
 }
 
-input {
+input.tags {
   border: none;
   border-radius: 12px;
   padding: 16px 20px;
