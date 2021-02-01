@@ -24,13 +24,20 @@ block content
                 input.w3-input.w3-border.w3-light-grey(type='text' name='subtitulo')
         .w3-row.w3-margin-bottom
             .w3-col.s3
+                label.w3-text-teal Tags
+            .w3-col.s9
+                input.w3-input.w3-border.w3-light-grey(class="tags" type="text" id="hashtags2" name="hashtags2" autocomplete="off")
+                input.w3-input.w3-border.w3-light-grey(class="tags" type="hidden" id="hashtags" name="hashtags[]" autocomplete="off")
+                div(class="tag-container")
+        .w3-row.w3-margin-bottom
+            .w3-col.s3
                 label.w3-text-teal Select File
-            .w3-col.s9.w3-border
+            .w3-col.s9
                 input.w3-input.w3-border.w3-light-grey(type='file' name='myFile')
         .w3-row.w3-margin-bottom
             .w3-col.s3
                 label.w3-text-teal File Type
-            .w3-col.s9.w3-border
+            .w3-col.s9
                 select(id="tipo" name="tipo")
                     option(value='relatorio') Relatório
                     option(value='tese') Tese
@@ -43,23 +50,19 @@ block content
         .w3-row.w3-margin-bottom
             .w3-col.s3
                 label.w3-text-teal Visibilidade
-            .w3-col.s9.w3-border
+            .w3-col.s9
                 select(id="visibilidade" name="visibilidade")
                     option(value='publico') Publico
                     option(value='privado') Privado
-            
-            div(class="wrapper")
-                h3(class="tags") Your hashtags
-                p(class="tags") Type your hashtag & click enter.
-                input(class="tags" type="text" id="hashtags2" name="hashtags2" autocomplete="off")
-                input(class="tags" type="hidden" id="hashtags" name="hashtags[]" autocomplete="off")
-                div(class="tag-container")
-            p Data de criação: 
-                input(type="text" id="datepicker" name="dataCriacao")
+        .w3-row.w3-margin-bottom
+            .w3-col.s3
+                label.w3-text-teal Data de criação
+            .w3-col.s9
+                input.w3-light-grey(type="text" id="datepicker" name="dataCriacao")
     
         #adiciona
-        input.w3-btn.w3-blue-grey(type='button' value='+' onclick='addFile()')
-        input.w3-btn.w3-blue-grey(type='submit' value='Submit')
+        input.w3-btn.w3-grey.w3-border(type='button' value='+' onclick='addFile()')
+        input.w3-btn.w3-teal.w3-border(type='submit' value='Submit')
     footer.w3-container.w3-teal
         adress Gerado por PGR:: André Morais, João Nuno Abreu, Tiago Magalhães em #{d} ----------------
 

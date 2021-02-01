@@ -20,6 +20,7 @@ router.get('/naoaut', function(req, res) {
   res.render('naoaut', { title: 'PGR' });
 });
 
+
 /* Form de registo */
 router.get('/registar', function(req, res) {
   res.render('registar', { title: 'PGR' });
@@ -147,6 +148,7 @@ router.get("/logout", function(req,res){
   res.cookie('token', {expires: Date.now()});
   res.redirect("/")
 })
+
 
 
 // --------------------------------------------Funções auxiliares -------------------------------------------

@@ -7,7 +7,7 @@ body.tags {
   height: 100vh;
   overflow: hidden;
   font-family: 'Work Sans', sans-serif;
-  background-color: #1a284f;
+  background-color: #2a6b69;
   color: white;
 }
 
@@ -15,7 +15,7 @@ body.tags {
   padding: 20px 28px;
   margin: 0;
   width: 580px;
-  background-color: #273c75;
+  background-color: #3c8583;
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -38,11 +38,6 @@ p.tags {
 }
 
 input.tags {
-  border: none;
-  border-radius: 12px;
-  padding: 16px 20px;
-  margin: 8px;
-  width: 100%;
   color: #666;
   font-family: 'Work Sans', sans-serif;
   font-size: 16px;
@@ -56,7 +51,7 @@ input.tags {
 
 .tag{
   pointer-events: none;
-  background-color: #242424;
+  background-color: #3c8583;
   color: white;
   padding: 6px;
   margin: 5px;
