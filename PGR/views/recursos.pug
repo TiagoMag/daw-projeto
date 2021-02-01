@@ -1,0 +1,69 @@
+extends layout
+
+block content
+    .w3-container.w3.bar.w3-teal
+        a(href="/logout" class="w3-bar-item w3-button w3-right")
+            img(src="images/logout.png" style='width:25px; height:25px;') 
+        a(href="/perfil" class="w3-bar-item w3-button w3-right")
+            img(src="images/utilizador.png" style='width:25px; height:25px;') 
+        if(isProd == 1)    
+            a(href="" class="w3-bar-item w3-button w3-right")
+                img(src="images/upload.png" style='width:25px; height:25px;') 
+        a(href="" class="w3-bar-item w3-button w3-right")
+            img(src="images/search.png" style='width:25px; height:25px;') 
+        a(href="" class="w3-bar-item w3-button w3-right")
+            img(src="images/home.png" style='width:25px; height:25px;') 
+    body
+        .w3-row
+            .w3-dropdown-hover
+                label Procurar por
+                select(name="ord" id="ord" onchange="sortFun()")
+                    option(value="autor") Autor 
+                    option(value="tipo") Tipo
+                    option(value="tags") Tags
+                    option(value="tags") Ano
+                input(type="text" placeholder="Search..")
+                    
+        .w3-row
+            .w3-container.w3-margin
+                table.w3-table-all#myTable
+                    thead
+                        tr
+                            th Tipo
+                            th Título 
+                            th Descrição
+                            th SubTítulo
+                            th Data de criação
+                            th Data de upload
+                            th Tags
+                            th Autor
+                    tbody
+    script(src='https://code.jquery.com/jquery-3.5.1.js')
+    link(rel='stylesheet', href='https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css')
+    script(src='https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js')
+    script.
+        $(document).ready(function() {
+            var token = '!{token}'
+            $('#myTable').DataTable( {
+                "paginate": false,
+                "order": [[ 1, "desc" ]],
+                "ajax": {
+                    "url": "http://localhost:7777/recurso/lista?token="+token,
+                    "type": "GET"
+                },
+                "columns": [
+                    { "data": "tipo"},
+                    { "data": "titulo" },
+                    { "data": "descricao" },
+                    { "data": "subtitulo" },
+                    { "data": "dataCriacao" },
+                    { "data": "dataRegisto" },
+                    { "data": "hashtags" },
+                    { "data": "autor" }
+                ],
+            } );
+        } );
+    .w3-container.w3-teal
+        footer.w3-container
+            p
+                adress Gerado por PGR:: André Morais, João Nuno Abreu, Tiago Magalhães

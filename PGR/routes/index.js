@@ -138,7 +138,16 @@ router.get("/logout", function(req,res){
   res.cookie('token', {expires: Date.now()});
   res.redirect("/")
 })
+
+/* Search page */
+router.get("/search", function(req,res){
+  var consumidor = verifyConsumidor(req.cookies.token)
+  var produtor = verifyProdutor(req.cookies.token)
+  res.render('search', { token: req.cookies.token,isProd: produtor, isCons: consumidor})  
+})
   
+
+
 // --------------------------------------------Funções auxiliares -------------------------------------------
 
 /* Verifica se nível de utilizador é admin */
