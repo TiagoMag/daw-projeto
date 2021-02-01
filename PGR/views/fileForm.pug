@@ -1,5 +1,6 @@
 extends layout
 block content
+    link(rel='stylesheet', href='/stylesheets/tags.css')
     script(src='/javascripts/jquery-3.5.1.min.js')
     script(src='/javascripts/imagens.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js')
@@ -58,7 +59,7 @@ block content
     
         #adiciona
         input.w3-btn.w3-blue-grey(type='button' value='+' onclick='addFile()')
-        input.w3-btn.w3-blue-grey(class='submit' type='submit' value='Submit')
+        input.w3-btn.w3-blue-grey(type='submit' value='Submit')
     footer.w3-container.w3-teal
         adress Gerado por PGR:: André Morais, João Nuno Abreu, Tiago Magalhães em #{d} ----------------
 
@@ -96,7 +97,7 @@ block content
                 if (event.which == '13') {
                     event.preventDefault();
                 }
-            });;
+            });
     link(rel='stylesheet' href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
     link(rel='stylesheet' href='/resources/demos/style.css')
     script(src='https://code.jquery.com/jquery-1.12.4.js')

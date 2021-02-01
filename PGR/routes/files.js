@@ -140,9 +140,7 @@ router.post('/',upload.array('myFile'),function(req,res){
         .catch(err => console.log("Erro:"+err))
 
         // Faz unzip
-        var tmp = path.resolve(__dirname,"../public/fileStore/") + "/" + u_email + "/" + f.originalname
-        console.log("tmp = " + tmp)
-        var zip = new AdmZip(tmp);
+        var zip = new AdmZip(filePath);
         var zipEntries = zip.getEntries();
         var meta_dados = [];
         zipEntries.forEach(function(zipEntry) {
