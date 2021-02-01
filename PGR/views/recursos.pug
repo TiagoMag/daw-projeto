@@ -17,16 +17,16 @@ block content
         .w3-row
             .w3-dropdown-hover
                 label Procurar por
-                select(name="ord" id="ord" onchange="sortFun()")
-                    option(value="autor") Autor 
+                select(name="ord" id="ord" )
+                    option(value="nome") Autor 
                     option(value="tipo") Tipo
                     option(value="tags") Tags
-                    option(value="tags") Ano
-                input(type="text" placeholder="Search..")
+                    option(value="ano") Ano
+                input(type="text" onkeydown="search(this)" id="search" class="search" placeholder="Search..")
                     
         .w3-row
             .w3-container.w3-margin
-                table.w3-table-all#myTable.w3-hoverable
+                table.w3-table-all#myTable
                     thead
                         tr
                             th Tipo
@@ -45,7 +45,7 @@ block content
         $(document).ready(function() {
             var token = '!{token}'
             $('#myTable').DataTable( {
-                "paginate": false,
+                "paginate": true,
                 "order": [[ 1, "desc" ]],
                 "ajax": {
                     "url": "http://localhost:7777/recurso/lista?token="+token,
@@ -59,10 +59,109 @@ block content
                     { "data": "dataCriacao" },
                     { "data": "dataRegisto" },
                     { "data": "hashtags" },
-                    { "data": "autor" }
+                    { "data": "nome" }
                 ],
-            } );
-        } );
+            });
+        });
+    script.
+        function search(ele) {
+            if(event.key === 'Enter') {
+                var tipo = document.getElementById("ord").value;
+                console.log(tipo)
+                var input = ele.value;
+                var table = $('#myTable').DataTable();
+                table.destroy();
+                var token = '!{token}'
+                if(tipo == "tipo")  {
+                    $(document).ready(function() {
+                        $('#myTable').DataTable( {
+                            "paginate": true,
+                            "order": [[ 1, "desc" ]],
+                            "ajax": {
+                                "url": "http://localhost:7777/recurso/lista?"+tipo+"="+input+"&token="+token,
+                                "type": "GET"
+                            },
+                            "columns": [
+                                { "data": "tipo"},
+                                { "data": "titulo" },
+                                { "data": "descricao" },
+                                { "data": "subtitulo" },
+                                { "data": "dataCriacao" },
+                                { "data": "dataRegisto" },
+                                { "data": "hashtags" },
+                                { "data": "nome" }
+                            ],
+                        });
+                    });
+                }
+                else if(tipo == "tags"){
+                    $(document).ready(function() {
+                        $('#myTable').DataTable( {
+                            "paginate": true,
+                            "order": [[ 1, "desc" ]],
+                            "ajax": {
+                                "url": "http://localhost:7777/recurso/lista?"+tipo+"="+input+"&token="+token,
+                                "type": "GET"
+                            },
+                            "columns": [
+                                { "data": "tipo"},
+                                { "data": "titulo" },
+                                { "data": "descricao" },
+                                { "data": "subtitulo" },
+                                { "data": "dataCriacao" },
+                                { "data": "dataRegisto" },
+                                { "data": "hashtags" },
+                                { "data": "nome" }
+                            ],
+                        });
+                    });
+                }
+                else if(tipo == "ano"){
+                    $(document).ready(function() {
+                        $('#myTable').DataTable( {
+                            "paginate": true,
+                            "order": [[ 1, "desc" ]],
+                            "ajax": {
+                                "url": "http://localhost:7777/recurso/lista?"+tipo+"="+input+"&token="+token,
+                                "type": "GET"
+                            },
+                            "columns": [
+                                { "data": "tipo"},
+                                { "data": "titulo" },
+                                { "data": "descricao" },
+                                { "data": "subtitulo" },
+                                { "data": "dataCriacao" },
+                                { "data": "dataRegisto" },
+                                { "data": "hashtags" },
+                                { "data": "nome" }
+                            ],
+                        });
+                    });
+                }
+                else if(tipo == "nome"){
+                    $(document).ready(function() {
+                        $('#myTable').DataTable( {
+                            "paginate": true,
+                            "order": [[ 1, "desc" ]],
+                            "ajax": {
+                                "url": "http://localhost:7777/recurso/lista?"+tipo+"="+input+"&token="+token,
+                                "type": "GET"
+                            },
+                            "columns": [
+                                { "data": "tipo"},
+                                { "data": "titulo" },
+                                { "data": "descricao" },
+                                { "data": "subtitulo" },
+                                { "data": "dataCriacao" },
+                                { "data": "dataRegisto" },
+                                { "data": "hashtags" },
+                                { "data": "nome" }
+                            ],
+                        });
+                    });
+                }
+            } 
+        }
     .w3-container.w3-teal
         footer.w3-container
             p

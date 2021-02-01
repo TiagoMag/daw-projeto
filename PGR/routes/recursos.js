@@ -22,12 +22,6 @@ router.get("/:id", function(req,res){
     
 // --------------------------------------------Funções auxiliares -------------------------------------------
 
-/* Verifica se nível de utilizador é admin */
-function verifyAdmin(token){
-  u_level = jwt_decode(token).nivel
-  return u_level == 'admin' ? true : false
-}
-
 /* Verifica se nível de utilizador é produtor */
 function verifyProdutor(token){
   u_level = jwt_decode(token).nivel

@@ -162,12 +162,5 @@ router.post('/',upload.array('myFile'),function(req,res){
     })
     res.redirect('/files')
 })
-  
-function deleteZip(path){
-    fs.unlink(path, function(err) {
-        if (err) throw err
-        else console.log("Successfully deleted the zip: " + path)
-    })
-}
 
 module.exports = router;
