@@ -8,9 +8,10 @@
         "dataRegisto" : "2021-01-17 17:10:33",
         "visibilidade": "Publico",
         "hashtags": ["SDB","Informatica"],
-        "rating": "5",
         "autor": "jony@gmail.com",
-        "nome": "João"
+        "nome": "João",
+        "rating": "0",
+        "numVotantes": "0"
     },
     {
         "tipo" :  "Teste", 
@@ -21,9 +22,10 @@
         "dataRegisto" : "2021-02-17 17:10:33",
         "visibilidade": "Publico",
         "hashtags": ["Cripto","Informatica"],
-        "rating": "5",
         "autor": "jony@gmail.com",
-        "nome": "João"
+        "nome": "João",
+        "rating": "0",
+        "numVotantes": "0"
     },
     {
         "tipo" :  "Teste", 
@@ -34,9 +36,10 @@
         "dataRegisto" : "2021-02-15 17:10:33",
         "visibilidade": "Publico",
         "hashtags": ["Seguranca","Informatica"],
-        "rating": "5",
         "autor": "jony@gmail.com",
-        "nome": "João"
+        "nome": "João",
+        "rating": "0",
+        "numVotantes": "0"
     },
     {
         "tipo" :  "Teste", 
@@ -47,8 +50,9 @@
         "dataRegisto" : "2021-02-15 17:10:33",
         "visibilidade": "Privado",
         "hashtags": ["Seguranca","Informatica"],
-        "rating": "5",
         "autor": "jony@gmail.com",
-        "nome": "João"
+        "nome": "João",
+        "rating": "0",
+        "numVotantes": "0"
     }
 ]

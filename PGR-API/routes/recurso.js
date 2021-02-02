@@ -3,6 +3,7 @@ var router = express.Router();
 var moment = require('moment'); 
 const jwt = require('jsonwebtoken');
 const Recurso = require('../controllers/recurso');
+const Voto = require('../controllers/voto');
 
 /* GET lista de recursos por utilizador/tipo/ano/hashtag */
 router.get('/lista', function(req, res, next) {
@@ -50,9 +51,10 @@ router.get('/lista', function(req, res, next) {
 /* POST de um recurso */
 router.post('/', (req, res) => {
     rec = req.body
-    console.log(rec)
     rec.dataRegisto = moment(new Date(Date.now())).format('YYYY-MM-DD hh:mm:ss')
     rec.dataCriacao = moment(new Date(req.body.dataCriacao)).format('YYYY-MM-DD')
+    rec.numVotantes = 0
+    rec.rating = 0
     Recurso.insert(rec)
     .then(data => res.status(200).json({message: data._id}))
     .catch(err => res.status(404).json({message: 'Recurso não inserido!'+ err})) 
@@ -70,6 +72,13 @@ router.get('/:id', (req, res) => {
     Recurso.consultar(req.params.id)
         .then(dados => res.status(200).jsonp(dados) )
         .catch(e => res.status(500).jsonp({error: e}))
+});
+
+/* POST de um voto */
+router.post('/voto',(req,res)=>{
+    Recurso.updateAverage(req.body.userID,req.body.rating,req.body.recursoID,req.body.flag)
+    .then(data => res.status(200).json({message: data}))
+    .catch(err => res.status(500).json({message: err}))
 });
 
 module.exports = router;

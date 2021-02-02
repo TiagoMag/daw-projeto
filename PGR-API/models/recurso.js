@@ -10,6 +10,7 @@ var recSchema = new mongoose.Schema({
     visibilidade: String, // Publico,Privado
     hashtags: [String],
     rating: Number,
+    numVotantes: Number,
     autor: String,
     nome: String
 });
