@@ -11,29 +11,74 @@ block content
                 | #{data.descricao}
             h6 
                 strong Hashtags: 
-                | #{data.hashtags} 
-            h6 
-                strong Classificação: 
-                | #{data.rating} 
+                | #{data.hashtags}
             h6 
                 strong Data de Criação: 
                 | #{data.dataCriacao}
             h6 
+                strong Data de Registo: 
+                | #{data.dataRegisto}
+            h6 
+                strong Rating: 
+                | #{data.rating}
+            h6 
                 strong Autor: 
                 | #{data.autor} 
-    if(f.tipo === "cartaz")
+        if(f.tipo === "cartaz")
+            .w3-row
+                div(class="w3-col s2")
+                    div(class="containerp")
+                        img(src='/fileStore/' + u_email  + '/' + name_without_ext + '/' + name_without_ext + '.' + f.ext class="imgp" style="width:100%")
+                        
+        else if(f.ext == "pdf")
+            .w3-row
+                div(class="w3-col s2")
+                    div(class="containerp")
+                        a(href='/fileStore/' + u_email  + '/' + name_without_ext + '/' + name_without_ext + '.' + f.ext target="_blank") Ver Ficheiro
+        
         .w3-row
-            div(class="w3-col s3")
-                div(class="containerp")
-                    img(src='/fileStore/' + u_email  + '/' + name_without_ext + '/' + name_without_ext + '.' + f.ext class="imgp" style="width:100%")
-                    
-    else if(f.ext == "pdf")
-        .w3-row
-            div(class="w3-col s3")
-                div(class="containerp")
-                    a(href='/fileStore/' + u_email  + '/' + name_without_ext + '/' + name_without_ext + '.' + f.ext target="_blank") Ver Ficheiro
-    else
-        .w3-row
-            div(class="w3-col s3")
+            div(class="w3-col s2")
                 div(class="containerp")
                     a(href="/files/download/" + f.name) Download
+    //----------------------------------------------------------------
+    link(rel='stylesheet', href='/stylesheets/rating.css')
+    form.w3-container(action='/files' method='POST' id="myform" enctype='multipart/form-data')
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
+        .rating
+            span
+                input#str5(type='radio' name='rating' value='5')
+                label(for='str5')
+            span
+                input#str4(type='radio' name='rating' value='4')
+                label(for='str4')
+            span
+                input#str3(type='radio' name='rating' value='3')
+                label(for='str3')
+            span
+                input#str2(type='radio' name='rating' value='2')
+                label(for='str2')
+            span
+                input#str1(type='radio' name='rating' value='1')
+                label(for='str1')
+
+        .w3-row.w3-margin
+            input.w3-input.w3-border.w3-light-grey(type='text' name='desc' style='width: 30%' placeholder="Escreva aqui o seu comentário.")
+        .w3-row.w3-margin
+            input.w3-btn.w3-teal.w3-border(type='submit' value='Submit')
+
+    script.
+        $(document).ready(function(){
+            // Check Radio-box
+            $(".rating input:radio").attr("checked", false);
+
+            $('.rating input').click(function () {
+                $(".rating span").removeClass('checked');
+                $(this).parent().addClass('checked');
+            });
+
+            $('input:radio').change(
+              function(){
+                var userRating = this.value;
+                alert(userRating);
+            });
+        });
