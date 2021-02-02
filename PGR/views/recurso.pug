@@ -1,17 +1,11 @@
 extends header
-
 block content
-    script(src='/javascripts/jquery-3.5.1.min.js')
-    script(src='/javascripts/imagens.js')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js')
-    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css')
-    #display.w3-card-4.modal
     if(f.tipo === "cartaz")
         .w3-row
             div(class="w3-col s3")
                 div(class="containerp")
                     p Título
-                    img.imagep(src='/fileStore/' + u_email  + '/' + name_without_ext + '/' + name_without_ext + '.' + f.ext class="imgp" style="width:100%")
+                    img(src='/fileStore/' + u_email  + '/' + name_without_ext + '/' + name_without_ext + '.' + f.ext class="imgp" style="width:100%")
                     p Subtítulo
             div(class="w3-col s9" )
                 ul 

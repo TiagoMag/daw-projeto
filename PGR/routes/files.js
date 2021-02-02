@@ -178,7 +178,7 @@ router.post('/',upload.array('myFile'), function(req,res){
                     else console.log("Successfully deleted the zip: " + filePath)
                 })
             })
-            res.redirect('/files')
+            res.redirect('/perfil')
         })    
 })
 

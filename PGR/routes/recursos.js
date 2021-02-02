@@ -25,7 +25,7 @@ router.get("/:id", function(req,res){
       name_without_ext = f.name.split('.').slice(0, -1).join('.')
     }
   });
-  res.render('recurso', { token: req.cookies.token,isProd: produtor, isCons: consumidor,f: f,name_without_ext:name_without_ext, u_email: u_email})  
+  res.render('recurso', { token: req.cookies.token,isProd: produtor, isCons: consumidor,f: f, name_without_ext: name_without_ext, u_email: u_email})  
 })
     
 // --------------------------------------------Funções auxiliares -------------------------------------------
