@@ -65,13 +65,15 @@ router.post('/',upload.array('myFile'), function(req,res){
 
             req.files.forEach((f,idx) => {
 
+                // ----------- Prepara o upload para o fileStore -----------
                 let oldPath = path.resolve(__dirname, '../') + '/' + f.path
                 let newPath = path.resolve(__dirname, '../') + '/public/fileStore/' + u_email + '/'
         
                 if (!fs.existsSync(newPath)){
                     fs.mkdirSync(newPath);
                 }
-        
+                // ----------- Extrai a extensão -----------------
+
                 var zip2 = new AdmZip(oldPath);
                 var zipEntries2 = zip2.getEntries();
                 var meta_dados2 = [];
@@ -86,26 +88,18 @@ router.post('/',upload.array('myFile'), function(req,res){
         
                 let filePath = newPath + f.originalname
         
+                // ----------- Faz upload ------------------------
+
                 fs.rename(oldPath,filePath, function (err){
                     if(err) throw err
                 })
+
+                // --------------- Cria novo recurso -------------
+
                 var r = new Recurso()
-                // Escreve no ficheiro as alterações
-                var files = jsonfile.readFileSync(path.resolve(__dirname, '../dbFiles.json'))
-                var d = new Date().toISOString().substring(0,16)
                 var n = req.files.length
                 
                 if(n > 1){
-                    files.push({
-                        date: d,
-                        name: f.originalname,
-                        mimetype: f.mimetype,
-                        size: f.size,
-                        desc: req.body.desc[idx],
-                        tipo: req.body.tipo[idx],
-                        ext: ext,
-                        nome: nome
-                    })
                     r.tipo = req.body.tipo[idx], // Relatorio,tese,exame,artigo,aplicacao,slides
                     r.titulo = req.body.titulo[idx]
                     r.descricao = req.body.desc[idx]
@@ -117,44 +111,61 @@ router.post('/',upload.array('myFile'), function(req,res){
                     
                 }
                 else if (n == 1){
-                    files.push({
-                        date: d,
-                        name: f.originalname,
-                        mimetype: f.mimetype,
-                        size: f.size,
-                        desc: req.body.desc,
-                        tipo: req.body.tipo,
-                        ext: ext,
-                        nome: nome
-                    })
-                    r.tipo = req.body.tipo, // Relatorio,tese,exame,artigo,aplicacao,slides
+                    r.tipo = req.body.tipo,
                     r.titulo = req.body.titulo
                     r.descricao = req.body.desc
-                    r.subtitulo = req.body.subtitulo // Opcional 
+                    r.subtitulo = req.body.subtitulo 
                     r.dataCriacao = req.body.dataCriacao 
                     r.visibilidade = req.body.visibilidade
                     r.hashtags = req.body.hashtags[0].split(',')
                     r.nome = nome
                 }
-        
-                jsonfile.writeFileSync(path.resolve(__dirname, '../dbFiles.json'),files)
-        
                 r.rating = 0
                 r.autor = u_email
         
+                // --------------- Faz POST do recurso -------------
+
                 axios.post('http://localhost:7777/recurso?token='+token,r)
-                    .then(console.log("Registado"))
+                    .then(data => {
+                        var id = data.data.message;
+                        console.log("Recurso registado na base de dados!")
+                        var files = jsonfile.readFileSync(path.resolve(__dirname, '../dbFiles.json'))
+                        var d = new Date().toISOString().substring(0,16)
+                        
+                        if(n > 1){
+                            files.push({
+                                date: d,
+                                name: f.originalname,
+                                desc: req.body.desc[idx],
+                                tipo: req.body.tipo[idx],
+                                ext: ext,
+                                nome: nome,
+                                id: id
+                            })
+                        }
+                        else if(n == 1){
+                            files.push({
+                                date: d,
+                                name: f.originalname,
+                                desc: req.body.desc,
+                                tipo: req.body.tipo,
+                                ext: ext,
+                                nome: nome,
+                                id: id
+                            })
+                        }
+                        jsonfile.writeFileSync(path.resolve(__dirname, '../dbFiles.json'),files)
+                    })
                     .catch(err => console.log("Erro:"+err))
         
-                // Faz unzip
+                // -------------------- Faz unzip --------------------
                 var zip = new AdmZip(filePath);
                 var zipEntries = zip.getEntries();
                 var meta_dados = [];
                 zipEntries.forEach(function(zipEntry) {
                     meta_dados.push(zipEntry.toString());
                 });
-        
-                // Remove o file extension
+
                 var folder_dest = newPath + f.originalname.split('.').slice(0, -1).join('.') + "/"
         
                 // Extrai zip para uma pasta com o mesmo nome

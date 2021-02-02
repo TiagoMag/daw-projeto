@@ -2,6 +2,7 @@ extends layout
 block content
     script(src='/javascripts/jquery-3.5.1.min.js')
     script(src='/javascripts/imagens.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js')
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css')
     #display.w3-card-4.modal
     .w3-container.w3-teal
@@ -11,7 +12,6 @@ block content
             th Date
             th File
             th Description
-            th Size
             th Tipo
             th Extensão
         each f in files  
@@ -19,7 +19,6 @@ block content
                 td #{f.date}
                 td #{f.name}
                 td #{f.desc}
-                td #{f.size}
                 td #{f.tipo}
                 td #{f.ext}
 

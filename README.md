@@ -7,7 +7,7 @@ Todo o repositório foi realizado pelos elementos:
 - [Tiago Magalhães, A84485](https://github.com/TiagoMag)
 
 ## About
-### Plataforma de Gestão e Disponibilização deRecursos Educativos
+### Plataforma de Gestão e Disponibilização de Recursos Educativos
 Plataforma que disponibiliza recursos educativos de vários tipos: livros, artigos, aplicações, trabalhos de alunos, monografias, relatórios
 
 # Requisitos
@@ -22,8 +22,11 @@ Plataforma que disponibiliza recursos educativos de vários tipos: livros, artig
 ## Comandos úteis:
 
 ```bash
-# Importa dados de um ficheiro json para o mongo
-mongoimport -d PGR -c users --jsonArray db.json
+# Importa dados dos utilizadores de um ficheiro json para o mongo
+mongoimport -d PGR -c users --jsonArray datasets/db.json
+
+# Importa dados dos recursos de um ficheiro json para o mongo
+mongoimport -d PGR -c recursos --jsonArray datasets/dbrecurso.json
 
 # Correr servers que dão restart em saves (ctrl+s)
 npm run devstart
@@ -51,6 +54,5 @@ db.users.deleteOne({"_id":ObjectId("5fe0fb1e752091173a8732e8")})
 - [ ] Permitir que os outros utilizadores comentem Posts;
 - [ ] Criar um sistema de ranking para os recursos (atribuição de estrelas pelos utilizadores);
 - [X] Auth com password + user + token
-
-
-
+- [ ] Só aceitar zips
+- [ ] Funções auxiliares ficheiro à parte

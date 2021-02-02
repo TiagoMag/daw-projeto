@@ -1,30 +1,30 @@
-var count = 0
-
 function showImage(name,ext,tipo,user){
-    var name_without_ext = name.split('.').slice(0, -1).join('.')
-    if(tipo == "aplicacao")
-        var ficheiro = '<p>' + name + ', ' + ext + '</p>'
-    else
-        var ficheiro = '<a href=/fileStore/' + user + '/' + name_without_ext + "/" + name_without_ext + "." + ext + ' target="_blank">Ver Ficheiro</a>'
+   var name_without_ext = name.split('.').slice(0, -1).join('.')
+   if(tipo == "aplicacao")
+       var ficheiro = '<p>' + name + ', ' + ext + '</p>'
+   else
+       var ficheiro = '<a href=/fileStore/' + user + '/' + name_without_ext + "/" + name_without_ext + "." + ext + ' target="_blank">Ver Ficheiro</a>'
 
-    var fileObj = `
-        <div class="w3-row w3-margin">
-            <div class="w3-col s6">
-                ${ficheiro}
-            </div>
-            <div class="w3-col s6 w3-border">
-                <p>Filename: ${name}</p>
-                <p>Tipo: ${tipo}</p>
-                <p>Formato: ${ext}</p>
-            </div>
-        </div>
-    `
-    
-    var download = $('<div><a href="/files/download/' + name + '">Download</a></div>')
-    $("#display").empty()
-    $("#display").append(fileObj,download)
-    $("#display").modal()
+   var fileObj = `
+       <div class="w3-row w3-margin">
+           <div class="w3-col s6">
+               ${ficheiro}
+           </div>
+           <div class="w3-col s6 w3-border">
+               <p>Filename: ${name}</p>
+               <p>Tipo: ${tipo}</p>
+               <p>Formato: ${ext}</p>
+           </div>
+       </div>
+   `
+   
+   var download = $('<div><a href="/files/download/' + name + '">Download</a></div>')
+   $("#display").empty()
+   $("#display").append(fileObj,download)
+   $("#display").modal()
 }
+
+var count = 0
 
 function addFile(){
     count++;
