@@ -3,7 +3,7 @@ extends header
 block content
     .w3-row
         .w3-dropdown-hover.w3-white.w3-margin
-            label Procurar por
+            label Procurar por 
             select(name="ord" id="ord" )
                 option(value="nome") Autor 
                 option(value="tipo") Tipo
@@ -16,6 +16,7 @@ block content
             table.w3-table-all#myTable.w3-hoverable
                 thead
                     tr
+                        th Id
                         th Tipo
                         th Título 
                         th Descrição
@@ -38,16 +39,28 @@ block content
                     "url": "http://localhost:7777/recurso/lista?token="+token,
                     "type": "GET"
                 },
+                "columnDefs": [
+                    {
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false
+                    }
+                ],
                 "columns": [
-                    { "data": "tipo"},
-                    { "data": "titulo" },
+                    { "data": "_id" },
+                    { "data": "tipo" },
+                    { "data": "titulo",
+                        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                            $(nTd).html("<a href='http://localhost:7778/recursos/" + oData._id + "'>" + oData.titulo + "</a>");
+                        } 
+                    },
                     { "data": "descricao" },
                     { "data": "subtitulo" },
                     { "data": "dataCriacao" },
                     { "data": "dataRegisto" },
                     { "data": "hashtags" },
                     { "data": "nome" }
-                ],
+                ]
             });
         });
     script.

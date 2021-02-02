@@ -6,10 +6,14 @@ block content
             h2 PGR 
         form.w3-container(action='/login' method='POST')
             label.w3-text-teal
-                p.w3-text-white Email:
+                p.w3-text-white 
+                    i(class="fas fa-envelope") 
+                    label  Email:
                     input.w3-input.w3-border.w3-light-grey(type='text' name='email')
             label.w3-text-teal
-                p.w3-text-white Password: 
+                p.w3-text-white
+                    i(class="fas fa-key") 
+                    label  Password: 
                     input.w3-input.w3-border.w3-light-grey(type='password' name='password')
             if(err=="1")
                 p <i class="fas fa-info-circle"></i> Email/Passowrd incorretos

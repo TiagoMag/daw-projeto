@@ -1,11 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var axios = require('axios')
 var jwt_decode = require('jwt-decode');
-var multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
-var path = require('path')
-var fs = require('fs')
 
 /* Search page */
 router.get("/", function(req,res){
