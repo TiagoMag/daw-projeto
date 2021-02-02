@@ -1,42 +1,45 @@
-extends layout
-
-block content
-    script(src='/jquery-3.5.1.min.js')
-    script(src='/imagens.js')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js')
-    .w3-container.w3-teal
-        header.w3-container.w3-teal
-            h2 Registar
-        form.w3-container(action='/registar' method='POST' enctype='multipart/form-data')
-            label.w3-text-teal
-                p.w3-text-white Nome:
-                    input.w3-input.w3-border.w3-light-grey(type='text' name='nome')
-            label.w3-text-teal
-                p.w3-text-white Email:
-                    input.w3-input.w3-border.w3-light-grey(type='text' name='email')
-
-            label.w3-text-teal
-                p.w3-text-white Password:
-                    input.w3-input.w3-border.w3-light-grey(type='password' name='password')
-            label.w3-text-teal
-                p.w3-text-white Filiação:
-                    select(id="filiacao" name="filiacao")
-                        option(value="estudante") Estudante
-                        option(value="professor") Professor 
-            label.w3-text-teal
-                p.w3-text-white Nível: 
-                    select(id="nivel" name="nivel")
-                            option(value="consumidor") Consumidor
-                            option(value="produtor") Produtor
-            label.w3-text-teal
-                p.w3-text-white Foto de Perfil:
-                    input.w3-input.w3-border.w3-light-grey(type='file' name='myFile')
-            br
-            input.w3-btn.w3-tealw3-btn.w3-border.w3-margin-bottom.w3-left.w3-teal(type='submit' value='Registar')
-            input.w3-btn.w3-border.w3-margin-bottom.w3-right.w3-teal(type='reset' value='Limpar')
-    .w3-container.w3-teal
-        footer.w3-container
-            p
-                a(href="/") Voltar à página principal
-
-
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible' content='ie=edge')
+  title Login/Registar
+  link(rel='stylesheet' href='/stylesheets/fonts/material-icon/css/material-design-iconic-font.min.css')
+  link(rel='stylesheet' href='/stylesheets/login.css')
+.main
+  // Sign up form
+  section.signup
+    .container
+      .signup-content
+        .signup-form
+          h2.form-title Sign up
+          form#register-form.register-form(method='POST' action='/login')
+            .form-group
+              label(for='name')
+                i.zmdi.zmdi-account.material-icons-name
+              input#name(type='text' name='name' placeholder='Your Name')
+            .form-group
+              label(for='email')
+                i.zmdi.zmdi-email
+              input#email(type='email' name='email' placeholder='Your Email')
+            .form-group
+              label(for='pass')
+                i.zmdi.zmdi-lock
+              input#pass(type='password' name='pass' placeholder='Password')
+            .form-group
+              label(for='re-pass')
+                i.zmdi.zmdi-lock-outline
+              input#re_pass(type='password' name='re_pass' placeholder='Repeat your password')
+            .form-group
+              input#agree-term.agree-term(type='checkbox' name='agree-term')
+              label.label-agree-term(for='agree-term')
+                span
+                  span
+                | I agree all statements in  
+                a.term-service(href='#') Terms of service
+            .form-group.form-button
+              input#signup.form-submit(type='submit' name='signup' value='Register')
+        .signup-image
+          figure
+            img(src='images/signup-image.jpg' alt='sing up image')
+          a.signup-image-link(href='#') I am already member

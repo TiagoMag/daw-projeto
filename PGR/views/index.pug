@@ -1,30 +1,37 @@
-extends layout
-
-block content
-    .w3-container.w3-teal
-        header.w3-container.w3-teal
-            h2 PGR 
-        form.w3-container(action='/login' method='POST')
-            label.w3-text-teal
-                p.w3-text-white 
-                    i(class="fas fa-envelope") 
-                    label  Email:
-                    input.w3-input.w3-border.w3-light-grey(type='text' name='email')
-            label.w3-text-teal
-                p.w3-text-white
-                    i(class="fas fa-key") 
-                    label  Password: 
-                    input.w3-input.w3-border.w3-light-grey(type='password' name='password')
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible' content='ie=edge')
+  title Login/Registar
+  link(rel='stylesheet' href='/stylesheets/fonts/material-icon/css/material-design-iconic-font.min.css')
+  link(rel='stylesheet' href='/stylesheets/login.css')
+.main
+  // Sing in  Form
+  section.sign-in
+    .container
+      .signin-content
+        .signin-image
+          figure
+            img(src='images/signin-image.jpg' alt='sing up image')
+          a.signup-image-link(href='/registar') Create an account
+        .signin-form
+          h2.form-title Sign up
+          form#login-form.register-form(method='POST' action='/login')
+            .form-group
+              label(for='your_name')
+                i.zmdi.zmdi-account.material-icons-name
+              input#your_name(type='text' name='email' placeholder='Your Name')
+            .form-group
+              label(for='your_pass')
+                i.zmdi.zmdi-lock
+              input#your_pass(type='password' name='password' placeholder='Password')
             if(err=="1")
                 p <i class="fas fa-info-circle"></i> Email/Passowrd incorretos
+                alert("erro1")
             else if (err=="2")
                 p <i class="fas fa-info-circle"></i> Sessão Expirada
-            input.w3-btn.w3-tealw3-btn.w3-border.w3-margin-bottom.w3-right.w3-teal(type='submit' value='Login')
-            br
-            p
-                | Não és membro?
-                a(href="/registar")    Registar Agora
-    .w3-container.w3-teal
-        footer.w3-container
-            p
-                adress Gerado por PGR:: André Morais, João Nuno Abreu, Tiago Magalhães
+                alert("erro2")
+            .form-group.form-button
+              input#signin.form-submit(type='submit' value='Login')
+          
