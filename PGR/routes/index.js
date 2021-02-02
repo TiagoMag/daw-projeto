@@ -110,7 +110,7 @@ router.post('/login', function(req, res) {
       if(verifyProdutor(dados.data.token) || verifyConsumidor(dados.data.token)) 
         res.redirect("/perfil")
     })
-    .catch( err => {res.cookie('logout', "0", {
+    .catch( err => {res.cookie('auth', "1", {
       expires: new Date(Date.now() + '1d'),
       secure: false, // set to true if your using https
       httpOnly: true
