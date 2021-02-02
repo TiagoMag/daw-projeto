@@ -1,77 +1,39 @@
 extends header
 block content
+    .w3-container.w3-margin
+        h2="Recurso: " + data.titulo
+        .w3-container.w3-margin
+            h6 
+                strong Subtítulo: 
+                | #{data.subtitulo}
+            h6 
+                strong Descrição: 
+                | #{data.descricao}
+            h6 
+                strong Hashtags: 
+                | #{data.hashtags} 
+            h6 
+                strong Classificação: 
+                | #{data.rating} 
+            h6 
+                strong Data de Criação: 
+                | #{data.dataCriacao}
+            h6 
+                strong Autor: 
+                | #{data.autor} 
     if(f.tipo === "cartaz")
         .w3-row
             div(class="w3-col s3")
                 div(class="containerp")
-                    p Título
                     img(src='/fileStore/' + u_email  + '/' + name_without_ext + '/' + name_without_ext + '.' + f.ext class="imgp" style="width:100%")
-                    p Subtítulo
-            div(class="w3-col s9" )
-                ul 
-                    hr
-                    li Descrição:
-                    br
-                    br
-                    li Hashtags:
-                    br
-                    br
-                    li Classificação:
-                    br
-                    br
-                    li Data de Criação
-                    br
-                    br
-                    hr
+                    
     else if(f.ext == "pdf")
         .w3-row
             div(class="w3-col s3")
                 div(class="containerp")
-                    p Título
                     a(href='/fileStore/' + u_email  + '/' + name_without_ext + '/' + name_without_ext + '.' + f.ext target="_blank") Ver Ficheiro
-                    p Subtítulo
-            div(class="w3-col s9" )
-                ul 
-                    hr
-                    li Descrição:
-                    br
-                    br
-                    li Hashtags:
-                    br
-                    br
-                    li Classificação:
-                    br
-                    br
-                    li Data de Criação:
-                    br
-                    br
-                    hr
     else
         .w3-row
             div(class="w3-col s3")
                 div(class="containerp")
-                    p Título
-                    p Subtítulo
-                div
                     a(href="/files/download/" + f.name) Download
-
-
-            div(class="w3-col s9" )
-                ul 
-                    hr
-                    li Descrição:
-                    br
-                    br
-                    li Hashtags:
-                    br
-                    br
-                    li Classificação:
-                    br
-                    br
-                    li Data de Criação:
-                    br
-                    br
-                    hr
-    
-                    
-                    

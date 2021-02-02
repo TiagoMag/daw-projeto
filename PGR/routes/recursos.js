@@ -3,6 +3,7 @@ var router = express.Router();
 var jwt_decode = require('jwt-decode');
 var jsonfile = require('jsonfile')
 var path = require('path')
+var axios = require('axios')
 
 /* Search page */
 router.get("/", function(req,res){
@@ -25,7 +26,11 @@ router.get("/:id", function(req,res){
       name_without_ext = f.name.split('.').slice(0, -1).join('.')
     }
   });
-  res.render('recurso', { token: req.cookies.token,isProd: produtor, isCons: consumidor,f: f, name_without_ext: name_without_ext, u_email: u_email})  
+
+  axios.get('http://localhost:7777/recurso/' + f.id + '?token=' + req.cookies.token)
+    .then(data => {res.render('recurso', {data: data.data, token: req.cookies.token,isProd: produtor, isCons: consumidor,f: f, name_without_ext: name_without_ext, u_email: u_email})})
+    .catch(err => res.render('error', {error: err}));
+
 })
     
 // --------------------------------------------Funções auxiliares -------------------------------------------

@@ -65,4 +65,11 @@ router.get('/tipos', (req, res) => {
     .catch(err => res.status(500).json({message: err})) 
 });
 
+/* GET id de um recurso */
+router.get('/:id', (req, res) => {
+    Recurso.consultar(req.params.id)
+        .then(dados => res.status(200).jsonp(dados) )
+        .catch(e => res.status(500).jsonp({error: e}))
+});
+
 module.exports = router;

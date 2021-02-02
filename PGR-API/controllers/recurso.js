@@ -52,3 +52,10 @@ module.exports.tipos = () => {
     { $project: { _id: 1, count: 1 } },
   ]);
 };
+
+/* Devolve a informação de um recurso */
+module.exports.consultar = id => {
+  return Recurso
+      .findOne({_id: id})
+      .exec()
+}
