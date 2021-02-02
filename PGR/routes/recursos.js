@@ -4,17 +4,18 @@ var jwt_decode = require('jwt-decode');
 var jsonfile = require('jsonfile')
 var path = require('path')
 var axios = require('axios')
+const Commons = require('../commons/commons')
 
 /* Search page */
 router.get("/", function(req,res){
-  var consumidor = verifyConsumidor(req.cookies.token)
-  var produtor = verifyProdutor(req.cookies.token)
+  var consumidor = Commons.verifyConsumidor(req.cookies.token)
+  var produtor = Commons.verifyProdutor(req.cookies.token)
   res.render('recursos', { token: req.cookies.token,isProd: produtor, isCons: consumidor})  
 })
 
 router.get("/:id", function(req,res){
-  var consumidor = verifyConsumidor(req.cookies.token)
-  var produtor = verifyProdutor(req.cookies.token)
+  var consumidor = Commons.verifyConsumidor(req.cookies.token)
+  var produtor = Commons.verifyProdutor(req.cookies.token)
   var token = req.cookies.token
   u_email = jwt_decode(token).id
   var files = jsonfile.readFileSync(path.resolve(__dirname, '../dbFiles.json'))
@@ -33,19 +34,5 @@ router.get("/:id", function(req,res){
 
 })
     
-// --------------------------------------------Funções auxiliares -------------------------------------------
-
-/* Verifica se nível de utilizador é produtor */
-function verifyProdutor(token){
-  u_level = jwt_decode(token).nivel
-  return u_level == 'produtor' ? true : false
-}
-
-/* Verifica se nível de utilizador é consumidor */
-function verifyConsumidor(token){
-  u_level = jwt_decode(token).nivel
-  return u_level == 'consumidor' ? true : false
-}
-
 module.exports = router;
   

@@ -7,6 +7,7 @@ var upload = multer({ dest: 'uploads/' })
 var path = require('path')
 var fs = require('fs')
 const User = require('../models/user')
+const Commons = require('../commons/commons')
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -58,9 +59,9 @@ router.get('/perfil', function(req, res) {
 
       // -----------------------------------------------------------------------
 
-      if(verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
-      var consumidor = verifyConsumidor(req.cookies.token)
-      var produtor = verifyProdutor(req.cookies.token)
+      if(Commons.verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
+      var consumidor = Commons.verifyConsumidor(req.cookies.token)
+      var produtor = Commons.verifyProdutor(req.cookies.token)
       res.render("perfil", {title: 'PGR', perfil: dados.data.data, extensao: extensao , isProd: produtor, isCons: consumidor, temFoto: temFoto, id: u_id, token: req.cookies.token})
     })
     .catch(err => res.render('error',{error: err}))
@@ -106,8 +107,9 @@ router.post('/login', function(req, res) {
         httpOnly: true
       });
       res.cookie('logout', {expires: Date.now()});
-      if(verifyAdmin(dados.data.token) == true) res.redirect("/admin/edit")
-      if(verifyProdutor(dados.data.token) || verifyConsumidor(dados.data.token)) 
+      res.cookie('auth', {expires: Date.now()});
+      if(Commons.verifyAdmin(dados.data.token) == true) res.redirect("/admin/edit")
+      if(Commons.verifyProdutor(dados.data.token) || Commons.verifyConsumidor(dados.data.token)) 
         res.redirect("/perfil")
     })
     .catch( err => {res.cookie('auth', "1", {
@@ -119,9 +121,9 @@ router.post('/login', function(req, res) {
 
 /* Página de admin ... */
 router.get('/admin/edit',function(req,res){
-  if(verifyProdutor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
-  if(verifyConsumidor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
-  if(verifyAdmin(req.cookies.token) == true){
+  if(Commons.verifyProdutor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
+  if(Commons.verifyConsumidor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
+  if(Commons.verifyAdmin(req.cookies.token) == true){
   axios.get('http://localhost:7777/users/lista?token=' + req.cookies.token)
     .then(data => {res.render('edit', {token: req.cookies.token,list: data.data, title: 'PGR'})})
     .catch(err => res.render('error', {error: err}))}
@@ -130,9 +132,9 @@ router.get('/admin/edit',function(req,res){
 /* Página de admin ... */
 router.get('/admin/:id',function(req,res){
   id = req.params.id
-  if(verifyProdutor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
-  if(verifyConsumidor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
-  if(verifyAdmin(req.cookies.token) == true){
+  if(Commons.verifyProdutor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
+  if(Commons.verifyConsumidor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
+  if(Commons.verifyAdmin(req.cookies.token) == true){
   axios.get('http://localhost:7777/users/perfil/' + id + '?token=' + req.cookies.token)
     .then(data => {res.render('paguser', {id:id ,token: req.cookies.token,list: data.data, title: 'PGR'})})
     .catch(err => res.render('error', {error: err}))}
@@ -149,24 +151,5 @@ router.get("/logout", function(req,res){
   res.redirect("/")
 })
 
-// --------------------------------------------Funções auxiliares -------------------------------------------
-
-/* Verifica se nível de utilizador é admin */
-function verifyAdmin(token){
-  u_level = jwt_decode(token).nivel
-  return u_level == 'admin' ? true : false
-}
-
-/* Verifica se nível de utilizador é produtor */
-function verifyProdutor(token){
-  u_level = jwt_decode(token).nivel
-  return u_level == 'produtor' ? true : false
-}
-
-/* Verifica se nível de utilizador é consumidor */
-function verifyConsumidor(token){
-  u_level = jwt_decode(token).nivel
-  return u_level == 'consumidor' ? true : false
-}
 
 module.exports = router;
