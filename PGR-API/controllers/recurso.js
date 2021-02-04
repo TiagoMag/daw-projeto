@@ -119,5 +119,4 @@ module.exports.updateAverage = (email,rating,id,flag) => {
         .catch(err => console.log("Erro ao introduzir voto")+err)
       ])
     }
-};
-
+  };

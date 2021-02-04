@@ -3,7 +3,6 @@ var router = express.Router();
 var moment = require('moment'); 
 const Recurso = require('../controllers/recurso');
 
-
 /* GET lista de recursos por utilizador/tipo/ano/hashtag */
 router.get('/lista', function(req, res, next) {
     // query strings
