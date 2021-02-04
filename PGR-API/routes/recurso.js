@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var moment = require('moment'); 
-const jwt = require('jsonwebtoken');
 const Recurso = require('../controllers/recurso');
-const Voto = require('../controllers/voto');
+
 
 /* GET lista de recursos por utilizador/tipo/ano/hashtag */
 router.get('/lista', function(req, res, next) {
