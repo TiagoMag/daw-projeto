@@ -1,7 +1,7 @@
 extends header
 block content
     .w3-container.w3-margin
-        h2="Recurso: " + data.titulo
+        h2="Título: " + data.titulo
         .w3-container.w3-margin
             h6 
                 strong Subtítulo: 
@@ -28,13 +28,13 @@ block content
             .w3-row
                 div(class="w3-col s2")
                     div(class="containerp")
-                        img(src='/fileStore/' + u_email  + '/' + name_without_ext + '/' + name_without_ext + '.' + f.ext class="imgp" style="width:100%")
+                        img(src='/fileStore/' + data.autor  + '/' + name_without_ext + '/data/' + name_without_ext + '.' + f.ext class="imgp" style="width:100%")
                         
         else if(f.ext == "pdf")
             .w3-row
                 div(class="w3-col s2")
                     div(class="containerp")
-                        a(href='/fileStore/' + u_email  + '/' + name_without_ext + '/' + name_without_ext + '.' + f.ext target="_blank") Ver Ficheiro
+                        a(href='/fileStore/' + data.autor  + '/' + name_without_ext + '/data/' + name_without_ext + '.' + f.ext target="_blank") Ver Ficheiro
         
         .w3-row
             div(class="w3-col s2")

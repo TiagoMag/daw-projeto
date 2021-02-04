@@ -9,6 +9,7 @@ var jwt_decode = require('jwt-decode');
 var AdmZip = require('adm-zip');
 var axios = require('axios')
 const Recurso = require('../models/recurso');
+var Commons = require('../commons/commons')
 
 /* GET files */
 router.get('/',function(req,res){
@@ -32,16 +33,31 @@ router.get('/download/:fname', function(req,res){
 
     // ---------------------- Zippa de novo ------------------------
 
-    var zip = new AdmZip();
+    var archiver = require('archiver');
+    var archive = archiver('zip');
     var name_without_ext = req.params.fname.split('.').slice(0, -1).join('.')
-    var folder = path.resolve(__dirname, '../') + "/public/fileStore/" + u_email + '/' + name_without_ext
-    fs.readdirSync(folder).forEach(file => {
-        zip.addLocalFile(folder + "/" + path.parse(file).base);
+    var source_dir = path.resolve(__dirname, '../') + "/public/fileStore/" + u_email + '/' + name_without_ext
+    let newZip = path.resolve(__dirname, '../') + '/public/fileStore/' + u_email + '/' + req.params.fname
+    var output = fs.createWriteStream(newZip);
+
+    output.on('close', function () {
+        console.log(archive.pointer() + ' total bytes');
+        console.log('archiver has been finalized and the output file descriptor has closed.');
     });
 
-    let newZip = path.resolve(__dirname, '../') + '/public/fileStore/' + u_email + '/' + req.params.fname
+    archive.on('error', function(err){
+        throw err;
+    });
 
-    zip.writeZip(newZip);
+    archive.pipe(output);
+
+    // append files from a sub-directory, putting its contents at the root of archive
+    archive.directory(source_dir, false);
+
+    // append files from a sub-directory and naming it `new-subdir` within the archive
+    archive.directory('subdir/', 'new-subdir');
+
+    archive.finalize();
 
     // -------------------------------------------------------------
 
@@ -53,6 +69,7 @@ router.get('/download/:fname', function(req,res){
     });
 })
 
+
 /* POST file */
 router.post('/',upload.array('myFile'), function(req,res){
 
@@ -62,123 +79,162 @@ router.post('/',upload.array('myFile'), function(req,res){
     axios.get('http://localhost:7777/users/perfil?email=' + u_email + "&token=" + token)  
         .then(response => {
             var nome = response.data.data.nome
-
+            var erros = []
+        
             req.files.forEach((f,idx) => {
 
                 // ----------- Prepara o upload para o fileStore -----------
+
                 let oldPath = path.resolve(__dirname, '../') + '/' + f.path
                 let newPath = path.resolve(__dirname, '../') + '/public/fileStore/' + u_email + '/'
+                
         
                 if (!fs.existsSync(newPath)){
                     fs.mkdirSync(newPath);
                 }
-                // ----------- Extrai a extensão -----------------
+                
+                // ------------ Checkar manifesto -------------------------
 
                 var zip2 = new AdmZip(oldPath);
                 var zipEntries2 = zip2.getEntries();
                 var meta_dados2 = [];
+                var manifest = ""
+                var found = false
                 zipEntries2.forEach(function(zipEntry2) {
-                    meta_dados2.push(zipEntry2);
+                    if(zipEntry2.name != "manifesto.json" && zipEntry2.isDirectory == false)
+                        meta_dados2.push(zipEntry2.entryName.substring(5));
+                    if(zipEntry2.entryName == "manifesto.json") {
+                        manifest = zipEntry2.getData().toString('utf8')
+                    }
+                    if(zipEntry2.entryName == "data/")
+                        found = true
                 });
-                if(req.body.tipo != "aplicacao"){
-                    var ext = path.extname(meta_dados2[0]["name"]).substring(1)
-                }
-                else
-                    var ext = "zip"
-        
-                let filePath = newPath + f.originalname
-        
-                // ----------- Faz upload ------------------------
+                if(found != false && manifest != "" && Commons.manifestValidator(meta_dados2,manifest,req.body.tipo)){
 
-                fs.rename(oldPath,filePath, function (err){
-                    if(err) throw err
-                })
-
-                // --------------- Cria novo recurso -------------
-
-                var r = new Recurso()
-                var n = req.files.length
-                
-                if(n > 1){
-                    r.tipo = req.body.tipo[idx], // Relatorio,tese,exame,artigo,aplicacao,slides
-                    r.titulo = req.body.titulo[idx]
-                    r.descricao = req.body.desc[idx]
-                    r.subtitulo = req.body.subtitulo[idx] // Opcional 
-                    r.dataCriacao = req.body.dataCriacao[idx] 
-                    r.visibilidade = req.body.visibilidade[idx]
-                    r.hashtags = req.body.hashtags[idx].split(",")
-                    r.nome = nome
+                    // --------------- Extrai a extensão ----------------------
                     
-                }
-                else if (n == 1){
-                    r.tipo = req.body.tipo,
-                    r.titulo = req.body.titulo
-                    r.descricao = req.body.desc
-                    r.subtitulo = req.body.subtitulo 
-                    r.dataCriacao = req.body.dataCriacao 
-                    r.visibilidade = req.body.visibilidade
-                    r.hashtags = req.body.hashtags[0].split(',')
-                    r.nome = nome
-                }
-                r.rating = 0
-                r.autor = u_email
-        
-                // --------------- Faz POST do recurso -------------
+                    console.log("meta_dados2 = " + meta_dados2)
 
-                axios.post('http://localhost:7777/recurso?token='+token,r)
-                    .then(data => {
-                        var id = data.data.message;
-                        console.log("Recurso registado na base de dados!")
-                        var files = jsonfile.readFileSync(path.resolve(__dirname, '../dbFiles.json'))
-                        var d = new Date().toISOString().substring(0,16)
-                        
-                        if(n > 1){
-                            files.push({
-                                date: d,
-                                name: f.originalname,
-                                desc: req.body.desc[idx],
-                                tipo: req.body.tipo[idx],
-                                ext: ext,
-                                nome: nome,
-                                id: id
-                            })
-                        }
-                        else if(n == 1){
-                            files.push({
-                                date: d,
-                                name: f.originalname,
-                                desc: req.body.desc,
-                                tipo: req.body.tipo,
-                                ext: ext,
-                                nome: nome,
-                                id: id
-                            })
-                        }
-                        jsonfile.writeFileSync(path.resolve(__dirname, '../dbFiles.json'),files)
+                    if(meta_dados2.length == 1){
+                        var ext = path.extname(meta_dados2[0]).substring(1)
+                    }
+                    else
+                        var ext = "zip"
+                
+                    console.log("ext = " + ext)
+
+                    // ----------- Faz upload ------------------------
+
+                    let filePath = newPath + f.originalname
+                    
+                    fs.rename(oldPath,filePath, function (err){
+                        if(err) throw err
                     })
-                    .catch(err => console.log("Erro:"+err))
-        
-                // -------------------- Faz unzip --------------------
-                var zip = new AdmZip(filePath);
-                var zipEntries = zip.getEntries();
-                var meta_dados = [];
-                zipEntries.forEach(function(zipEntry) {
-                    meta_dados.push(zipEntry.toString());
-                });
 
-                var folder_dest = newPath + f.originalname.split('.').slice(0, -1).join('.') + "/"
-        
-                // Extrai zip para uma pasta com o mesmo nome
-                zip.extractAllTo(folder_dest, true);
-                console.log("Zip extracted to: " + folder_dest)
-        
-                // Apaga o zip
-                fs.unlink(filePath, function(err) {
-                    if (err) throw err
-                    else console.log("Successfully deleted the zip: " + filePath)
-                })
+                    // --------------- Cria novo recurso -------------
+
+                    var r = new Recurso()
+                    var n = req.files.length
+
+                    if(n > 1){
+                        r.tipo = req.body.tipo[idx], // Relatorio,tese,exame,artigo,aplicacao,slides
+                        r.titulo = req.body.titulo[idx]
+                        r.descricao = req.body.desc[idx]
+                        r.subtitulo = req.body.subtitulo[idx] // Opcional 
+                        r.dataCriacao = req.body.dataCriacao[idx] 
+                        r.visibilidade = req.body.visibilidade[idx]
+                        r.hashtags = req.body.hashtags[idx].split(",")
+                        r.nome = nome
+
+                    }
+                    else if (n == 1){
+                        r.tipo = req.body.tipo,
+                        r.titulo = req.body.titulo
+                        r.descricao = req.body.desc
+                        r.subtitulo = req.body.subtitulo 
+                        r.dataCriacao = req.body.dataCriacao 
+                        r.visibilidade = req.body.visibilidade
+                        r.hashtags = req.body.hashtags[0].split(',')
+                        r.nome = nome
+                    }
+                    r.rating = 0
+                    r.autor = u_email
+                
+                    // --------------- Faz POST do recurso -------------
+
+                    axios.post('http://localhost:7777/recurso?token='+token,r)
+                        .then(data => {
+                            var id = data.data.message;
+                            console.log("Recurso registado na base de dados!")
+                            var files = jsonfile.readFileSync(path.resolve(__dirname, '../dbFiles.json'))
+                            var d = new Date().toISOString().substring(0,16)
+
+                            if(n > 1){
+                                files.push({
+                                    date: d,
+                                    name: f.originalname,
+                                    desc: req.body.desc[idx],
+                                    tipo: req.body.tipo[idx],
+                                    ext: ext,
+                                    nome: nome,
+                                    id: id
+                                })
+                            }
+                            else if(n == 1){
+                                files.push({
+                                    date: d,
+                                    name: f.originalname,
+                                    desc: req.body.desc,
+                                    tipo: req.body.tipo,
+                                    ext: ext,
+                                    nome: nome,
+                                    id: id
+                                })
+                            }
+                            jsonfile.writeFileSync(path.resolve(__dirname, '../dbFiles.json'),files)
+                        })
+                        .catch(err => console.log("Erro:"+err))
+                    
+                    // -------------------- Faz unzip --------------------
+
+                    var zip = new AdmZip(filePath);
+                    var zipEntries = zip.getEntries();
+                    var meta_dados = [];
+                    zipEntries.forEach(function(zipEntry) {
+                        meta_dados.push(zipEntry.toString());
+                    });
+
+                    var folder_dest = filePath.split('.').slice(0, -1).join('.') + "/"
+                
+                    // Extrai zip para uma pasta com o mesmo nome
+                    zip.extractAllTo(folder_dest, true);
+                    console.log("Zip extracted to: " + folder_dest)
+                
+                    // Apaga o zip
+                    fs.unlink(filePath, function(err) {
+                        if (err) throw err
+                        else console.log("Successfully deleted the zip: " + filePath)
+                    })
+                }
+                else{
+                    console.log("Tem erros na validação do manifest!")
+                    var entrou = false
+                    if(manifest == ""){
+                        erros.push("Manifesto não está presente no zip.")
+                        entrou = true
+                    }
+                    if(found == false){
+                        erros.push("Pasta data não está presente no zip.")
+                        entrou = true
+                    }
+                    if(entrou == false)
+                        erros.push("Foram encontrados erros no manifest no ficheiro: " + f.originalname + "\nO manifesto contém {" + JSON.parse(manifest).ficheiros + "}, e os ficheiros dentro do zip são {" + meta_dados2 + "}. Se ambos os arrays têm os mesmos elementos é porque o número de ficheiros é inválido para o tipo de recurso escolhido.")
+                }
             })
-            res.redirect('/perfil')
+            if(erros.length > 0)
+                res.render('error', {message:"Erro no manifest", error: erros})
+            else
+                res.redirect('/perfil')
         })    
 })
 

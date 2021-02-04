@@ -29,7 +29,7 @@ router.get("/:id", function(req,res){
   });
 
   axios.get('http://localhost:7777/recurso/' + f.id + '?token=' + req.cookies.token)
-    .then(data => {res.render('recurso', {data: data.data, token: req.cookies.token,isProd: produtor, isCons: consumidor,f: f, name_without_ext: name_without_ext, u_email: u_email})})
+    .then(data => {res.render('recurso', {data: data.data, token: req.cookies.token,isProd: produtor, isCons: consumidor,f: f, name_without_ext: name_without_ext,u_email:u_email})})
     .catch(err => res.render('error', {error: err}));
 
 })

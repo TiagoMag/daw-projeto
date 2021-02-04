@@ -55,4 +55,6 @@ db.users.deleteOne({"_id":ObjectId("5fe0fb1e752091173a8732e8")})
 - [ ] Criar um sistema de ranking para os recursos (atribuição de estrelas pelos utilizadores);
 - [X] Auth com password + user + token
 - [X] Só aceitar zips
-- [ ] Funções auxiliares ficheiro à parte
+- [X] Funções auxiliares ficheiro à parte
+- [ ] Upload foto de perfil dentro do perfil
+- [ ] Mudar sítio do manifestValidator
