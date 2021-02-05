@@ -11,15 +11,6 @@ var axios = require('axios')
 const Recurso = require('../models/recurso');
 var Commons = require('../commons/commons')
 
-/* GET files */
-router.get('/',function(req,res){
-    var token = req.cookies.token
-    u_email = jwt_decode(token).id
-    var d = new Date().toISOString().substring(0,16)
-    var files = jsonfile.readFileSync(path.resolve(__dirname, '../dbFiles.json'))
-    res.render("files",{title:"File List",files: files, d: d, u_email: u_email})
-})
-
 /* GET upload */
 router.get('/upload',function(req,res){
     var d = new Date().toISOString().substring(0,16)

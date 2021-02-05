@@ -1,25 +1,24 @@
 # Projeto DAW
 
 ## Elementos
+
 Todo o repositório foi realizado pelos elementos:
+
 - [André Morais, A83899](https://github.com/Demorales1998)
 - [João Abreu, A84802](https://github.com/JoaoNunoAbreu)
 - [Tiago Magalhães, A84485](https://github.com/TiagoMag)
 
-## About
-### Plataforma de Gestão e Disponibilização de Recursos Educativos
+## Plataforma de Gestão e Disponibilização de Recursos Educativos
+
 Plataforma que disponibiliza recursos educativos de vários tipos: livros, artigos, aplicações, trabalhos de alunos, monografias, relatórios
 
-# Requisitos
+## Requisitos
 
 **nodejs** - 3.5-3.9 </br>
 **npm** - Installs package dependencies</br>
 **mongodb** - Database</br>
 
-# Instalação
-
-
-## Comandos úteis:
+## Comandos úteis
 
 ```bash
 # Importa dados dos utilizadores de um ficheiro json para o mongo
@@ -35,7 +34,7 @@ npm run devstart
 sh clean.sh
 ```
 
-## Comandos úteis mongo:
+## Comandos úteis mongo
 
 ```bash
 show dbs;
@@ -43,11 +42,12 @@ db.users.find()
 db.users.deleteOne({"_id":ObjectId("5fe0fb1e752091173a8732e8")})
 ```
 
-## To Do list:
+## To Do list
+
 - [ ] Feed
 - [X] Download
 - [X] Upload
-- [X] Disponibilizar recursos educativos 
+- [X] Disponibilizar recursos educativos
 - [ ] Permitir adicionar novos tipos de recursos e novos recursos;
 - [ ] Ter os recursos classificados por ano, tipo, tema, ... (utilização de hashtags ou de uma taxonomia classificativa);
 - [ ] Permitir que um utilizador faça um Post sobre um recurso;
@@ -56,5 +56,5 @@ db.users.deleteOne({"_id":ObjectId("5fe0fb1e752091173a8732e8")})
 - [X] Auth com password + user + token
 - [X] Só aceitar zips
 - [X] Funções auxiliares ficheiro à parte
-- [ ] Upload foto de perfil dentro do perfil
+- [X] Upload foto de perfil dentro do perfil
 - [ ] Mudar sítio do manifestValidator

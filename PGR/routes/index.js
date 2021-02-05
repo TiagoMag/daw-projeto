@@ -94,9 +94,31 @@ router.post('/registar',upload.single('myFile'), function(req, res) {
 
   // regista utilizador
   axios.post('http://localhost:7776/users/registar',u)
-  .then(data => console.log("Registado"))
-  .catch(err => res.render('error',{error: err}))
+    .then(data => console.log("Registado"))
+    .catch(err => res.render('error',{error: err}))
+
   res.redirect("/")
+});
+
+/* POST newProfilePic */
+router.post('/newProfilePic',upload.single('myFile'), function(req, res) {
+  var token = req.cookies.token
+  u_email = jwt_decode(token).id
+  if(req.file){
+
+    //------------------------- Upload Profile Pic ----------------------------------
+
+    let oldPath = path.resolve(__dirname, '../') + '/' + req.file.path
+    let newPath = path.resolve(__dirname, '../') + '/public/profilepics/' + u_email + path.extname(req.file.originalname)
+
+    fs.rename(oldPath,newPath, function (err){
+      if(err) throw err
+    })
+
+    // ------------------------------------------------------------------------------
+  }
+
+  res.redirect("/perfil")
 });
 
 /* POST login */
@@ -143,14 +165,14 @@ router.get('/admin/:id',function(req,res){
   axios.get('http://localhost:7777/users/perfil/' + id + '?token=' + req.cookies.token)
     .then(data => {res.render('paguser', {id:id ,token: req.cookies.token,list: data.data, title: 'PGR'})})
     .catch(err => res.render('error', {error: err}))}
-  })
+})
 
-  /*Eliminar User*/ 
-  router.get("/admin/delete/:id", (req,res)=>{
-    axios.delete('http://localhost:7777/users/remove/' + req.params.id + '?token=' +req.cookies.token)
-      .then(data => res.redirect('/admin/edit') )
-      .catch(err => res.render('error', {error: err}))
-  })
+/* Eliminar User */ 
+router.get("/admin/delete/:id", (req,res)=>{
+  axios.delete('http://localhost:7777/users/remove/' + req.params.id + '?token=' +req.cookies.token)
+    .then(data => res.redirect('/admin/edit') )
+    .catch(err => res.render('error', {error: err}))
+})
 
 
 /* Logout */
