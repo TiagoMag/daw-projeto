@@ -8,6 +8,42 @@ html
     link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/v4-shims.css")
     
   body
+    div(id="myNav" class="overlay")
+        a(href="javascript:void(0)" class="closebtn" onclick="closeNav()") &times;
+        div(class="overlay-content")
+            a(href="/" )
+                i(class="fas fa-home") 
+                |   Feed
+            a(href="/perfil" ) 
+                i(class="fa fa-user") 
+                |   Perfil
+            if(isProd)
+                a(href="/files/upload" ) 
+                    i(class="fas fa-upload")
+                    |   Upload
+            a(href="/recursos" ) 
+                i(class="fas fa-search")
+                |   Pesquisar
+            a(href="/logout" ) 
+                i(class="fas fa-sign-out-alt")
+                |   Logout
+
+    button(class="openbtn" onclick="openNav()") ☰ 
+    block content
+<!-- Use any element to open the sidenav -->
+
+script.
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
+
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+     
+
+   
+//
     .w3-container.w3.bar.w3-teal
         a(href="/logout" class="w3-bar-item w3-button w3-right")
             img(src="/images/logout.png" style='width:25px; height:25px;') 
@@ -19,4 +55,5 @@ html
             img(src="/images/search.png" style='width:25px; height:25px;') 
         a(href="" class="w3-bar-item w3-button w3-right")
             img(src="/images/home.png" style='width:25px; height:25px;') 
-    block content
+    
+//

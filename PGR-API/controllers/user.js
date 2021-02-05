@@ -32,6 +32,6 @@ module.exports.insert = u => {
 /* Remove um utilizador da bd */
 module.exports.remove = id => {
     return User
-        .deleteOne({email: id})
+        .deleteOne({_id: id})
         .exec()
 }

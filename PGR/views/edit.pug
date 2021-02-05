@@ -52,9 +52,9 @@ block content
                     { "data": "dataRegisto"},
                     { "data": "dataUltimoAcesso"},
                     { data: null, 
-                        className: 'dt-body-center',
-                        render: function ( data, type, row ) {
-                        return '<button class="w3-button w3-red"> Apagar </button>';}
+                        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                                $(nTd).html("<a href='http://localhost:7778/admin/delete/"+ oData._id +"'>" + '<button class="w3-button w3-red"> Apagar </button>' +"</a>");
+                        },
                     }
                 ],
             } );

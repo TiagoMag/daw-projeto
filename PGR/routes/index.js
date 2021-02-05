@@ -140,6 +140,14 @@ router.get('/admin/:id',function(req,res){
     .catch(err => res.render('error', {error: err}))}
   })
 
+  /*Eliminar User*/ 
+  router.get("/admin/delete/:id", (req,res)=>{
+    axios.delete('http://localhost:7777/users/remove/' + req.params.id + '?token=' +req.cookies.token)
+      .then(data => res.redirect('/admin/edit') )
+      .catch(err => res.render('error', {error: err}))
+  })
+
+
 /* Logout */
 router.get("/logout", function(req,res){
   res.cookie('logout', "1", {
