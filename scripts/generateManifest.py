@@ -1,7 +1,5 @@
-import os,json,sys
-if(len(sys.argv) == 1): print("Pasta não foi fornecida. Passar como argumento...") ; sys.exit()
-folder = sys.argv[1]
-if("/" not in folder): print("Ficheiro inválido. Nota: Colocar '/' no fim do nome da pasta.")
+import os,json
+folder = "data/"
 paths = [os.path.join(root,filename).replace(folder,"").replace("\\","/") for root, directories, filenames in os.walk(folder) for filename in filenames]
 data = {}
 data["ficheiros"] = paths

@@ -92,6 +92,7 @@ router.post('/',upload.array('myFile'), function(req,res){
                 var manifest = ""
                 var found = false
                 var count = 0
+                var pdf_pptx = 0
                 zipEntries2.forEach(function(zipEntry2) {
                     if(zipEntry2.name != "manifesto.json" && zipEntry2.isDirectory == false)
                         meta_dados2.push(zipEntry2.entryName.substring(5));
@@ -101,9 +102,11 @@ router.post('/',upload.array('myFile'), function(req,res){
                     if(zipEntry2.entryName == "data/")
                         found = true
                     if(!zipEntry2.entryName.includes('data/'))
-                        count += 1
+                        count++;
+                    if(zipEntry2.entryName.includes(".pdf") || zipEntry2.entryName.includes(".pptx"))
+                        pdf_pptx++;
                 });
-                if(count == 1 && found != false && manifest != "" && Commons.manifestValidator(meta_dados2,manifest,req.body.tipo)){
+                if(count == 1 && found == true && manifest != "" && Commons.manifestValidator(meta_dados2,manifest,req.body.tipo)){
 
                     // --------------- Extrai a extensão ----------------------
                     
@@ -216,6 +219,11 @@ router.post('/',upload.array('myFile'), function(req,res){
                     fs.unlink(oldPath, function(){
                         console.log("Ficheiro na pasta upload apagado.")
                     });
+
+                    if(pdf_pptx != 1){
+                        erros.push("Segundo a nossa implementação, não se pode ter mais do que 1 pdf/pptx no zip.")
+                        entrou = true
+                    }
                     if(count != 1){
                         erros.push("Existem mais ficheiros para além da pasta data e do ficheiro manifest.json.")
                         entrou = true
