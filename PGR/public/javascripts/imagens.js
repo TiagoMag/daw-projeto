@@ -55,7 +55,7 @@ function addFile(){
     </div>
     <div class="w3-row w3-margin-bottom">
        <div class="w3-col s3"><label class="w3-text-teal">Escolher Ficheiro</label></div>
-       <div class="w3-col s9"><input class="w3-input w3-border w3-light-grey" type="file" name="myFile" /></div>
+       <div class="w3-col s9"><input class="w3-input w3-border w3-light-grey" type="file" name="myFile" accept=".zip"/></div>
     </div>
     <div class="w3-row w3-margin-bottom">
        <div class="w3-col s3"><label class="w3-text-teal">Tipo do Ficheiro</label></div>
