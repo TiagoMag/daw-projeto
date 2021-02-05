@@ -21,6 +21,7 @@ block content
                 thead
                     tr
                         th Id
+                        th AutorID
                         th Tipo
                         th Título
                         th Descrição
@@ -52,13 +53,14 @@ block content
                 },
                 "columnDefs": [
                     {
-                        "targets": [0],
+                        "targets": [0,1],
                         "visible": false,
                         "searchable": false
                     }
                 ],
                 "columns": [
                     { "data": "_id" },
+                    { "data": "autorID"},
                     { "data": "tipo" },
                     { "data": "titulo",
                         "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -70,7 +72,11 @@ block content
                     { "data": "dataCriacao" },
                     { "data": "dataRegisto" },
                     { "data": "hashtags" },
-                    { "data": "nome" }
+                    { "data": "nome",
+                        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                            $(nTd).html("<a href='http://localhost:7778/perfil/" + oData.autorID + "'>" + oData.nome + "</a>");
+                        } 
+                    }
                 ]
             });
         });

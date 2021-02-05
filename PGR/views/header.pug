@@ -8,28 +8,29 @@ html
     link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/v4-shims.css")
     
   body
-    div(id="myNav" class="overlay")
-        a(href="javascript:void(0)" class="closebtn" onclick="closeNav()") &times;
-        div(class="overlay-content")
-            a(href="/feed" )
-                i(class="fas fa-home") 
-                |   Feed
-            a(href="/perfil" ) 
-                i(class="fa fa-user") 
-                |   Perfil
-            if(isProd)
-                a(href="/files/upload" ) 
-                    i(class="fas fa-upload")
-                    |   Upload
-            a(href="/recursos" ) 
-                i(class="fas fa-search")
-                |   Pesquisar
-            a(href="/logout" ) 
-                i(class="fas fa-sign-out-alt")
-                |   Logout
+    if(isAdmin != true)
+        div(id="myNav" class="overlay")
+            a(href="javascript:void(0)" class="closebtn" onclick="closeNav()") &times;
+            div(class="overlay-content")
+                a(href="/feed" )
+                    i(class="fas fa-home") 
+                    |   Feed
+                a(href="/perfil" ) 
+                    i(class="fa fa-user") 
+                    |   Perfil
+                if(isProd)
+                    a(href="/files/upload" ) 
+                        i(class="fas fa-upload")
+                        |   Upload
+                a(href="/recursos" ) 
+                    i(class="fas fa-search")
+                    |   Pesquisar
+                a(href="/logout" ) 
+                    i(class="fas fa-sign-out-alt")
+                    |   Logout
 
-    button(class="openbtn" onclick="openNav()") ☰ 
-    block content
+        button(class="openbtn" onclick="openNav()") ☰ 
+        block content
 <!-- Use any element to open the sidenav -->
 
 script.

@@ -42,7 +42,7 @@ block content
                 "columns": [
                     { "data": "_id",
                         "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                            $(nTd).html("<a href='http://localhost:7778/admin/"+ oData._id +"'>"+oData._id+"</a>");
+                            $(nTd).html("<a href='http://localhost:7778/perfil/"+ oData._id +"'>"+oData._id+"</a>");
                         } 
                     },
                     { "data": "nome"},
@@ -53,7 +53,7 @@ block content
                     { "data": "dataUltimoAcesso"},
                     { data: null, 
                         "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                                $(nTd).html("<a href='http://localhost:7778/admin/delete/"+ oData._id +"'>" + '<button class="w3-button w3-red"> Apagar </button>' +"</a>");
+                                $(nTd).html("<a href='http://localhost:7778/admin/delete/"+ oData._id +"'>" + '<center><button class="w3-button w3-red"> Apagar </button></center>' +"</a>");
                         },
                     }
                 ],

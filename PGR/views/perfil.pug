@@ -1,19 +1,21 @@
 extends header
 block content
-    h1 Perfil
+    
+    h1 Perfil de #{perfil.nome}
     hr
     b 
     .w3-row
         div(class="w3-col s3")
             div(class="containerp")
                 if( temFoto == true )
-                    img.imagep(src="profilepics/" + perfil.email + extensao alt="Avatar" class="imgp" style="width:100%")
+                    img.imagep(src="/profilepics/" + perfil.email + extensao alt="Avatar" class="imgp" style="width:100%")
                 else
-                    img.imagep(src="profilepics/default.png" alt="Avatar" class="imgp" style="width:100%")
+                    img.imagep(src="/profilepics/default.png" alt="Avatar" class="imgp" style="width:100%")
+                if(change == true)
                     div(class="middlep")
                         div(class="textp")
                             form.w3-container(action='/newProfilePic' method='POST' id="myform" enctype='multipart/form-data')
-                                input#selectedFile(type='file' name="myFile" accept="image/png, image/jpeg, image/jpg" style='display: none;')
+                                input#selectedFile(type='file' name="myFile" accept="image/png, image/jpeg, image/jpg, image/gif, image/jfif" style='display: none;')
                                 input(type='button' value='Browse...' onclick="document.getElementById('selectedFile').click();")
 
                                 input.w3-btn.w3-teal.w3-border(type='submit' value='Submit')
@@ -33,9 +35,9 @@ block content
                 li Filiação: #{perfil.filiacao}
                 br
                 br
-            if (isProd==1)  
-                li Nº de publicações:
-                br
+                if (isProd==1)  
+                    li Nº de publicações:
+                    br
                 hr
     if (isProd==1)            
         .w3-row
@@ -43,14 +45,15 @@ block content
                 table.w3-table-all#myTable
                     thead
                         tr
+                            th ID
                             th Tipo
-                            th titulo
+                            th Título
                             th Descrição
-                            th Subtitulo
+                            th Subtítulo
                             th Data de Criação
                             th Data de Registo
                             th Hashtags
-                            th autor
+                            th Autor
                     tbody
     script(src='https://code.jquery.com/jquery-3.5.1.js')
     link(rel='stylesheet', href='https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css')
@@ -66,15 +69,27 @@ block content
                     "url": "http://localhost:7777/recurso/lista?autor="+ email + "&token="+token,
                     "type": "GET"
                 },
+                 "columnDefs": [
+                    {
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false
+                    }
+                 ],
                 "columns": [
+                    { "data": "_id"},
                     { "data": "tipo"},
-                    { "data": "titulo" },
+                    { "data": "titulo", 
+                        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                                $(nTd).html("<a href='http://localhost:7778/recursos/" + oData._id + "'>" + oData.titulo + "</a>");
+                        } 
+                    },
                     { "data": "descricao" },
                     { "data": "subtitulo" },
                     { "data": "dataCriacao" },
                     { "data": "dataRegisto" },
                     { "data": "hashtags" },
-                    { "data": "autor" }
+                    { "data": "nome" }
                 ],
             } );
         });

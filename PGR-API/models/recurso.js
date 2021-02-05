@@ -12,7 +12,8 @@ var recSchema = new mongoose.Schema({
     rating: Number,
     numVotantes: Number,
     autor: String,
-    nome: String
+    nome: String,
+    autorID: String
 });
  
 module.exports = mongoose.model('recurso', recSchema)

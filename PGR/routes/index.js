@@ -64,10 +64,11 @@ router.get('/perfil', function(req, res) {
 
       // -----------------------------------------------------------------------
 
+      change=true
       if(Commons.verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
       var consumidor = Commons.verifyConsumidor(req.cookies.token)
       var produtor = Commons.verifyProdutor(req.cookies.token)
-      res.render("perfil", {title: 'PGR', perfil: dados.data.data, extensao: extensao , isProd: produtor, isCons: consumidor, temFoto: temFoto, id: u_id, token: req.cookies.token})
+      res.render("perfil", {title: 'PGR',change: change , perfil: dados.data.data, extensao: extensao , isProd: produtor, isCons: consumidor, temFoto: temFoto, id: u_id, token: req.cookies.token})
     })
     .catch(err => res.render('error',{error: err}))
 });
@@ -157,15 +158,80 @@ router.get('/admin/edit',function(req,res){
   })
 
 /* Página de admin ... */
-router.get('/admin/:id',function(req,res){
+router.get('/perfil/:id',function(req,res){
   id = req.params.id
-  if(Commons.verifyProdutor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
-  if(Commons.verifyConsumidor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
-  if(Commons.verifyAdmin(req.cookies.token) == true){
-  axios.get('http://localhost:7777/users/perfil/' + id + '?token=' + req.cookies.token)
-    .then(data => {res.render('paguser', {id:id ,token: req.cookies.token,list: data.data, title: 'PGR'})})
-    .catch(err => res.render('error', {error: err}))}
-})
+  if(req.cookies.logout == "1") { // verifica se sessão deu logout
+    res.cookie('auth', "2", { 
+      expires: new Date(Date.now() + '1d'),
+      secure: false, // set to true if your using https
+      httpOnly: true
+     }); 
+     res.redirect("/")
+  }
+  axios.get('http://localhost:7777/users/perfil?id=' + id + "&token=" + req.cookies.token)  
+    .then (dados => {
+      const testFolder = path.resolve(__dirname, '../') + "/public/profilepics/"
+
+      // -------------------------- Adiciona extensão --------------------------
+
+      var extensao = ""
+      fs.readdirSync(testFolder).forEach(file => {
+        if(path.parse(file).name == dados.data.data.email){
+          extensao = path.parse(file).ext
+        }
+      });
+
+      // Se não encontrar o ficheiro, quer dizer que o user não tem foto de perfil
+      var temFoto = true
+      if(extensao == ""){
+        temFoto = false
+      }
+
+      // -----------------------------------------------------------------------
+      if(dados.data.data.nivel == "produtor"){
+        produtor = true
+        consumidor = false
+        admin = false
+      }
+      if(dados.data.data.nivel == "consumidor"){
+        produtor = false
+        consumidor = true
+        admin = false
+      }
+      if(dados.data.data.nivel == "admin"){
+        produtor = false
+        consumidor = false
+        admin = true
+      }
+      var email = dados.data.data.email
+      if(email == jwt_decode(req.cookies.token).id) change=true
+      else change=false
+      res.render("perfil" , {title: 'PGR', igual: change, perfil: dados.data.data, extensao: extensao, isAdmin: admin, isProd: produtor, isCons: consumidor, temFoto: temFoto, id: email, token: req.cookies.token})
+      })
+      .catch(err => res.render('error',{error: err}))
+});
+
+/* POST newProfilePic */
+router.post('/newProfilePic',upload.single('myFile'), function(req, res) {
+  var token = req.cookies.token
+  u_email = jwt_decode(token).id
+  if(req.file){
+
+    //------------------------- Upload Profile Pic ----------------------------------
+
+    let oldPath = path.resolve(__dirname, '../') + '/' + req.file.path
+    let newPath = path.resolve(__dirname, '../') + '/public/profilepics/' + u_email + path.extname(req.file.originalname)
+
+    fs.rename(oldPath,newPath, function (err){
+      if(err) throw err
+    })
+
+    // ------------------------------------------------------------------------------
+  }
+
+  res.redirect("/perfil")
+});
+
 
 /* Eliminar User */ 
 router.get("/admin/delete/:id", (req,res)=>{
