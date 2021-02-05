@@ -65,3 +65,4 @@ db.users.deleteOne({"_id":ObjectId("5fe0fb1e752091173a8732e8")})
 - [X] Quando é pdf/pptx só aceitar se for 1
 - [ ] Quando a token for de vela avisar
 - [ ] Ter recursos públicos e privados
+- [ ] Mais maneiras de fazer logins (?)
