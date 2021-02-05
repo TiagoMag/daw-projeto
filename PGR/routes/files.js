@@ -14,7 +14,10 @@ var Commons = require('../commons/commons')
 /* GET upload */
 router.get('/upload',function(req,res){
     var d = new Date().toISOString().substring(0,16)
-    res.render("fileForm",{title:"File Upload",d: d})
+    if(Commons.verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
+    var consumidor = Commons.verifyConsumidor(req.cookies.token)
+    var produtor = Commons.verifyProdutor(req.cookies.token)
+    res.render("fileForm",{title:"File Upload",d: d,isProd: produtor,isCons: consumidor})
 })
   
 /* Download file */

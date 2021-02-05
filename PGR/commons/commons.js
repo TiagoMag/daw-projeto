@@ -1,5 +1,8 @@
 // --------------------------------------------Funções auxiliares -------------------------------------------
 var jwt_decode = require('jwt-decode');
+var jwt = require('jsonwebtoken')
+require("dotenv-safe").config()
+
 
 /* Verifica se nível de utilizador é admin */
 module.exports.verifyAdmin = (token) => {
@@ -17,6 +20,16 @@ module.exports.verifyProdutor = (token) => {
 module.exports.verifyConsumidor = (token) => {
     u_level = jwt_decode(token).nivel
     return u_level == 'consumidor' ? true : false
+}
+module.exports.verifyToken = (token) => {
+  jwt.verify(token, process.env.SECRET, function(err, decoded) {
+    if (err) res.redirect('index')
+    else{
+    // se tudo estiver ok, salva no request para uso posterior
+    req.userId = decoded.id;
+    req.nivel = decoded.nivel;
+    }
+  })
 }
 
 function arrayCompare(_arr1, _arr2) {

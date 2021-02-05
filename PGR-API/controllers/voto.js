@@ -8,8 +8,13 @@ module.exports.insert = (recursoID,userID,rating) => {
 
 /* Remove um voto na bd */
 module.exports.remove = (recursoID,userID) => {
-    return Voto.deleteOne({ recursoID: recursoID,userID: userID }).exec()
+    return Voto.deleteOne({ recursoID: recursoID, userID: userID }).exec()
 };
+
+/* Verifica se um utilizador já votou */
+module.exports.userVote = (recursoID,userID) => {
+    return Voto.find({ recursoID: recursoID, userID: userID }).exec()
+}
 
 /* Num votantes */
 module.exports.numVotantes = (id) => {

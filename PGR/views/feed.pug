@@ -41,10 +41,10 @@ block content
             $container.infiniteScroll('loadNextPage');
             console.log("asd")
             //------------------//
-            function getItemHTML({prodName,recursoTitulo,recursoDescricao,data,recursoTipo,recursoId}) {
+            function getItemHTML({prodName,prodId,recursoTitulo,recursoDescricao,data,recursoTipo,recursoId}) {
                 console.log("we did it")
                 return ` <div class="post-content">
-                            <p class="post-date"> ${recursoTipo} publicado em ${data} por ${prodName} </p>
+                            <p class="post-date"> ${recursoTipo} publicado em ${data} por <a href='http://localhost:7778/perfil/${prodId}'>${prodName}</a> </p>
                             <h2 class="post-title"><a href='http://localhost:7778/recursos/${recursoId}'>${recursoTitulo}</a></h2>
                             <div class="post-excerpt">
                                 <p>${recursoDescricao}</p>

@@ -7,7 +7,8 @@ var upload = multer({ dest: 'uploads/' })
 var path = require('path')
 var fs = require('fs')
 const User = require('../models/user')
-const Commons = require('../commons/commons')
+const Commons = require('../commons/commons');
+var jwt = require('jsonwebtoken')
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -17,8 +18,11 @@ router.get('/', function(req, res) {
 });
 
 /* GET feed */
-router.get('/feed', function(req, res) {
-  res.render('feed', {token: req.cookies.token });
+router.get('/feed',verifyToken, function(req, res) {
+  if(Commons.verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
+  var consumidor = Commons.verifyConsumidor(req.cookies.token)
+  var produtor = Commons.verifyProdutor(req.cookies.token)
+  res.render('feed', {token: req.cookies.token,isCons:consumidor,isProd: produtor });
 });
 
 /* Página de acesso não autorizado */
@@ -63,12 +67,19 @@ router.get('/perfil', function(req, res) {
       }
 
       // -----------------------------------------------------------------------
-
+      var num = 0
       change=true
       if(Commons.verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
       var consumidor = Commons.verifyConsumidor(req.cookies.token)
       var produtor = Commons.verifyProdutor(req.cookies.token)
-      res.render("perfil", {title: 'PGR',change: change , perfil: dados.data.data, extensao: extensao , isProd: produtor, isCons: consumidor, temFoto: temFoto, id: u_id, token: req.cookies.token})
+      if (produtor) {
+        axios.get('http://localhost:7777/recurso/numFich/' + dados.data.data._id + "?token=" + req.cookies.token)
+        .then(dados => {return dados.data.data})
+        .then(result => res.render("perfil" , {title: 'PGR',num: result, igual: change, perfil: dados.data.data, extensao: extensao,isProd: produtor, isCons: consumidor, temFoto: temFoto, id: u_id, token: req.cookies.token})
+        )
+        .catch(err => res.render('error',{error: err}))
+      }
+      else res.render("perfil", {title: 'PGR',change: change ,num: num, perfil: dados.data.data, extensao: extensao , isProd: produtor, isCons: consumidor, temFoto: temFoto, id: u_id, token: req.cookies.token})
     })
     .catch(err => res.render('error',{error: err}))
 });
@@ -201,28 +212,34 @@ router.get('/perfil/:id',function(req,res){
       }
 
       // -----------------------------------------------------------------------
+      var email = dados.data.data.email
+      if(email == jwt_decode(req.cookies.token).id) change=true
+      else change=false
+
       if(dados.data.data.nivel == "produtor"){
         produtor = true
         consumidor = false
         admin = false
         axios.get('http://localhost:7777/recurso/numFich/' + id + "?token=" + req.cookies.token)
-        .then(dados => {num = dados})
+        .then(dados => {return dados.data.data})
+        .then( result => res.render("perfil" , {title: 'PGR',num: result, igual: change, perfil: dados.data.data, extensao: extensao, isAdmin: admin, isProd: produtor, isCons: consumidor, temFoto: temFoto, id: email, token: req.cookies.token})
+        )
         .catch(err => res.render('error',{error: err}))
       }
-      if(dados.data.data.nivel == "consumidor"){
+      else if(dados.data.data.nivel == "consumidor"){
         produtor = false
         consumidor = true
         admin = false
+        res.render("perfil" , {title: 'PGR', igual: change, perfil: dados.data.data, extensao: extensao, isAdmin: admin, isProd: produtor, isCons: consumidor, temFoto: temFoto, id: email, token: req.cookies.token})
+
       }
-      if(dados.data.data.nivel == "admin"){
+      else if(dados.data.data.nivel == "admin"){
         produtor = false
         consumidor = false
         admin = true
+        res.render("perfil" , {title: 'PGR', igual: change, perfil: dados.data.data, extensao: extensao, isAdmin: admin, isProd: produtor, isCons: consumidor, temFoto: temFoto, id: email, token: req.cookies.token})
+
       }
-      var email = dados.data.data.email
-      if(email == jwt_decode(req.cookies.token).id) change=true
-      else change=false
-      res.render("perfil" , {title: 'PGR',num: num, igual: change, perfil: dados.data.data, extensao: extensao, isAdmin: admin, isProd: produtor, isCons: consumidor, temFoto: temFoto, id: email, token: req.cookies.token})
       })
       .catch(err => res.render('error',{error: err}))
 });
@@ -268,5 +285,24 @@ router.get("/logout", function(req,res){
   res.redirect("/")
 })
 
+
+function verifyToken(req,res,next) {
+  jwt.verify(req.cookies.token, process.env.SECRET, function(err, decoded) {
+    if (err){
+      res.cookie('auth', "2", { 
+        expires: new Date(Date.now() + '1d'),
+        secure: false, // set to true if your using https
+        httpOnly: true
+        }); 
+        res.redirect("/")
+    }
+    else{
+    // se tudo estiver ok, salva no request para uso posterior
+    req.userId = decoded.id;
+    req.nivel = decoded.nivel;
+    next()
+    }
+  })
+}
 
 module.exports = router;

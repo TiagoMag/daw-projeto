@@ -80,25 +80,57 @@ module.exports.updateAverage = (email,rating,id,flag) => {
   // Insere um voto
     if (flag==0){ // new voto
       return Promise.all([
-        Voto.insert(id,email,rating)
-        .then(data => {
-          return Voto.numVotantes(id)
-          .then(result => {
-            numVotantes = result
-            return Voto.sumRating(id)
-            .then(result => {
-              ratingSum = result[0].total
-              newRating = ratingSum / numVotantes
-              // Update no rating e número de votantes do recurso
-              return updateRating(id,newRating,numVotantes)
-              .then(result =>{return result})
-              .catch(err => console.log("Erro no updateRating,"+err))
+        Voto.userVote(id,email)
+        .then(data =>{ 
+          console.log("Hh")
+          console.log(data)
+          if (data!=[]) { 
+            return Voto.remove(id,email)
+            .then(result =>{
+              return Voto.insert(id,email,rating)
+              .then(data => {
+                return Voto.numVotantes(id)
+                .then(result => {
+                  numVotantes = result
+                  return Voto.sumRating(id)
+                  .then(result => {
+                    ratingSum = result[0].total
+                    newRating = ratingSum / numVotantes
+                    // Update no rating e número de votantes do recurso
+                    return updateRating(id,newRating,numVotantes)
+                    .then(result =>{return result})
+                    .catch(err => console.log("Erro no updateRating,"+err))
+                  })
+                  .catch(err => console.log("Erro no sumRating,"+err))
+                })
+                .catch(err => console.log("Erro no numVotantes"+err))
+              })
+              .catch(err => console.log("Erro ao introduzir voto")+err)
+            });
+          }
+          else{
+            return Voto.insert(id,email,rating)
+            .then(data => {
+              return Voto.numVotantes(id)
+              .then(result => {
+                numVotantes = result
+                return Voto.sumRating(id)
+                .then(result => {
+                  ratingSum = result[0].total
+                  newRating = ratingSum / numVotantes
+                  // Update no rating e número de votantes do recurso
+                  return updateRating(id,newRating,numVotantes)
+                  .then(result =>{return result})
+                  .catch(err => console.log("Erro no updateRating,"+err))
+                })
+                .catch(err => console.log("Erro no sumRating,"+err))
+              })
+              .catch(err => console.log("Erro no numVotantes"+err))
             })
-            .catch(err => console.log("Erro no sumRating,"+err))
-          })
-          .catch(err => console.log("Erro no numVotantes"+err))
+            .catch(err => console.log("Erro ao introduzir voto")+err)
+          }
         })
-        .catch(err => console.log("Erro ao introduzir voto")+err)
+        .catch(err => console.log("Erro no userVote")+err)
       ])
     } 
     else if (flag==1){ // new voto
