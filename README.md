@@ -35,6 +35,9 @@ npm run devstart
 
 # Limpa o fileStore e o dbFiles.json
 sh clean.sh
+
+# Gera um ficheiro manifesto.json a partir duma pasta chamada "data"
+python generateManifest.py
 ```
 
 ## Comandos úteis mongo
