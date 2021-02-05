@@ -16,6 +16,11 @@ router.get('/', function(req, res) {
   else res.render('index', {err: "0", title: 'PGR' });
 });
 
+/* GET feed */
+router.get('/feed', function(req, res) {
+  res.render('feed', {token: req.cookies.token });
+});
+
 /* Página de acesso não autorizado */
 router.get('/naoaut', function(req, res) {
   res.render('naoaut', { title: 'PGR' });
