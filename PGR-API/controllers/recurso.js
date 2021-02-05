@@ -69,6 +69,12 @@ function updateRating(id,newRating,numVotantes){
   }).exec();
 };
 
+/* Devolve o numero de ficheiros de um utilizador */
+module.exports.numFich = (id) => {
+  return Recurso.countDocuments({ autorID: id })
+};
+
+
 /* Calcula nova média */
 module.exports.updateAverage = (email,rating,id,flag) => {
   // Insere um voto

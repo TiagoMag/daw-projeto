@@ -172,6 +172,7 @@ router.get('/admin/edit',function(req,res){
 /* Página de admin ... */
 router.get('/perfil/:id',function(req,res){
   id = req.params.id
+  var num = 0
   if(req.cookies.logout == "1") { // verifica se sessão deu logout
     res.cookie('auth', "2", { 
       expires: new Date(Date.now() + '1d'),
@@ -204,6 +205,9 @@ router.get('/perfil/:id',function(req,res){
         produtor = true
         consumidor = false
         admin = false
+        axios.get('http://localhost:7777/recurso/numFich/' + id + "?token=" + req.cookies.token)
+        .then(dados => {num = dados})
+        .catch(err => res.render('error',{error: err}))
       }
       if(dados.data.data.nivel == "consumidor"){
         produtor = false
@@ -218,7 +222,7 @@ router.get('/perfil/:id',function(req,res){
       var email = dados.data.data.email
       if(email == jwt_decode(req.cookies.token).id) change=true
       else change=false
-      res.render("perfil" , {title: 'PGR', igual: change, perfil: dados.data.data, extensao: extensao, isAdmin: admin, isProd: produtor, isCons: consumidor, temFoto: temFoto, id: email, token: req.cookies.token})
+      res.render("perfil" , {title: 'PGR',num: num, igual: change, perfil: dados.data.data, extensao: extensao, isAdmin: admin, isProd: produtor, isCons: consumidor, temFoto: temFoto, id: email, token: req.cookies.token})
       })
       .catch(err => res.render('error',{error: err}))
 });

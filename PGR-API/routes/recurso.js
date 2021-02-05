@@ -46,6 +46,13 @@ router.get('/lista', function(req, res, next) {
     }
 });
 
+router.get('/numFich/:id', function(req,res){
+    Recurso.numFich(req.params.id)
+    .then(data => res.status(200).json({data: data}))
+    .catch(err => res.status(500).json({message: err}))
+    
+});
+
 /* POST de um recurso */
 router.post('/', (req, res) => {
     rec = req.body
