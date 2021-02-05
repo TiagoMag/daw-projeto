@@ -68,7 +68,7 @@ router.post('/',upload.array('myFile'), function(req,res){
     
     axios.get('http://localhost:7777/users/perfil?email=' + u_email + "&token=" + token)  
         .then(response => {
-            var id = response.data.data.id
+            var id = response.data.data._id
             var nome = response.data.data.nome
             var erros = []
         
@@ -114,8 +114,6 @@ router.post('/',upload.array('myFile'), function(req,res){
                     }
                     else
                         var ext = "zip"
-                
-                    console.log("ext = " + ext)
 
                     // ----------- Faz upload ------------------------
 
@@ -154,6 +152,7 @@ router.post('/',upload.array('myFile'), function(req,res){
                     r.rating = 0
                     r.autor = u_email
                     r.autorID = id
+                    console.log("r.autorID = " + r.autorID)
                 
                     // --------------- Faz POST do recurso -------------
 

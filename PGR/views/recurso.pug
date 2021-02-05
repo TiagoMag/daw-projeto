@@ -1,5 +1,6 @@
 extends header
 block content
+    link(rel='stylesheet' href='/stylesheets/slideshow.css')
     .w3-container.w3-margin
         h2="Título: " + data.titulo
         .w3-container.w3-margin
@@ -24,18 +25,28 @@ block content
             h6 
                 strong Autor: 
                 | #{data.autor} 
-        if(f.tipo === "cartaz")
+        if(f.tipo === "cartaz" && f.ext != "zip")
             .w3-row
                 div(class="w3-col s2")
                     div(class="containerp")
                         img(src='/fileStore/' + data.autor  + '/' + name_without_ext + '/data/' + name_without_ext + '.' + f.ext class="imgp" style="width:100%")
                         
-        else if(f.ext == "pdf")
+        else if(f.ext == "pdf" || f.ext == "pptx")
             .w3-row
                 div(class="w3-col s2")
                     div(class="containerp")
                         a(href='/fileStore/' + data.autor  + '/' + name_without_ext + '/data/' + name_without_ext + '.' + f.ext target="_blank") Ver Ficheiro
-        
+        else if(f.ext == "zip" && (f.tipo === "cartaz" || f.tipo === "teste" || f.tipo == "problema"))
+            // Container for the image gallery
+            .container
+                each i in conjunto_imgs
+                    .mySlides
+                        img(src='/fileStore/' + data.autor + '/' + name_without_ext + '/data/' + i)
+                
+                br
+                a.prev(onclick='plusSlides(-1)') ❮
+                a.next(onclick='plusSlides(1)') ❯
+
         .w3-row
             div(class="w3-col s2")
                 div(class="containerp")
@@ -82,3 +93,34 @@ block content
                 alert(userRating);
             });
         });
+    script.
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        // Next/previous controls
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        // Thumbnail image controls
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            var captionText = document.getElementById("caption");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].className += " active";
+            captionText.innerHTML = dots[slideIndex-1].alt;
+        }

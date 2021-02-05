@@ -43,12 +43,8 @@ function arrayCompare(_arr1, _arr2) {
 
 module.exports.manifestValidator = (meta_dados,manifest,tipo) => {
   manifest_json = JSON.parse(manifest)
-  if((tipo == "relatorio" || tipo == "tese" || tipo == "artigo" || tipo == "slides" || tipo == "cartaz") && (meta_dados.length > 1 || manifest_json.length > 1)){
-    console.log(meta_dados.length)
-    console.log(manifest_json.length)
+  if((tipo == "relatorio" || tipo == "tese" || tipo == "artigo" || tipo == "slides") && (meta_dados.length > 1 || manifest_json.length > 1)){
     return false
   }
-  //console.log("meta_dados = " + meta_dados)
-  console.log("manifest_json = " + manifest_json.ficheiros)
   return arrayCompare(meta_dados,manifest_json.ficheiros)
 }

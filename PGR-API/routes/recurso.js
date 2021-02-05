@@ -56,6 +56,7 @@ router.get('/numFich/:id', function(req,res){
 /* POST de um recurso */
 router.post('/', (req, res) => {
     rec = req.body
+    console.log(rec)
     rec.dataRegisto = moment(new Date(Date.now())).format('YYYY-MM-DD hh:mm:ss')
     rec.dataCriacao = moment(new Date(req.body.dataCriacao)).format('YYYY-MM-DD')
     rec.numVotantes = 0
