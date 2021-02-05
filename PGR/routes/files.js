@@ -43,6 +43,12 @@ router.get('/download/:fname', function(req,res){
     output.on('close', function () {
         console.log(archive.pointer() + ' total bytes');
         console.log('archiver has been finalized and the output file descriptor has closed.');
+        res.download(newZip, function(err) {
+            if (err) console.log(err);
+            fs.unlink(newZip, function(){
+                console.log("File was deleted")
+            });
+        });
     });
 
     archive.on('error', function(err){
@@ -60,13 +66,6 @@ router.get('/download/:fname', function(req,res){
     archive.finalize();
 
     // -------------------------------------------------------------
-
-    res.download(newZip, function(err) {
-        if (err) console.log(err);
-        fs.unlink(newZip, function(){
-            console.log("File was deleted")
-        });
-    });
 })
 
 
@@ -100,6 +99,7 @@ router.post('/',upload.array('myFile'), function(req,res){
                 var meta_dados2 = [];
                 var manifest = ""
                 var found = false
+                var count = 0
                 zipEntries2.forEach(function(zipEntry2) {
                     if(zipEntry2.name != "manifesto.json" && zipEntry2.isDirectory == false)
                         meta_dados2.push(zipEntry2.entryName.substring(5));
@@ -108,8 +108,10 @@ router.post('/',upload.array('myFile'), function(req,res){
                     }
                     if(zipEntry2.entryName == "data/")
                         found = true
+                    if(!zipEntry2.entryName.includes('data/'))
+                        count += 1
                 });
-                if(found != false && manifest != "" && Commons.manifestValidator(meta_dados2,manifest,req.body.tipo)){
+                if(count == 1 && found != false && manifest != "" && Commons.manifestValidator(meta_dados2,manifest,req.body.tipo)){
 
                     // --------------- Extrai a extensão ----------------------
                     
@@ -219,6 +221,13 @@ router.post('/',upload.array('myFile'), function(req,res){
                 else{
                     console.log("Tem erros na validação do manifest!")
                     var entrou = false
+                    fs.unlink(oldPath, function(){
+                        console.log("Ficheiro na pasta upload apagado.")
+                    });
+                    if(count != 1){
+                        erros.push("Existem mais ficheiros para além da pasta data e do ficheiro manifest.json.")
+                        entrou = true
+                    }
                     if(manifest == ""){
                         erros.push("Manifesto não está presente no zip.")
                         entrou = true
@@ -232,7 +241,7 @@ router.post('/',upload.array('myFile'), function(req,res){
                 }
             })
             if(erros.length > 0)
-                res.render('error', {message:"Erro no manifest", error: erros})
+                res.render('error', {message:"Erro no upload", error: erros})
             else
                 res.redirect('/perfil')
         })    
