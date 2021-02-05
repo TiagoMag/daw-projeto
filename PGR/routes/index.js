@@ -107,6 +107,18 @@ router.post('/newProfilePic',upload.single('myFile'), function(req, res) {
   u_email = jwt_decode(token).id
   if(req.file){
 
+    var extensao = ""
+    fs.readdirSync(path.resolve(__dirname, '../') + '/public/profilepics/').forEach(file => {
+      if(path.parse(file).name == u_email){
+        extensao = path.parse(file).ext
+      }
+    });
+
+    var foto_antiga = path.resolve(__dirname, '../') + '/public/profilepics/' + u_email + extensao
+    fs.unlink(foto_antiga, function(){
+      console.log("Foto antiga foi apagada.")
+    });
+
     //------------------------- Upload Profile Pic ----------------------------------
 
     let oldPath = path.resolve(__dirname, '../') + '/' + req.file.path

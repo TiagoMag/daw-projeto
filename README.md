@@ -58,3 +58,4 @@ db.users.deleteOne({"_id":ObjectId("5fe0fb1e752091173a8732e8")})
 - [X] Funções auxiliares ficheiro à parte
 - [X] Upload foto de perfil dentro do perfil
 - [ ] Mudar sítio do manifestValidator
+- [ ] Fix uploads por tipos

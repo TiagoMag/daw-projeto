@@ -229,8 +229,12 @@ router.post('/',upload.array('myFile'), function(req,res){
                         erros.push("Pasta data não está presente no zip.")
                         entrou = true
                     }
-                    if(entrou == false)
-                        erros.push("Foram encontrados erros no manifest no ficheiro: " + f.originalname + "\nO manifesto contém {" + JSON.parse(manifest).ficheiros + "}, e os ficheiros dentro do zip são {" + meta_dados2 + "}. Se ambos os arrays têm os mesmos elementos é porque o número de ficheiros é inválido para o tipo de recurso escolhido.")
+                    if(entrou == false){
+                        if(JSON.parse(manifest).ficheiros.length <= 10) // Só para a mensagem de erro não ser demasiado grande
+                            erros.push("Foram encontrados erros no manifest no ficheiro: " + f.originalname + "\nO manifesto contém {" + JSON.parse(manifest).ficheiros + "}, e os ficheiros dentro do zip são {" + meta_dados2 + "}. Se ambos os arrays têm os mesmos elementos é porque o número de ficheiros é inválido para o tipo de recurso escolhido.")
+                        else
+                        erros.push("Foram encontrados erros no manifest no ficheiro: " + f.originalname + "\nO manifesto contém " + JSON.parse(manifest).ficheiros.length + " elementos e o zip contém " + meta_dados2.length + " elementos. Se ambos os arrays têm os mesmos elementos é porque o número de ficheiros é inválido para o tipo de recurso escolhido.")
+                    }
                 }
             })
             if(erros.length > 0)

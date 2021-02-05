@@ -48,5 +48,7 @@ module.exports.manifestValidator = (meta_dados,manifest,tipo) => {
     console.log(manifest_json.length)
     return false
   }
+  //console.log("meta_dados = " + meta_dados)
+  console.log("manifest_json = " + manifest_json.ficheiros)
   return arrayCompare(meta_dados,manifest_json.ficheiros)
 }
