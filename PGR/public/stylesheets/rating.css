@@ -1,18 +1,39 @@
-*{
-  margin: 0;
-  padding: 0;
-}
+
 .rate {
-  float: left;
-  height: 46px;
-  padding: 0 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+ 
 }
+
+.btn {
+  background-color: black;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 30px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  
+}
+
+/* Darker background on mouse-over */
+.btn:hover {
+  background-color: grey;
+}
+
 .rate:not(:checked) > input {
   position:absolute;
   top:-9999px;
 }
 .rate:not(:checked) > label {
   float:right;
+  
   width:1em;
   overflow:hidden;
   white-space:nowrap;
@@ -38,4 +59,3 @@
   color: #c59b08;
 }
 
-/* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
