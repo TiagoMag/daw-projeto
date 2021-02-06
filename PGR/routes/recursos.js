@@ -29,14 +29,18 @@ router.get("/:id", function(req,res){
     }
   });
 
-  var conjunto_files = []
   
-  var folder_recurso = path.resolve(__dirname, '../') + "/public/fileStore/" + u_email + '/' + name_without_ext + '/data/'
-  fs.readdirSync(folder_recurso).forEach(file => {
-    conjunto_files.push(file)
-  });
   axios.get('http://localhost:7777/recurso/' + f.id + '?token=' + req.cookies.token)
-    .then(data => {res.render('recurso', {data: data.data, token: req.cookies.token,isProd: produtor, isCons: consumidor,f: f, name_without_ext: name_without_ext,u_email:u_email,conjunto_files:conjunto_files})})
+    .then(data => {
+      var conjunto_files = []
+  
+      var folder_recurso = path.resolve(__dirname, '../') + "/public/fileStore/" + data.data.autor + '/' + name_without_ext + '/data/'
+      fs.readdirSync(folder_recurso).forEach(file => {
+        conjunto_files.push(file)
+      });
+
+      res.render('recurso', {data: data.data, token: req.cookies.token,isProd: produtor, isCons: consumidor,f: f, name_without_ext: name_without_ext,u_email:u_email,conjunto_files:conjunto_files})
+    })
     .catch(err => res.render('error', {error: err}));
 
 })
