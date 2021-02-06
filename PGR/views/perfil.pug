@@ -21,7 +21,6 @@ block content
                                                 form.w3-container(action='/newProfilePic' method='POST' id="myform" enctype='multipart/form-data')
                                                     input#selectedFile(type='file' name="myFile" accept="image/png, image/jpeg, image/jpg, image/gif, image/jfif" style='display: none;')
                                                     input(type='button' value='Browse...' onclick="document.getElementById('selectedFile').click();")
-
                                                     input.w3-btn.w3-g.w3-border(type='submit' value='Submit')
                                     .mt-3
                                         h4 #{perfil.nome}

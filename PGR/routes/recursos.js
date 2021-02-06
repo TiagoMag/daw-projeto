@@ -29,16 +29,14 @@ router.get("/:id", function(req,res){
     }
   });
 
-  var conjunto_imgs = []
+  var conjunto_files = []
   
-  if((f.tipo == "teste" || f.tipo == "problema" || f.tipo == "cartaz") && f.ext == "zip"){
-    var folder_recurso = path.resolve(__dirname, '../') + "/public/fileStore/" + u_email + '/' + name_without_ext + '/data/'
-    fs.readdirSync(folder_recurso).forEach(file => {
-      conjunto_imgs.push(file)
-    });
-  }
+  var folder_recurso = path.resolve(__dirname, '../') + "/public/fileStore/" + u_email + '/' + name_without_ext + '/data/'
+  fs.readdirSync(folder_recurso).forEach(file => {
+    conjunto_files.push(file)
+  });
   axios.get('http://localhost:7777/recurso/' + f.id + '?token=' + req.cookies.token)
-    .then(data => {res.render('recurso', {data: data.data, token: req.cookies.token,isProd: produtor, isCons: consumidor,f: f, name_without_ext: name_without_ext,u_email:u_email,conjunto_imgs:conjunto_imgs})})
+    .then(data => {res.render('recurso', {data: data.data, token: req.cookies.token,isProd: produtor, isCons: consumidor,f: f, name_without_ext: name_without_ext,u_email:u_email,conjunto_files:conjunto_files})})
     .catch(err => res.render('error', {error: err}));
 
 })

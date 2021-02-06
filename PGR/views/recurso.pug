@@ -29,17 +29,17 @@ block content
             .w3-row
                 div(class="w3-col s2")
                     div(class="containerp")
-                        img(src='/fileStore/' + data.autor  + '/' + name_without_ext + '/data/' + name_without_ext + '.' + f.ext class="imgp" style="width:100%")
+                        img(src='/fileStore/' + data.autor  + '/' + name_without_ext + '/data/' + conjunto_files[0] class="imgp" style="width:100%")
                         
         else if(f.ext == "pdf" || f.ext == "pptx")
             .w3-row
                 div(class="w3-col s2")
                     div(class="containerp")
-                        a(href='/fileStore/' + data.autor  + '/' + name_without_ext + '/data/' + name_without_ext + '.' + f.ext target="_blank") Ver Ficheiro
+                        a(href='/fileStore/' + data.autor  + '/' + name_without_ext + '/data/' + conjunto_files[0] target="_blank") Ver Ficheiro
         else if(f.ext == "zip" && (f.tipo === "cartaz" || f.tipo === "teste" || f.tipo == "problema"))
             // Container for the image gallery
             .container
-                each i in conjunto_imgs
+                each i in conjunto_files
                     .mySlides
                         img(src='/fileStore/' + data.autor + '/' + name_without_ext + '/data/' + i)
                 
