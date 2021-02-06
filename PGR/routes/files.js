@@ -19,17 +19,15 @@ router.get('/upload',function(req,res){
 })
   
 /* Download file */
-router.get('/download/:fname', function(req,res){
-    var token = req.cookies.token
-    u_email = jwt_decode(token).id
+router.get('/download/:u_email/:fname', function(req,res){
 
     // ---------------------- Zippa de novo ------------------------
 
     var archiver = require('archiver');
     var archive = archiver('zip');
     var name_without_ext = req.params.fname.split('.').slice(0, -1).join('.')
-    var source_dir = path.resolve(__dirname, '../') + "/public/fileStore/" + u_email + '/' + name_without_ext
-    let newZip = path.resolve(__dirname, '../') + '/public/fileStore/' + u_email + '/' + req.params.fname
+    var source_dir = path.resolve(__dirname, '../') + "/public/fileStore/" + req.params.u_email + '/' + name_without_ext
+    let newZip = path.resolve(__dirname, '../') + '/public/fileStore/' + req.params.u_email + '/' + req.params.fname
     var output = fs.createWriteStream(newZip);
 
     output.on('close', function () {
@@ -198,18 +196,11 @@ router.post('/',upload.array('myFile'), function(req,res){
                                 })
                             }
                             console.log(pub)
-                            console.log("Tamos aí na via")
                             pub.recursoId = id
-                            console.log(pub)
                             axios.post('http://localhost:7777/pub?token='+token,pub)
-                            .then(data => {
-                               
-                                jsonfile.writeFileSync(path.resolve(__dirname, '../dbFiles.json'),files)
-                          
-                                
-                                
-                            })
+                            .then(data => console.log("Publicação criada!"))
                             .catch(err => console.log("Erro:"+err))    
+                            jsonfile.writeFileSync(path.resolve(__dirname, '../dbFiles.json'),files)
                         })
                         .catch(err => console.log("Erro:"+err))
                     

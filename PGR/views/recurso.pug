@@ -19,9 +19,7 @@ block content
                                             img(src='/fileStore/' + data.autor  + '/' + name_without_ext + '/data/' + conjunto_files[0] class="imgp" style="width:100%")
                                 else if(f.ext == "pdf" || f.ext == "pptx")
                                     .w3-row
-                                        div(class="w3-col s2")
-                                            div(class="containerp")
-                                                 a(href='/fileStore/' + data.autor  + '/' + name_without_ext + '/data/' + conjunto_files[0] target="_blank") Ver Ficheiro
+                                        img(src="/images/" + f.ext + ".png" style="width:100%")
                                 else if(f.ext == "zip" && (f.tipo === "cartaz" || f.tipo === "teste" || f.tipo == "problema"))
                                     // Container for the image gallery
                                     .container
@@ -34,11 +32,14 @@ block content
                                 .mt-3
                                     h4 #{data.subtitulo}
                                     p.text-secondary.mb-1 <i class="fas fa-user-graduate"></i> #{data.autor}                     
-                    .card.mt-3
-                        ul.list-group.list-group-flush
-                            li.list-group-item.d-flex.justify-content-between.align-items-center.flex-wrap
-                                h6.mb-0
-                                a(href="/files/download/" + f.name) View
+                    if(f.ext == "pdf")
+                        .card.mt-3
+                            ul.list-group.list-group-flush
+                                li.list-group-item.justify-content-between.flex-wrap(style="text-align:center")
+                                    h6.mb-0
+                                    if(f.ext == "pdf")
+                                        a(href='/fileStore/' + data.autor  + '/' + name_without_ext + '/data/' + conjunto_files[0] target="_blank") Ver Ficheiro
+
                 .col-md-8
                     .card.mb-3
                         .card-body
@@ -94,7 +95,7 @@ block content
                         .col-sm-6.mb-3
                             .card.h-100
                                 .card-body
-                                    <button class="btn"><i class="fa fa-download"></i> Download</button>
+                                    <button class="btn" onclick="location.href='/files/download/#{data.autor}/#{f.name}'"><i class="fa fa-download"></i> Download</button>
 
                     .row.gutters-sm
                         .col-md8
