@@ -6,6 +6,11 @@ module.exports.insert = (recursoID,userID,rating) => {
     return novo.save();
   };
 
+/* Insere um voto na bd */
+module.exports.lookup = (userID,recursoID) => {
+    return Voto.find({ recursoID : userID, userID: recursoID});
+  };
+
 /* Remove um voto na bd */
 module.exports.remove = (recursoID,userID) => {
     return Voto.deleteOne({ recursoID: recursoID, userID: userID }).exec()

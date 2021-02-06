@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var moment = require('moment'); 
 const Recurso = require('../controllers/recurso');
+const Voto = require('../controllers/voto');
 
 /* GET lista de recursos por utilizador/tipo/ano/hashtag */
 router.get('/lista', function(req, res, next) {
@@ -83,8 +84,22 @@ router.get('/:id', (req, res) => {
 /* POST de um voto */
 router.post('/voto',(req,res)=>{
     Recurso.updateAverage(req.body.userID,req.body.rating,req.body.recursoID,req.body.flag)
-    .then(data => res.status(200).json({message: data}))
+    .then(data => 
+    {
+        Recurso.consultar(req.body.recursoID)
+        .then(data=>res.status(200).json({message: data.rating}))
+        .catch(err => res.status(500).json({message: err}))
+        
+    })
     .catch(err => res.status(500).json({message: err}))
 });
+
+/* Voto de um utilizador */
+router.get('/voto/:userID/:recursoID', function(req, res, next) {
+    Voto.lookup(req.params.userID,req.params.recursoID)
+    .then(data => res.send(data))
+    .catch(err => res.status(500).json({message: err}))
+});
+
 
 module.exports = router;

@@ -20,4 +20,5 @@ router.post('/', function(req, res, next) {
     .catch(err => res.status(404).json({message: 'Publicação não inserido!'+ err})) 
 });
 
+
 module.exports = router;
