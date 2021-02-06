@@ -1,6 +1,7 @@
 extends header
 block content
-    h1 Feed
+    h1(class="nowrap") <i class="fas fa-exclamation-circle"></i> Feed
+    hr
     .container
     .page-load-status
         .loader-ellips.infinite-scroll-request
@@ -41,10 +42,10 @@ block content
             $container.infiniteScroll('loadNextPage');
             console.log("asd")
             //------------------//
-            function getItemHTML({prodName,prodId,recursoTitulo,recursoDescricao,data,recursoTipo,recursoId}) {
+            function getItemHTML({prodName,prodId,recursoTitulo,recursoDescricao,dataCriacao,recursoTipo,recursoId}) {
                 console.log("we did it")
                 return ` <div class="post-content">
-                            <p class="post-date"> ${recursoTipo} publicado em ${data} por <a href='http://localhost:7778/perfil/${prodId}'>${prodName}</a> </p>
+                            <p class="post-date"> ${recursoTipo} publicado em ${dataCriacao} por <a href='http://localhost:7778/perfil/${prodId}'>${prodName}</a> </p>
                             <h2 class="post-title"><a href='http://localhost:7778/recursos/${recursoId}'>${recursoTitulo}</a></h2>
                             <div class="post-excerpt">
                                 <p>${recursoDescricao}</p>

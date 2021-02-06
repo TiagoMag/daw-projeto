@@ -9,6 +9,7 @@ var jwt_decode = require('jwt-decode');
 var AdmZip = require('adm-zip');
 var axios = require('axios')
 const Recurso = require('../models/recurso');
+const Pub = require('../models/pub');
 var Commons = require('../commons/commons')
 
 /* GET upload */
@@ -132,6 +133,7 @@ router.post('/',upload.array('myFile'), function(req,res){
                     // --------------- Cria novo recurso -------------
 
                     var r = new Recurso()
+                    var pub = new Pub()
                     var n = req.files.length
 
                     if(n > 1){
@@ -143,7 +145,9 @@ router.post('/',upload.array('myFile'), function(req,res){
                         r.visibilidade = req.body.visibilidade[idx]
                         r.hashtags = req.body.hashtags[idx].split(",")
                         r.nome = nome
-
+                        pub.recursoTitulo = req.body.titulo[idx]
+                        pub.recursoDescricao = req.body.desc[idx]
+                        pub.recursoTipo = req.body.tipo[idx]    
                     }
                     else if (n == 1){
                         r.tipo = req.body.tipo,
@@ -154,10 +158,15 @@ router.post('/',upload.array('myFile'), function(req,res){
                         r.visibilidade = req.body.visibilidade
                         r.hashtags = req.body.hashtags[0].split(',')
                         r.nome = nome
+                        pub.recursoTitulo = req.body.titulo
+                        pub.recursoDescricao = req.body.desc
+                        pub.recursoTipo = req.body.tipo  
                     }
                     r.rating = 0
                     r.autor = u_email
                     r.autorID = id
+                    pub.prodId = id,
+                    pub.prodName = nome
                     console.log("r.autorID = " + r.autorID)
                 
                     // --------------- Faz POST do recurso -------------
@@ -191,10 +200,25 @@ router.post('/',upload.array('myFile'), function(req,res){
                                     id: id
                                 })
                             }
-                            jsonfile.writeFileSync(path.resolve(__dirname, '../dbFiles.json'),files)
+                            console.log(pub)
+                            console.log("Tamos aí na via")
+                            pub.recursoId = id
+                            console.log(pub)
+                            axios.post('http://localhost:7777/pub?token='+token,pub)
+                            .then(data => {
+                               
+                                jsonfile.writeFileSync(path.resolve(__dirname, '../dbFiles.json'),files)
+                          
+                                
+                                
+                            })
+                            .catch(err => console.log("Erro:"+err))    
                         })
                         .catch(err => console.log("Erro:"+err))
                     
+         
+
+
                     // -------------------- Faz unzip --------------------
 
                     var zip = new AdmZip(filePath);

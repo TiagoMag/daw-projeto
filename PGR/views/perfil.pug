@@ -1,5 +1,8 @@
 extends header
 block content
+    .w3-h1 <i class="fas fa-user-circle"></i> Perfil
+    hr
+    br
     .container
         .main-body
             // /Breadcrumb
@@ -22,21 +25,34 @@ block content
                                                     input.w3-btn.w3-g.w3-border(type='submit' value='Submit')
                                     .mt-3
                                         h4 #{perfil.nome}
-                                        p.text-secondary.mb-1 #{perfil.filiacao}
+                                        p.text-secondary.mb-1 <i class="fas fa-user-graduate"></i> #{perfil.filiacao}
+                                    
                 .col-md-8
                     .card.mb-3
                         .card-body
                             .row
                                 .col-sm-3
-                                    h6.mb-0 Email
+                                    h6.mb-0 <i class="far fa-envelope"></i> Email
                                 .col-sm-9.text-secondary
                                     | #{perfil.email}
                             hr
                             .row
                                 .col-sm-3
-                                    h6.mb-0 Nível
+                                    h6.mb-0 <i class="fas fa-user-shield"></i> Nível
                                 .col-sm-9.text-secondary
                                     | #{perfil.nivel}
+                            hr
+                            .row
+                                .col-sm-3
+                                    h6.mb-0 <i class="far fa-clock"></i> Data de registo
+                                .col-sm-9.text-secondary
+                                    | #{perfil.dataRegisto}
+                            hr
+                            .row
+                                .col-sm-3
+                                    h6.mb-0 <i class="fas fa-sign-in-alt"></i> Último acesso
+                                .col-sm-9.text-secondary
+                                    | #{perfil.dataUltimoAcesso}
                             if (isProd==1)  
                                 hr
                                 .row
@@ -44,12 +60,13 @@ block content
                                     h6.mb-0 Número de publicações
                                 .col-sm-9.text-secondary
                                     | #{num}
-                    if (isProd==1) 
-                        .row.gutters-sm
-                            .card.h-100
+                if (isProd==1) 
+                    .row.gutters-sm
+                        .col-md8
+                            .card.mb-3
                                 .card-body
                                     h6.d-flex.align-items-center.mb-3
-                                        i.material-icons.text-info.mr-2 Meus recursos
+                                        i.material-icons.text-info.mr-2 <i class="fas fa-file"></i> Meus recursos
                                     if (isProd==1)            
                                         table.w3-table-all#myTable
                                             thead

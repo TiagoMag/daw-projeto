@@ -2,7 +2,7 @@ extends header
 block content
     link(rel='stylesheet' href='/stylesheets/slideshow.css')
     .w3-container.w3-margin
-        h2="Título: " + data.titulo
+        h1="Título: " + data.titulo
         .w3-container.w3-margin
             h6 
                 strong Subtítulo: 
@@ -53,30 +53,47 @@ block content
                     a(href="/files/download/" + f.name) Download
     //----------------------------------------------------------------
     link(rel='stylesheet', href='/stylesheets/rating.css')
+    script(src='/javascripts/rate.js')
+    script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
     form.w3-container(action='/files' method='POST' id="myform" enctype='multipart/form-data')
-        script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
-        .rating
-            span
-                input#str5(type='radio' name='rating' value='5')
-                label(for='str5')
-            span
-                input#str4(type='radio' name='rating' value='4')
-                label(for='str4')
-            span
-                input#str3(type='radio' name='rating' value='3')
-                label(for='str3')
-            span
-                input#str2(type='radio' name='rating' value='2')
-                label(for='str2')
-            span
-                input#str1(type='radio' name='rating' value='1')
-                label(for='str1')
+        .rate
+            input#star5(type='radio' name='rate' value='5')
+            label(for='star5' title='text') 5 stars
+            input#star4(type='radio' name='rate' value='4')
+            label(for='star4' title='text') 4 stars  
+            input#star3(type='radio' name='rate' value='3' onclick="ratee(this.value,'"+data._id+"','"+ data.autorID + "')")
+            label(for='star3' title='text') 3 stars
+            input#star2(type='radio' name='rate' value='2')
+            label(for='star2' title='text') 2 stars
+            input#star1(type='radio' name='rate' value='1')
+            label(for='star1' title='text') 1 star 
+        button(type='radio' name='rate' value='1')
+        label(title='text') Clear 
+        
+
 
         .w3-row.w3-margin
             input.w3-input.w3-border.w3-light-grey(type='text' name='desc' style='width: 30%' placeholder="Escreva aqui o seu comentário.")
         .w3-row.w3-margin
             input.w3-btn.w3-teal.w3-border(type='submit' value='Submit')
-
+ 
+    script. 
+        function ratee(val,recursoID,userId) {
+            var p = {
+                recursoID: recursoID ,
+                userID: userId,
+                rating: val ,
+                flag:0
+            }
+            console.log(p)
+         
+            axios.post('http://localhost:7777/recurso/voto?token=#{token}',p)
+            .then(response => { 
+            const addedUser = response.data;
+            console.log(`POST: user is added`);// append to DOM
+            })
+            .catch(error => console.error(error));
+        }
     script.
         $(document).ready(function(){
             // Check Radio-box
