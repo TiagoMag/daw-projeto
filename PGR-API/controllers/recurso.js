@@ -8,14 +8,21 @@ module.exports.list = (email) => {
 };
 
 /* Retorna a lista de recursos de um utilizador */
-module.exports.listByUser = (email) => {
-  return Recurso.find({"$or":[{"autor":email},{"$and":[{"visibilidade":"publico"},{"autor":email}]}]}).sort({ dataRegisto: 1 }).exec();
+module.exports.listByUser = (email1,email2) => {
+  if(email1==email2){
+    console.log("1")
+    return Recurso.find({"autor":email2}).sort({ dataRegisto: 1 }).exec();
+  }else{
+    console.log("2")
+   return Recurso.find({"$and":[{"visibilidade":"publico"},{"autor":email2}]}).sort({ dataRegisto: 1 }).exec();
+  }
 };
 
 /* Retorna a lista de recursos de um utilizador com dado nome */
 module.exports.listByNome = (email,nome) => {
   return Recurso.find({"$or":[{"$and":[{"autor":email},{"nome":nome}]},{"$and":[{"visibilidade":"publico"},{"nome":nome}]}]}).sort({ dataRegisto: 1 }).exec();
 };
+
 
 /* Retorna a lista de recursos de um tipo */
 module.exports.listByTipo = (email,tipo) => {
