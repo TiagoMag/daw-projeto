@@ -70,3 +70,4 @@ db.users.deleteOne({"_id":ObjectId("5fe0fb1e752091173a8732e8")})
 - [X] Ter recursos públicos e privados
 - [ ] URL inválidos
 - [ ] Top 10 melhores ratings
+- [ ] Tirar excesso de tempo no token
