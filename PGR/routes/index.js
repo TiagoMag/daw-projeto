@@ -26,6 +26,14 @@ router.get('/feed',verifyToken, function(req, res) {
   res.render('feed', { title: 'PGR', token: req.cookies.token,isCons:consumidor,isProd: produtor });
 });
 
+/* GET feed */
+router.get('/top',verifyToken, function(req, res) {
+  var consumidor = Commons.verifyConsumidor(req.cookies.token)
+  var produtor = Commons.verifyProdutor(req.cookies.token)
+  res.render('top', { title: 'PGR', token: req.cookies.token,isCons:consumidor,isProd: produtor });
+});
+
+
 /* Página de acesso não autorizado */
 router.get('/naoaut', function(req, res) {
   res.render('naoaut', { title: 'PGR' });

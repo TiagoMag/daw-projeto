@@ -11,7 +11,7 @@ var fs = require('fs')
 router.get("/", function(req,res){
   var consumidor = Commons.verifyConsumidor(req.cookies.token)
   var produtor = Commons.verifyProdutor(req.cookies.token)
-  res.render('recursos', { token: req.cookies.token,isProd: produtor, isCons: consumidor})  
+  res.render('recursos', { title: 'PGR', token: req.cookies.token,isProd: produtor, isCons: consumidor})  
 })
 
 router.get("/:id", function(req,res){
@@ -38,7 +38,7 @@ router.get("/:id", function(req,res){
       fs.readdirSync(folder_recurso).forEach(file => {
         conjunto_files.push(file)
       });
-        res.render('recurso', {data: data.data, token: req.cookies.token,isProd: produtor, isCons: consumidor,f: f, name_without_ext: name_without_ext,u_email:u_email,conjunto_files:conjunto_files})
+        res.render('recurso', {title: 'PGR', data: data.data, token: req.cookies.token,isProd: produtor, isCons: consumidor,f: f, name_without_ext: name_without_ext,u_email:u_email,conjunto_files:conjunto_files})
     })
     .catch(err => res.render('error', {error: err}));
 

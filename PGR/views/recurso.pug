@@ -119,7 +119,8 @@ block content
                                         span.loader-ellips__dot
                                         span.loader-ellips__dot
                                     p.infinite-scroll-last 
-                                    p.infinite-scroll-error                              
+                                    p.infinite-scroll-error 
+                                                          
     //----------------------------------------------------------------
     link(rel='stylesheet', href='/stylesheets/rating.css')
     link(rel='stylesheet', href='/stylesheets/comment.css')
@@ -148,6 +149,7 @@ block content
                 status: '.scroll-status',
                 history: false,
             });
+           
             $container.on( 'load.infiniteScroll', function( event, body ) {
                 // compile body data into HTML
                 let itemsHTML = body.map( getItemHTML ).join('');
@@ -178,6 +180,8 @@ block content
                             </div>
                         </div>`;
             }
+
+          
         });
     script. 
         function resetRating(val,recursoID,userId) {

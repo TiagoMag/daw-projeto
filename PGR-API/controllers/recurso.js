@@ -20,13 +20,12 @@ module.exports.listByUser = (email1,email2) => {
 
 /* Retorna a lista de recursos de um utilizador com dado nome */
 module.exports.listByNome = (email,nome) => {
-  return Recurso.find({"$or":[{"$and":[{"autor":email},{"nome":nome}]},{"$and":[{"visibilidade":"publico"},{"nome":nome}]}]}).sort({ dataRegisto: 1 }).exec();
+  return Recurso.find({"$or":[{"$and":[{"autor":email},{"nome":{ $regex : new RegExp(nome, "i") }}]},{"$and":[{"visibilidade":"publico"},{"nome":{ $regex : new RegExp(nome, "i") }}]}]}).sort({ dataRegisto: 1 }).exec();
 };
-
 
 /* Retorna a lista de recursos de um tipo */
 module.exports.listByTipo = (email,tipo) => {
-  return Recurso.find({"$or":[{"$and":[{"autor":email},{"tipo":tipo}]},{"$and":[{"visibilidade":"publico"},{"tipo":tipo}]}]}).sort({ dataRegisto: 1 }).exec();
+  return Recurso.find({"$or":[{"$and":[{"autor":email},{"tipo":{ $regex : new RegExp(tipo, "i") }}]},{"$and":[{"visibilidade":"publico"},{"tipo":{ $regex : new RegExp(tipo, "i") }}]}]}).sort({ dataRegisto: 1 }).exec();
 };
 
 /* Retorna a lista de recursos de um ano */
@@ -39,6 +38,12 @@ module.exports.listByTags = (email,tags) => {
   return Recurso.find({"$or":[{"$and":[{"autor":email},{hashtags: { $in: tags }}]},{"$and":[{"visibilidade":"publico"},{hashtags: { $in: tags }}]}]}).sort({ dataRegisto: 1 }).exec();
 
 };
+
+/* Retorna a lista de recursos com tags em comum */
+module.exports.top10 = () => {
+  return Recurso.find({"visibilidade":"publico"}).sort({ rating: -1 }).limit(10).exec();
+};
+
 
 /* Insere um recurso na bd */
 module.exports.insert = (r) => {

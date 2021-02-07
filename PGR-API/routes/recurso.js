@@ -53,7 +53,12 @@ router.get('/numFich/:id', function(req,res){
     Recurso.numFich(req.params.id)
     .then(data => res.status(200).json({data: data}))
     .catch(err => res.status(500).json({message: err}))
-    
+});
+
+router.get('/top', function(req,res){
+    Recurso.top10()
+    .then(data => res.status(200).json({data: data}))
+    .catch(err => res.status(500).json({message: err}))
 });
 
 /* POST de um recurso */
