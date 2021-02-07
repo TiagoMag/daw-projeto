@@ -30,4 +30,6 @@ npm i
 **Depois de instaladas as dependências, para cada servidor fazer o seguinte:**</br>
 - ``` cd app/<diretoria_servidor> ```</br>
 - Ligar o servidor:</br>
-``` npm start ```</br>
+``` 
+npm start 
+``` 
