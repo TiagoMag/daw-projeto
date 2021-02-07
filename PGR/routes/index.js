@@ -35,7 +35,7 @@ router.get('/top',verifyToken, function(req, res) {
 
 
 /* Página de acesso não autorizado */
-router.get('/naoaut', function(req, res) {
+router.get('/naoaut',verifyToken, function(req, res) {
   res.render('naoaut', { title: 'PGR' });
 });
 
@@ -46,7 +46,7 @@ router.get('/registar', function(req, res) {
 });
 
 /* Perfil de consumidor e produtor */
-router.get('/perfil', function(req, res) {
+router.get('/perfil',verifyToken, function(req, res) {
   if(req.cookies.logout == "1") { // verifica se sessão deu logout
     res.cookie('auth', "2", { 
       expires: new Date(Date.now() + '1d'),
@@ -180,7 +180,7 @@ router.post('/login', function(req, res) {
 });
 
 /* Página de admin ... */
-router.get('/admin/edit',function(req,res){
+router.get('/admin/edit',verifyToken,function(req,res){
   if(Commons.verifyProdutor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
   if(Commons.verifyConsumidor(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
   if(Commons.verifyAdmin(req.cookies.token) == true){
@@ -190,7 +190,7 @@ router.get('/admin/edit',function(req,res){
   })
 
 /* Página de admin ... */
-router.get('/perfil/:id',function(req,res){
+router.get('/perfil/:id',verifyToken,function(req,res){
   id = req.params.id
   var num = 0
   if(req.cookies.logout == "1") { // verifica se sessão deu logout
@@ -274,17 +274,15 @@ router.post('/newProfilePic',upload.single('myFile'), function(req, res) {
   res.redirect("/perfil")
 });
 
-
 /* Eliminar User */ 
-router.get("/admin/delete/:id", (req,res)=>{
+router.get("/admin/delete/:id",verifyToken, (req,res)=>{
   axios.delete('http://localhost:7777/users/remove/' + req.params.id + '?token=' +req.cookies.token)
     .then(data => res.redirect('/admin/edit') )
     .catch(err => res.render('error', {error: err}))
 })
 
-
 /* Logout */
-router.get("/logout", function(req,res){
+router.get("/logout",verifyToken, function(req,res){
   res.cookie('logout', "1", {
     expires: new Date(Date.now() + '1d'),
     secure: false, // set to true if your using https
@@ -293,7 +291,6 @@ router.get("/logout", function(req,res){
   res.cookie('token', {expires: Date.now()});
   res.redirect("/")
 })
-
 
 function verifyToken(req,res,next) {
   jwt.verify(req.cookies.token, process.env.SECRET, function(err, decoded) {

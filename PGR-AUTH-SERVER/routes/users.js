@@ -30,7 +30,7 @@ router.post('/login', (req, res, next) => {
           const id = email; 
           const nivel = data.nivel
           const token = jwt.sign({ id, nivel }, process.env.SECRET, {
-            expiresIn: 40000 // expires in 30min
+            expiresIn: 1800 // expires in 30min
           });
           User.updateLastLogin(email) // atualiza data de último login
           return res.json({ auth: true, token: token });

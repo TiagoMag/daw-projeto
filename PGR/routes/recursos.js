@@ -4,17 +4,18 @@ var jwt_decode = require('jwt-decode');
 var jsonfile = require('jsonfile')
 var path = require('path')
 var axios = require('axios')
+var jwt = require('jsonwebtoken')
 const Commons = require('../commons/commons')
 var fs = require('fs')
 
 /* Search page */
-router.get("/", function(req,res){
+router.get("/", verifyToken, function(req,res){
   var consumidor = Commons.verifyConsumidor(req.cookies.token)
   var produtor = Commons.verifyProdutor(req.cookies.token)
   res.render('recursos', { title: 'PGR', token: req.cookies.token,isProd: produtor, isCons: consumidor})  
 })
 
-router.get("/:id", function(req,res){
+router.get("/:id", verifyToken, function(req,res){
   var consumidor = Commons.verifyConsumidor(req.cookies.token)
   var produtor = Commons.verifyProdutor(req.cookies.token)
   var token = req.cookies.token
@@ -44,7 +45,7 @@ router.get("/:id", function(req,res){
 
 })
 
-router.post("/comment/:recursoId", function(req,res) {
+router.post("/comment/:recursoId",verifyToken, function(req,res) {
   var token = req.cookies.token
   console.log("here")
   u_email = jwt_decode(token).id
@@ -70,6 +71,23 @@ router.post("/comment/:recursoId", function(req,res) {
         })
 });
 
-    
+function verifyToken(req,res,next) {
+  jwt.verify(req.cookies.token, process.env.SECRET, function(err, decoded) {
+    if (err){
+      res.cookie('auth', "2", { 
+        expires: new Date(Date.now() + '1d'),
+        secure: false, // set to true if your using https
+        httpOnly: true
+        }); 
+        res.redirect("/")
+    }
+    else{
+    // se tudo estiver ok, salva no request para uso posterior
+    req.userId = decoded.id;
+    req.nivel = decoded.nivel;
+    next()
+    }
+  })
+}
+
 module.exports = router;
-  

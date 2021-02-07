@@ -10,10 +10,11 @@ var AdmZip = require('adm-zip');
 var axios = require('axios')
 const Recurso = require('../models/recurso');
 const Pub = require('../models/pub');
+var jwt = require('jsonwebtoken')
 var Commons = require('../commons/commons')
 
 /* GET upload */
-router.get('/upload',function(req,res){
+router.get('/upload',verifyToken,function(req,res){
     var consumidor = Commons.verifyConsumidor(req.cookies.token)
     if(!consumidor){
         var consumidor = Commons.verifyConsumidor(req.cookies.token)
@@ -27,7 +28,7 @@ router.get('/upload',function(req,res){
 })
   
 /* Download file */
-router.get('/download/:u_email/:fname', function(req,res){
+router.get('/download/:u_email/:fname',verifyToken, function(req,res){
 
     // ---------------------- Zippa de novo ------------------------
 
@@ -273,5 +274,24 @@ router.post('/',upload.array('myFile'), function(req,res){
                 res.redirect('/perfil')
         })    
 })
+
+function verifyToken(req,res,next) {
+    jwt.verify(req.cookies.token, process.env.SECRET, function(err, decoded) {
+      if (err){
+        res.cookie('auth', "2", { 
+          expires: new Date(Date.now() + '1d'),
+          secure: false, // set to true if your using https
+          httpOnly: true
+          }); 
+          res.redirect("/")
+      }
+      else{
+      // se tudo estiver ok, salva no request para uso posterior
+      req.userId = decoded.id;
+      req.nivel = decoded.nivel;
+      next()
+      }
+    })
+}
 
 module.exports = router;
