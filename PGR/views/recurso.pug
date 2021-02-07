@@ -15,9 +15,13 @@ block content
                         .card-body
                             .d-flex.flex-column.align-items-center.text-center
                                 if(f.tipo === "cartaz" && f.ext != "zip")
+<<<<<<< Updated upstream
                                             img(src='/fileStore/' + data.autor  + '/' + name_without_ext + '/data/' + conjunto_files[0] class="imgp" style="width:100%")
                                 else if(f.ext == "pdf" || f.ext == "pptx")
                                         img(src="/images/" + f.ext + ".png" style="width:100%")
+=======
+                                    img(src='/fileStore/' + data.autor  + '/' + name_without_ext + '/data/' + conjunto_files[0] class="imgp" style="width:100%")
+>>>>>>> Stashed changes
                                 else if(f.ext == "zip" && (f.tipo === "cartaz" || f.tipo === "teste" || f.tipo == "problema"))
                                     // Container for the image gallery
                                     .slidecontainer
@@ -29,6 +33,7 @@ block content
                                         a.next(onclick='plusSlides(1)') ❯
                                 .mt-3
                                     h4 #{data.subtitulo}
+<<<<<<< Updated upstream
                                     p.text-secondary.mb-1 <i class="fas fa-user-graduate"></i> #{data.nome}                  
                     if(f.ext == "pdf")
                         .card.mt-3
@@ -36,6 +41,14 @@ block content
                                 li.list-group-item.justify-content-between.flex-wrap(style="text-align:center")
                                     h6.mb-0
                                     if(f.ext == "pdf")
+=======
+                                    p.text-secondary.mb-1 <i class="fas fa-user-graduate"></i> #{data.autor}                     
+                    .card.mt-3
+                        ul.list-group.list-group-flush
+                            li.list-group-item.d-flex.justify-content-between.align-items-center.flex-wrap
+                                h6.mb-0
+                                if(f.ext == "pdf" || f.ext == "pptx")
+>>>>>>> Stashed changes
                                         a(href='/fileStore/' + data.autor  + '/' + name_without_ext + '/data/' + conjunto_files[0] target="_blank") Ver Ficheiro
                 .col-md-8
                     .card.mb-3
@@ -88,12 +101,17 @@ block content
                                         label(for='star3' title='text') 3 stars
                                         input#star2(type='radio' name='rate' value='2' onclick="rate(this.value,'"+data._id+"','"+ u_email + "')")
                                         label(for='star2' title='text') 2 stars
+<<<<<<< Updated upstream
                                         input#star1(type='radio' name='rate' value='1' onclick="rate(this.value,'"+data._id+"','"+ u_email + "')")
                                         label(for='star1' title='text') 1 star
                                         br
                                         br
                                         button(class="btn2" onclick="resetRating(this.value,'"+data._id+"','"+ u_email + "')") Clear
                                         br          
+=======
+                                        input#star1(type='radio' name='rate' value='1')
+                                        label(for='star1' title='text') 1 star       
+>>>>>>> Stashed changes
                         .col-sm-6.mb-3
                             .card.h-100
                                 .card-body
@@ -105,6 +123,7 @@ block content
                                     h3.align-items-center.mb-3 
                                     i(class="fas fa-comment")  
                                     |  Comentários
+<<<<<<< Updated upstream
                                 form.w3-container(action='/recursos/comment/'+data._id method='POST' id="myform" enctype='text/html')        
                                     .w3-row
                                         input.w3-input.w3-border.w3-light-grey(type='text' name='texto' style='width: 100%' placeholder="Escreva aqui o seu comentário.")
@@ -121,6 +140,14 @@ block content
                                     p.infinite-scroll-last 
                                     p.infinite-scroll-error 
                                                           
+=======
+                                     
+                                  
+                                .w3-row.w3-margin
+                                    input.w3-input.w3-border.w3-light-grey(type='text' name='desc' style='width: 100%' placeholder="Escreva aqui o seu comentário.")
+                                .w3-row.w3-margin
+                                    input.w3-btn.w3-teal.w3-border(type='submit' value='Submit')                                
+>>>>>>> Stashed changes
     //----------------------------------------------------------------
     link(rel='stylesheet', href='/stylesheets/rating.css')
     link(rel='stylesheet', href='/stylesheets/comment.css')

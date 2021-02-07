@@ -3,7 +3,10 @@ var router = express.Router();
 var moment = require('moment'); 
 const Recurso = require('../controllers/recurso');
 const Voto = require('../controllers/voto');
+<<<<<<< Updated upstream
 var jwt_decode = require('jwt-decode');
+=======
+>>>>>>> Stashed changes
 
 /* GET lista de recursos por utilizador/tipo/ano/hashtag */
 router.get('/lista', function(req, res, next) {
@@ -104,7 +107,11 @@ router.post('/voto',(req,res)=>{
 /* Voto de um utilizador */
 router.get('/voto/:userID/:recursoID', function(req, res, next) {
     Voto.lookup(req.params.userID,req.params.recursoID)
+<<<<<<< Updated upstream
     .then(data => res.status(200).json({message: data[0].rating}))
+=======
+    .then(data => res.send(data))
+>>>>>>> Stashed changes
     .catch(err => res.status(500).json({message: err}))
 });
 
