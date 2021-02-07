@@ -8,7 +8,8 @@ Todo o repositório foi realizado pelos elementos:
 - [João Abreu, A84802](https://github.com/JoaoNunoAbreu)
 - [Tiago Magalhães, A84485](https://github.com/TiagoMag)
 
-## Plataforma de Gestão e Disponibilização de Recursos Educativos
+## Sobre 
+### Plataforma de Gestão e Disponibilização de Recursos Educativos
 
 Plataforma que disponibiliza recursos educativos de vários tipos: livros, artigos, aplicações, trabalhos de alunos, monografias, relatórios
 
@@ -18,35 +19,19 @@ Plataforma que disponibiliza recursos educativos de vários tipos: livros, artig
 **npm** - Installs package dependencies</br>
 **mongodb** - Database</br>
 
-## Comandos úteis
+# Instalação
 
-```bash
-# Importa dados dos utilizadores de um ficheiro json para o mongo
-mongoimport -d PGR -c users --jsonArray datasets/db.json
-
-# Importa dados dos recursos de um ficheiro json para o mongo
-mongoimport -d PGR -c recursos --jsonArray datasets/dbrecurso.json
-
-# Importa dados das publicações de um ficheiro json para o mongo
-mongoimport -d PGR -c pubs --jsonArray datasets/dbpub.json
-
-# Correr servers que dão restart em saves (ctrl+s)
-npm run devstart
-
-# Limpa o fileStore e o dbFiles.json
-sh clean.sh
-
-# Gera um ficheiro manifesto.json a partir duma pasta chamada "data"
-python generateManifest.py
+- Clone/download repositório.
+- Para cada componente(servidor), instalar as dependências
 ```
-
-## Comandos úteis mongo
-
-```bash
-show dbs;
-db.users.find()
-db.users.deleteOne({"_id":ObjectId("5fe0fb1e752091173a8732e8")})
+npm i
 ```
+# Uso
+**Depois de instaladas as dependencias, para cada servidor fazer o seguinte: **</br>
+``` cd <diretoria_servidor> ```</br>
+- Ligar os servidor:</br>
+``` npm start / npm run devstart```</br>
+
 
 ## To Do list
 
