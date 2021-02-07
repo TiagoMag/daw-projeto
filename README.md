@@ -27,7 +27,7 @@ Plataforma que disponibiliza recursos educativos de vários tipos: livros, artig
 npm i
 ```
 # Uso
-**Depois de instaladas as dependencias, para cada servidor fazer o seguinte: **</br>
+**Depois de instaladas as dependencias, para cada servidor fazer o seguinte:**</br>
 - ``` cd <diretoria_servidor> ```</br>
 - Ligar os servidor:</br>
 ``` npm start / npm run devstart```</br>
