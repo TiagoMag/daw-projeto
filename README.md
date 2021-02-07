@@ -25,6 +25,8 @@ Plataforma que disponibiliza recursos educativos de vários tipos: livros, artig
 - Para cada componente(servidor), instalar as dependências:
 ```
 cd app/<diretoria_servidor>
+```
+```
 npm i
 ```
 ## Uso
