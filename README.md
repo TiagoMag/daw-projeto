@@ -70,3 +70,4 @@ db.users.deleteOne({"_id":ObjectId("5fe0fb1e752091173a8732e8")})
 - [ ] Ter recursos públicos e privados
 - [ ] Mais maneiras de fazer logins (?)
 - [ ] URL inválidos
+- [ ] Top 10 melhores ratings
