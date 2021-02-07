@@ -22,7 +22,7 @@ Plataforma que disponibiliza recursos educativos de vários tipos: livros, artig
 ## Instalação
 
 - Clone/download repositório.
-- Para cada componente(servidor), instalar as dependências
+- Para cada componente(servidor), instalar as dependências:
 ```
 npm i
 ```
