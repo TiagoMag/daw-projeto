@@ -24,6 +24,7 @@ Plataforma que disponibiliza recursos educativos de vários tipos: livros, artig
 - Clone/download repositório.
 - Para cada componente(servidor), instalar as dependências:
 ```
+cp app/<diretoria_servidor>
 npm i
 ```
 ## Uso
