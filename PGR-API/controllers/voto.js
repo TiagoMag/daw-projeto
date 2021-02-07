@@ -8,11 +8,7 @@ module.exports.insert = (recursoID,userID,rating) => {
 
 /* Insere um voto na bd */
 module.exports.lookup = (userID,recursoID) => {
-<<<<<<< Updated upstream
     return Voto.find({ recursoID : recursoID, userID: userID});
-=======
-    return Voto.find({ recursoID : userID, userID: recursoID});
->>>>>>> Stashed changes
   };
 
 /* Remove um voto na bd */
