@@ -23,7 +23,7 @@ router.get('/feed',verifyToken, function(req, res) {
   if(Commons.verifyAdmin(req.cookies.token) == true) res.render("naoaut", { title: 'PGR' })
   var consumidor = Commons.verifyConsumidor(req.cookies.token)
   var produtor = Commons.verifyProdutor(req.cookies.token)
-  res.render('feed', {token: req.cookies.token,isCons:consumidor,isProd: produtor });
+  res.render('feed', { title: 'PGR', token: req.cookies.token,isCons:consumidor,isProd: produtor });
 });
 
 /* Página de acesso não autorizado */

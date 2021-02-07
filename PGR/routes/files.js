@@ -16,8 +16,10 @@ var Commons = require('../commons/commons')
 router.get('/upload',function(req,res){
     var consumidor = Commons.verifyConsumidor(req.cookies.token)
     if(!consumidor){
+        var consumidor = Commons.verifyConsumidor(req.cookies.token)
+        var produtor = Commons.verifyProdutor(req.cookies.token)
         var d = new Date().toISOString().substring(0,16)
-        res.render("fileForm",{title:"File Upload",d: d})
+        res.render("fileForm",{title:"File Upload",d: d,isCons:consumidor,isProd: produtor})
     }
     else{
         res.render("naoaut", { title: 'PGR' })
