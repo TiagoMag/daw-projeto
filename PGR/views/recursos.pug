@@ -98,16 +98,33 @@ block content
                                 "url": "http://localhost:7777/recurso/lista?"+tipo+"="+input+"&token="+token,
                                 "type": "GET"
                             },
+                           "columnDefs": [
+                                {
+                                    "targets": [0,1],
+                                    "visible": false,
+                                    "searchable": false
+                                }
+                            ],
                             "columns": [
-                                { "data": "tipo"},
-                                { "data": "titulo" },
+                                { "data": "_id" },
+                                { "data": "autorID"},
+                                { "data": "tipo" },
+                                { "data": "titulo",
+                                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                                        $(nTd).html("<a href='http://localhost:7778/recursos/" + oData._id + "'>" + oData.titulo + "</a>");
+                                    } 
+                                },
                                 { "data": "descricao" },
                                 { "data": "subtitulo" },
                                 { "data": "dataCriacao" },
                                 { "data": "dataRegisto" },
                                 { "data": "hashtags" },
-                                { "data": "nome" }
-                            ],
+                                { "data": "nome",
+                                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                                        $(nTd).html("<a href='http://localhost:7778/perfil/" + oData.autorID + "'>" + oData.nome + "</a>");
+                                    } 
+                                }
+                            ]
                         });
                     });
                 }
@@ -120,16 +137,33 @@ block content
                                 "url": "http://localhost:7777/recurso/lista?"+tipo+"="+input+"&token="+token,
                                 "type": "GET"
                             },
-                             "columns": [
-                                { "data": "tipo"},
-                                { "data": "titulo" },
+                             "columnDefs": [
+                                {
+                                    "targets": [0,1],
+                                    "visible": false,
+                                    "searchable": false
+                                }
+                            ],
+                            "columns": [
+                                { "data": "_id" },
+                                { "data": "autorID"},
+                                { "data": "tipo" },
+                                { "data": "titulo",
+                                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                                        $(nTd).html("<a href='http://localhost:7778/recursos/" + oData._id + "'>" + oData.titulo + "</a>");
+                                    } 
+                                },
                                 { "data": "descricao" },
                                 { "data": "subtitulo" },
                                 { "data": "dataCriacao" },
                                 { "data": "dataRegisto" },
                                 { "data": "hashtags" },
-                                { "data": "nome" }
-                            ],
+                                { "data": "nome",
+                                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                                        $(nTd).html("<a href='http://localhost:7778/perfil/" + oData.autorID + "'>" + oData.nome + "</a>");
+                                    } 
+                                }
+                            ]
                         });
                     });
                 }
@@ -142,16 +176,33 @@ block content
                                 "url": "http://localhost:7777/recurso/lista?"+tipo+"="+input+"&token="+token,
                                 "type": "GET"
                             },
+                             "columnDefs": [
+                                {
+                                    "targets": [0,1],
+                                    "visible": false,
+                                    "searchable": false
+                                }
+                            ],
                             "columns": [
-                                { "data": "tipo"},
-                                { "data": "titulo" },
+                                { "data": "_id" },
+                                { "data": "autorID"},
+                                { "data": "tipo" },
+                                { "data": "titulo",
+                                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                                        $(nTd).html("<a href='http://localhost:7778/recursos/" + oData._id + "'>" + oData.titulo + "</a>");
+                                    } 
+                                },
                                 { "data": "descricao" },
                                 { "data": "subtitulo" },
                                 { "data": "dataCriacao" },
                                 { "data": "dataRegisto" },
                                 { "data": "hashtags" },
-                                { "data": "nome" }
-                            ],
+                                { "data": "nome",
+                                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                                        $(nTd).html("<a href='http://localhost:7778/perfil/" + oData.autorID + "'>" + oData.nome + "</a>");
+                                    } 
+                                }
+                            ]
                         });
                     });
                 }
@@ -164,18 +215,35 @@ block content
                                 "url": "http://localhost:7777/recurso/lista?"+tipo+"="+input+"&token="+token,
                                 "type": "GET"
                             },
+                             "columnDefs": [
+                                {
+                                    "targets": [0,1],
+                                    "visible": false,
+                                    "searchable": false
+                                }
+                            ],
                             "columns": [
-                                { "data": "tipo"},
-                                { "data": "titulo" },
+                                { "data": "_id" },
+                                { "data": "autorID"},
+                                { "data": "tipo" },
+                                { "data": "titulo",
+                                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                                        $(nTd).html("<a href='http://localhost:7778/recursos/" + oData._id + "'>" + oData.titulo + "</a>");
+                                    } 
+                                },
                                 { "data": "descricao" },
                                 { "data": "subtitulo" },
                                 { "data": "dataCriacao" },
                                 { "data": "dataRegisto" },
                                 { "data": "hashtags" },
-                                { "data": "nome" }
-                            ],
+                                { "data": "nome",
+                                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                                        $(nTd).html("<a href='http://localhost:7778/perfil/" + oData.autorID + "'>" + oData.nome + "</a>");
+                                    } 
+                                }
+                            ]
                         });
                     });
                 }
-            } 
+            }
         }

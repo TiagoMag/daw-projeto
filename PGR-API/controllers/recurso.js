@@ -3,41 +3,34 @@ var Recurso = require("../models/recurso");
 var Voto = require("../controllers/voto");
 
 /* Retorna a lista de recursos */
-module.exports.list = () => {
-  return Recurso.find().sort({ dataRegisto: 1 }).exec();
+module.exports.list = (email) => {
+  return Recurso.find({ $or: [ { autor: email }, { visibilidade: "publico" } ] }).sort({ dataRegisto: 1 }).exec();
 };
 
 /* Retorna a lista de recursos de um utilizador */
 module.exports.listByUser = (email) => {
-  return Recurso.find({ autor: email }).sort({ dataRegisto: 1 }).exec();
+  return Recurso.find({ $or: [ { autor: email }, { visibilidade: "publico" } ] }).sort({ dataRegisto: 1 }).exec();
 };
 
 /* Retorna a lista de recursos de um utilizador com dado nome */
-module.exports.listByNome = (nome) => {
-  return Recurso.find({ nome: nome }).sort({ dataRegisto: 1 }).exec();
+module.exports.listByNome = (email,nome) => {
+  return Recurso.find({"$or":[{"$and":[{"autor":email},{"nome":nome}]},{"$and":[{"visibilidade":"publico"},{"nome":nome}]}]}).sort({ dataRegisto: 1 }).exec();
 };
 
 /* Retorna a lista de recursos de um tipo */
-module.exports.listByTipo = (tipo) => {
-  return Recurso.find({ tipo: tipo }).sort({ dataRegisto: 1 }).exec();
+module.exports.listByTipo = (email,tipo) => {
+  return Recurso.find({"$or":[{"$and":[{"autor":email},{"tipo":tipo}]},{"$and":[{"visibilidade":"publico"},{"tipo":tipo}]}]}).sort({ dataRegisto: 1 }).exec();
 };
 
 /* Retorna a lista de recursos de um ano */
-module.exports.listByAno = (ano) => {
-  return Recurso.find({
-    dataCriacao: { $regex: `^${ano}` },
-  })
-    .sort({ dataRegisto: 1 })
-    .exec();
+module.exports.listByAno = (email,ano) => {
+    return Recurso.find({"$or":[{"$and":[{"autor":email},{dataCriacao: { $regex: `^${ano}` }}]},{"$and":[{"visibilidade":"publico"},{dataCriacao: { $regex: `^${ano}` }}]}]}).sort({ dataRegisto: 1 }).exec();
 };
 
 /* Retorna a lista de recursos com tags em comum */
-module.exports.listByTags = (tags) => {
-  return Recurso.find({
-    hashtags: { $in: tags },
-  })
-    .sort({ dataRegisto: 1 })
-    .exec();
+module.exports.listByTags = (email,tags) => {
+  return Recurso.find({"$or":[{"$and":[{"autor":email},{hashtags: { $in: tags }}]},{"$and":[{"visibilidade":"publico"},{hashtags: { $in: tags }}]}]}).sort({ dataRegisto: 1 }).exec();
+
 };
 
 /* Insere um recurso na bd */

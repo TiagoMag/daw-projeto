@@ -9,6 +9,7 @@ var fs = require('fs')
 const User = require('../models/user')
 const Commons = require('../commons/commons');
 var jwt = require('jsonwebtoken')
+var moment = require('moment'); 
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -87,8 +88,8 @@ router.get('/perfil', function(req, res) {
 /* POST utilizador */
 router.post('/registar',upload.single('myFile'), function(req, res) {
   var u = new User(req.body)
-  u.dataRegisto = new Date(Date.now()).toISOString()
-  u.dataUltimoAcesso = new Date(Date.now()).toISOString()
+  u.dataRegisto = moment(new Date(Date.now())).format('YYYY-MM-DD hh:mm:ss')
+  u.dataUltimoAcesso = moment(new Date(Date.now())).format('YYYY-MM-DD hh:mm:ss')
 
   if(req.file){
 

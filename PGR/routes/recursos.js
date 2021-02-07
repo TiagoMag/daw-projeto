@@ -38,12 +38,38 @@ router.get("/:id", function(req,res){
       fs.readdirSync(folder_recurso).forEach(file => {
         conjunto_files.push(file)
       });
-
-      res.render('recurso', {data: data.data, token: req.cookies.token,isProd: produtor, isCons: consumidor,f: f, name_without_ext: name_without_ext,u_email:u_email,conjunto_files:conjunto_files})
+        res.render('recurso', {data: data.data, token: req.cookies.token,isProd: produtor, isCons: consumidor,f: f, name_without_ext: name_without_ext,u_email:u_email,conjunto_files:conjunto_files})
     })
     .catch(err => res.render('error', {error: err}));
 
 })
+
+router.post("/comment/:recursoId", function(req,res) {
+  var token = req.cookies.token
+  console.log("here")
+  u_email = jwt_decode(token).id
+  val = req.body.texto
+  console.log(req.body)
+  axios.get('http://localhost:7777/users/perfil?email=' + u_email + "&token=" + req.cookies.token)  
+      .then (dados => {
+        console.log("heree")
+        var nome = dados.data.data.nome
+        var p = {
+            autorId: u_email ,
+            recursoId: req.params.recursoId,
+            nome: nome,
+            text: val,
+            nomeId: dados.data.data._id
+        }
+        console.log(p)
+        axios.post('http://localhost:7777/comment?token='+token,p)
+        .then(response => { 
+          res.redirect('/recursos/'+req.params.recursoId)
+        })
+        .catch(error => {});      
+        })
+});
+
     
 module.exports = router;
   

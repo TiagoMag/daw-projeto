@@ -3,6 +3,7 @@ var router = express.Router();
 var moment = require('moment'); 
 const Recurso = require('../controllers/recurso');
 const Voto = require('../controllers/voto');
+var jwt_decode = require('jwt-decode');
 
 /* GET lista de recursos por utilizador/tipo/ano/hashtag */
 router.get('/lista', function(req, res, next) {
@@ -12,36 +13,37 @@ router.get('/lista', function(req, res, next) {
     var ano = req.query.ano
     var tags = req.query.tags
     var nome = req.query.nome
+    u_mail = jwt_decode(req.query.token).id // retira email da cookie
     if(tags){
         var array_tags = tags.split(" ")
-        Recurso.listByTags(array_tags)
+        Recurso.listByTags(u_mail,array_tags)
         .then(data => res.status(200).json({data: data}))
         .catch(err => res.status(500).json({message: err}))
     }
     else if(autor){
-        Recurso.listByUser(autor)
+        Recurso.listByUser(autor,u_mail)
         .then(data => res.status(200).json({data: data}))
         .catch(err => res.status(500).json({message: err}))
     }
     else if(tipo){
-        Recurso.listByTipo(tipo)
+        Recurso.listByTipo(u_mail,tipo)
         .then(data => res.status(200).json({data: data}))
         .catch(err => res.status(500).json({message: err}))
     }
     else if(nome){
-        Recurso.listByNome(nome)
+        Recurso.listByNome(u_mail,nome)
         .then(data => res.status(200).json({data: data}))
         .catch(err => res.status(500).json({message: err}))
     }
     else if(ano){
         if(ano.length==4){
-            Recurso.listByAno(ano)
+            Recurso.listByAno(u_mail,ano)
             .then(data => res.status(200).json({data: data}))
             .catch(err => res.status(500).json({message: err}))
-        }else res.status(404).json({message: "Data tem de ter 4 digitos"})  
+        }else res.status(200).json({data: [] })  
     }
     else{
-        Recurso.list()
+        Recurso.list(u_mail)
         .then(data => res.status(200).json({data: data}))
         .catch(err => res.status(500).json({message: err}))
     }
@@ -97,7 +99,7 @@ router.post('/voto',(req,res)=>{
 /* Voto de um utilizador */
 router.get('/voto/:userID/:recursoID', function(req, res, next) {
     Voto.lookup(req.params.userID,req.params.recursoID)
-    .then(data => res.send(data))
+    .then(data => res.status(200).json({message: data[0].rating}))
     .catch(err => res.status(500).json({message: err}))
 });
 
