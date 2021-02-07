@@ -15,7 +15,7 @@ Plataforma que disponibiliza recursos educativos de vários tipos: livros, artig
 
 ## Requisitos
 
-**nodejs** - 3.5-3.9 </br>
+**nodejs** - 15.3.0 </br>
 **npm** - Installs package dependencies</br>
 **mongodb** - Database</br>
 
