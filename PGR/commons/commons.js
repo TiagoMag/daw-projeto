@@ -2,6 +2,7 @@
 var jwt_decode = require('jwt-decode');
 var jwt = require('jsonwebtoken')
 require("dotenv-safe").config()
+var fs = require('fs')
 
 
 /* Verifica se nível de utilizador é admin */
