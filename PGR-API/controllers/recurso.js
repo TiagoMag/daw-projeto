@@ -9,7 +9,7 @@ module.exports.list = (email) => {
 
 /* Retorna a lista de recursos de um utilizador */
 module.exports.listByUser = (email) => {
-  return Recurso.find({ $or: [ { autor: email }, { visibilidade: "publico" } ] }).sort({ dataRegisto: 1 }).exec();
+  return Recurso.find({"$or":[{"autor":email},{"$and":[{"visibilidade":"publico"},{"autor":email}]}]}).sort({ dataRegisto: 1 }).exec();
 };
 
 /* Retorna a lista de recursos de um utilizador com dado nome */
