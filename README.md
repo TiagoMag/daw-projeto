@@ -50,15 +50,15 @@ db.users.deleteOne({"_id":ObjectId("5fe0fb1e752091173a8732e8")})
 
 ## To Do list
 
-- [ ] Feed
+- [X] Feed
 - [X] Download
 - [X] Upload
 - [X] Disponibilizar recursos educativos
-- [ ] Permitir adicionar novos tipos de recursos e novos recursos;
-- [ ] Ter os recursos classificados por ano, tipo, tema, ... (utilização de hashtags ou de uma taxonomia classificativa);
-- [ ] Permitir que um utilizador faça um Post sobre um recurso;
-- [ ] Permitir que os outros utilizadores comentem Posts;
-- [ ] Criar um sistema de ranking para os recursos (atribuição de estrelas pelos utilizadores);
+- [X] Permitir adicionar novos tipos de recursos e novos recursos;
+- [X] Ter os recursos classificados por ano, tipo, tema, ... (utilização de hashtags ou de uma taxonomia classificativa);
+- [X] Permitir que um utilizador faça um Post sobre um recurso;
+- [X] Permitir que os outros utilizadores comentem Posts;
+- [X] Criar um sistema de ranking para os recursos (atribuição de estrelas pelos utilizadores);
 - [X] Auth com password + user + token
 - [X] Só aceitar zips
 - [X] Funções auxiliares ficheiro à parte
@@ -67,7 +67,9 @@ db.users.deleteOne({"_id":ObjectId("5fe0fb1e752091173a8732e8")})
 - [X] Fix upload não aparecer no menu
 - [X] Quando é pdf/pptx só aceitar se for 1
 - [ ] Quando o token for de vela avisar
-- [ ] Ter recursos públicos e privados
-- [ ] Mais maneiras de fazer logins (?)
+- [X] Ter recursos públicos e privados
 - [ ] URL inválidos
-- [ ] Top 10 melhores ratings
+- [X] Top 10 melhores ratings
+- [ ] Tirar excesso de tempo no token
+- [ ] Tirar cinza do css?
+- [X] Mongo case insensetive
